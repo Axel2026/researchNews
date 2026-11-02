@@ -1,9 +1,27 @@
 .page {
+  position: relative;
+  isolation: isolate;
   flex: 1;
   min-height: 100%;
   color: var(--color-ink);
   background: var(--color-bg);
   font-family: var(--font-sans);
+}
+
+.page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.14;
+  mix-blend-mode: multiply;
+  background-image: var(--paper-grain);
+}
+
+.page > * {
+  position: relative;
+  z-index: 1;
 }
 
 .header {
@@ -13,8 +31,18 @@
   gap: var(--space-6);
   max-width: var(--content-max);
   margin: 0 auto;
-  padding: var(--space-5) var(--space-6);
-  border-bottom: var(--border-width) solid var(--color-line);
+  padding: var(--space-5) var(--space-6) calc(var(--space-5) + 8px);
+  border-bottom: none;
+  background-image:
+    linear-gradient(var(--color-rule), var(--color-rule)),
+    linear-gradient(var(--color-rule), var(--color-rule));
+  background-repeat: no-repeat;
+  background-size:
+    100% 1px,
+    100% var(--border-rule);
+  background-position:
+    left calc(100% - 7px),
+    left bottom;
 }
 
 .brand {
@@ -63,8 +91,9 @@
   max-width: 40rem;
   margin-top: var(--space-4);
   color: var(--color-muted);
+  font-family: var(--font-serif);
   font-size: var(--text-lg);
-  line-height: var(--leading-normal);
+  line-height: var(--leading-relaxed);
 }
 
 .meta {
@@ -95,7 +124,7 @@
   max-width: 46rem;
   margin: var(--space-8) 0 var(--space-10);
   aspect-ratio: 16 / 9;
-  border-radius: var(--radius-sm);
+  border-radius: 0;
   background: var(--color-hero);
 }
 
@@ -122,10 +151,19 @@
   max-width: var(--measure);
   margin-bottom: var(--space-10);
   padding-bottom: var(--space-8);
-  border-bottom: var(--border-width) solid var(--color-line);
+  border-bottom: var(--border-rule) solid var(--color-rule);
   font-family: var(--font-serif);
   font-size: var(--text-lg);
   line-height: var(--leading-relaxed);
+}
+
+.summary > p:first-child::first-letter {
+  float: left;
+  padding-right: var(--space-2);
+  color: var(--color-ink);
+  font-size: 3.55rem;
+  font-weight: var(--weight-bold);
+  line-height: 0.82;
 }
 
 .body {
@@ -133,6 +171,7 @@
   flex-direction: column;
   gap: var(--space-4);
   max-width: var(--measure);
+  font-family: var(--font-serif);
   font-size: var(--text-base);
   line-height: var(--leading-relaxed);
 }
@@ -178,7 +217,7 @@
   margin-top: var(--space-4);
 }
 
-@media (min-width: 64rem) {
+@media (min-width: 1024px) {
   .layout {
     grid-template-columns: minmax(0, 1fr) 16.5rem;
     align-items: start;
@@ -188,5 +227,6 @@
   .aside {
     position: sticky;
     top: var(--space-6);
+    align-self: start;
   }
 }

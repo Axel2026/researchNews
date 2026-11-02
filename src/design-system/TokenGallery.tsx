@@ -179,8 +179,8 @@ export function BordersGallery() {
           <div
             className={styles.borderPreview}
             style={{
-              border: `${token.variable.includes('width') ? `var(${token.variable})` : 'var(--border-width)'} solid ${
-                token.variable.includes('width')
+              border: `${token.value.endsWith('px') ? `var(${token.variable})` : 'var(--border-width)'} solid ${
+                token.value.endsWith('px')
                   ? 'var(--color-ink)'
                   : `var(${token.variable})`
               }`,

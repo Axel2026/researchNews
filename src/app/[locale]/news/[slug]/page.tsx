@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { Button } from '@/components/Button/Button';
 import {
@@ -6,17 +6,19 @@ import {
   getPaperParagraphs,
   getPaperSlugs,
 } from '@/data/papers';
+import { Link } from '@/i18n/navigation';
+import { routing } from '@/i18n/routing';
 import styles from './page.module.css';
 
 export function generateStaticParams() {
-  return getPaperSlugs().map((slug) => ({ slug }));
+  return routing.locales.flatMap((locale) =>
+    getPaperSlugs().map((slug) => ({ locale, slug })),
+  );
 }
 
 export default async function NewsPage({
   params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+}: PageProps<'/[locale]/news/[slug]'>) {
   const { slug } = await params;
   const paper = getPaperBySlug(slug);
 
@@ -24,6 +26,7 @@ export default async function NewsPage({
     notFound();
   }
 
+  const t = await getTranslations();
   const summary = getPaperParagraphs(paper, 'mediumPopularization');
   const article = getPaperParagraphs(paper, 'fullPopularization');
 
@@ -35,13 +38,13 @@ export default async function NewsPage({
         </Link>
         <nav className={styles.nav}>
           <Button href="/" variant="secondary">
-            Opracowania
+            {t('Nav.stories')}
           </Button>
         </nav>
       </header>
 
       <main className={styles.main}>
-        <p className={styles.kicker}>Opracowanie badania</p>
+        <p className={styles.kicker}>{t('News.kicker')}</p>
         <h1 className={styles.title}>{paper.title}</h1>
         <p className={styles.dek}>{paper.shortPopularization}</p>
         <div className={styles.meta}>
@@ -67,7 +70,7 @@ export default async function NewsPage({
               ))}
             </section>
             <section className={styles.body}>
-              <h2>Opracowanie</h2>
+              <h2>{t('News.bodyHeading')}</h2>
               {article.map((paragraph, index) => (
                 <p key={index}>{paragraph}</p>
               ))}
@@ -75,12 +78,12 @@ export default async function NewsPage({
           </article>
 
           <aside className={styles.aside}>
-            <p className={styles.asideLabel}>Źródłowa praca</p>
+            <p className={styles.asideLabel}>{t('News.source')}</p>
             <p className={styles.asideTitle}>{paper.realTitle}</p>
             <p className={styles.asideMeta}>{paper.authors.join(', ')}</p>
             <p className={styles.asideMeta}>{paper.field}</p>
             <Button className={styles.asideAction} href="/" variant="primary">
-              Więcej opracowań
+              {t('News.moreStories')}
             </Button>
           </aside>
         </div>

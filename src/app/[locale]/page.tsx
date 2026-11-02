@@ -1,11 +1,13 @@
-import Link from 'next/link';
+import { getLocale, getTranslations } from 'next-intl/server';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher/LanguageSwitcher';
 import { papers } from '@/data/papers';
+import { Link } from '@/i18n/navigation';
 import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
 
-function formatEditionDate(date: Date) {
-  return new Intl.DateTimeFormat('en-US', {
+function formatEditionDate(date: Date, locale: string) {
+  return new Intl.DateTimeFormat(locale, {
     month: 'short',
     day: 'numeric',
     year: 'numeric',
@@ -14,9 +16,11 @@ function formatEditionDate(date: Date) {
     .toUpperCase();
 }
 
-export default function Home() {
+export default async function Home() {
+  const t = await getTranslations();
+  const locale = await getLocale();
   const [featured, ...latest] = papers;
-  const editionDate = formatEditionDate(new Date());
+  const editionDate = formatEditionDate(new Date(), locale);
 
   return (
     <div className={styles.page}>
@@ -24,22 +28,23 @@ export default function Home() {
         <Link className={styles.brand} href="/">
           Badania<span>*</span>
         </Link>
-        <nav className={styles.nav} aria-label="Główne">
-          <Link className={styles.navCurrent} href="/">
-            Opracowania
-          </Link>
-        </nav>
+        <div className={styles.headerEnd}>
+          <nav className={styles.nav} aria-label={t('Nav.main')}>
+            <Link className={styles.navCurrent} href="/">
+              {t('Nav.stories')}
+            </Link>
+          </nav>
+          <LanguageSwitcher />
+        </div>
       </header>
 
       <main className={styles.main}>
         <p className={styles.edition}>
           {editionDate}
-          <span> / Weekly edition</span>
+          <span> / {t('Home.weeklyEdition')}</span>
         </p>
-        <h1 className={styles.masthead}>Research, in perspective.</h1>
-        <p className={styles.subtitle}>
-          Big ideas. Clear evidence. A little more context.
-        </p>
+        <h1 className={styles.masthead}>{t('Home.masthead')}</h1>
+        <p className={styles.subtitle}>{t('Home.subtitle')}</p>
 
         {featured ? (
           <article className={styles.featured}>
@@ -56,7 +61,7 @@ export default function Home() {
               />
             </Link>
             <div className={styles.featuredCopy}>
-              <p className={styles.kicker}>The big read</p>
+              <p className={styles.kicker}>{t('Home.kicker')}</p>
               <h2 className={styles.featuredTitle}>
                 <Link href={`/news/${featured.slug}`}>{featured.title}</Link>
               </h2>
@@ -68,7 +73,7 @@ export default function Home() {
                 className={styles.storyLink}
                 href={`/news/${featured.slug}`}
               >
-                Read the story <span aria-hidden="true">→</span>
+                {t('Home.readStory')} <span aria-hidden="true">→</span>
               </Link>
             </div>
           </article>
@@ -77,8 +82,8 @@ export default function Home() {
         {latest.length > 0 ? (
           <section className={styles.latest} aria-labelledby="latest-heading">
             <div className={styles.latestHeader}>
-              <h2 id="latest-heading">Latest discoveries</h2>
-              <p>New research, fresh insights and growing questions.</p>
+              <h2 id="latest-heading">{t('Home.latestTitle')}</h2>
+              <p>{t('Home.latestDek')}</p>
             </div>
             <ul className={styles.latestGrid}>
               {latest.map((paper) => (

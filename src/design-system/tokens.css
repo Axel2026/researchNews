@@ -1,8 +1,9 @@
 :root {
   --color-bg: #f6f1e8;
-  --color-ink: #1c1917;
-  --color-muted: #6d675f;
+  --color-ink: #3a291c;
+  --color-muted: #7a6856;
   --color-line: #e4ddd2;
+  --color-rule: #b9ab96;
   --color-accent: #c45c26;
   --color-accent-hover: #a84c1e;
   --color-surface: #fffdf8;
@@ -53,6 +54,8 @@
   --radius-pill: 999px;
 
   --border-width: 1px;
+  --border-rule: 3px;
   --content-max: 72rem;
   --measure: 42rem;
+  --paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
