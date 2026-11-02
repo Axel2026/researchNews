@@ -36,11 +36,6 @@
   color: var(--muted);
 }
 
-.hint {
-  font-size: 1rem;
-  line-height: 1.5;
-}
-
 @media (min-width: 48rem) {
   .main {
     padding: 4.5rem 2rem;

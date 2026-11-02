@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { papers } from '@/data/papers';
 import styles from './page.module.css';
 
 export default function Home() {
@@ -7,13 +8,20 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.intro}>
           <h1>Badania</h1>
-          <p>Lista opracowań pojawi się później.</p>
+          <p>Opracowania wybranych prac naukowych.</p>
         </div>
-        <p className={styles.hint}>
-          <Link href="/news/przykladowe-badanie">
-            Przykładowa strona opracowania
-          </Link>
-        </p>
+        <ul>
+          {papers.map((paper) => (
+            <li key={paper.id}>
+              <p>{paper.field}</p>
+              <h2>
+                <Link href={`/news/${paper.slug}`}>{paper.title}</Link>
+              </h2>
+              <p>{paper.authors.join(', ')}</p>
+              <p>{paper.shortPopularization}</p>
+            </li>
+          ))}
+        </ul>
       </main>
     </div>
   );

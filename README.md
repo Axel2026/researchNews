@@ -20,6 +20,8 @@ pnpm dev
 
 Lokalny adres aplikacji: [http://localhost:3000](http://localhost:3000)
 
+Design system i komponenty: [http://localhost:6006](http://localhost:6006) (`pnpm storybook`)
+
 ## Polecenia
 
 | Polecenie           | Opis                                         |
@@ -31,6 +33,8 @@ Lokalny adres aplikacji: [http://localhost:3000](http://localhost:3000)
 | `pnpm typecheck`    | Sprawdzenie TypeScript bez emitowania plików |
 | `pnpm format`       | Formatowanie Prettierem                      |
 | `pnpm format:check` | Kontrola formatowania                        |
+| `pnpm storybook`    | Storybook z design systemem (port 6006)      |
+| `pnpm build-storybook` | Statyczny build Storybooka                |
 
 ## Routing
 
