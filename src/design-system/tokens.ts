@@ -17,13 +17,13 @@ export const fonts = [
     name: 'Serif',
     variable: '--font-serif',
     value: 'Newsreader, Georgia, serif',
-    sample: 'Research, in perspective.',
+    sample: 'Research papers, plain language.',
   },
   {
     name: 'Sans',
     variable: '--font-sans',
     value: 'Source Sans 3, system-ui, sans-serif',
-    sample: 'Big ideas. Clear evidence.',
+    sample: 'Scientific jargon, closer.',
   },
 ] as const;
 
