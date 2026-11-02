@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
+import { newsreader, sourceSans } from '@/fonts';
 import '@/design-system/tokens.css';
 import '../globals.css';
 import { routing } from '@/i18n/routing';
@@ -40,8 +41,11 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
-      <body>
+    <html
+      lang={locale}
+      className={`${newsreader.variable} ${sourceSans.variable}`}
+    >
+      <body className={sourceSans.className}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
         </NextIntlClientProvider>

@@ -16,14 +16,13 @@ export const fonts = [
   {
     name: 'Serif',
     variable: '--font-serif',
-    value:
-      "Georgia, 'Iowan Old Style', Palatino, 'Palatino Linotype', 'Times New Roman', serif",
+    value: 'Newsreader, Georgia, serif',
     sample: 'Research, in perspective.',
   },
   {
     name: 'Sans',
     variable: '--font-sans',
-    value: "system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+    value: 'Source Sans 3, system-ui, sans-serif',
     sample: 'Big ideas. Clear evidence.',
   },
 ] as const;

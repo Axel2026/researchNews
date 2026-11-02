@@ -6,13 +6,13 @@ import styles from './page.module.css';
 
 export const dynamic = 'force-dynamic';
 
-function formatEditionDate(date: Date, locale: string) {
-  return new Intl.DateTimeFormat(locale, {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  })
-    .format(date)
+function formatEditionDate(date: Temporal.PlainDate, locale: string) {
+  return date
+    .toLocaleString(locale, {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    })
     .toUpperCase();
 }
 
@@ -20,7 +20,7 @@ export default async function Home() {
   const t = await getTranslations();
   const locale = await getLocale();
   const [featured, ...latest] = papers;
-  const editionDate = formatEditionDate(new Date(), locale);
+  const editionDate = formatEditionDate(Temporal.Now.plainDateISO(), locale);
 
   return (
     <div className={styles.page}>
@@ -41,7 +41,6 @@ export default async function Home() {
       <main className={styles.main}>
         <p className={styles.edition}>
           {editionDate}
-          <span> / {t('Home.weeklyEdition')}</span>
         </p>
         <h1 className={styles.masthead}>{t('Home.masthead')}</h1>
         <p className={styles.subtitle}>{t('Home.subtitle')}</p>

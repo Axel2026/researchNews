@@ -12,9 +12,11 @@
   --color-chip-border: #d8d0c4;
 
   --font-serif:
-    Georgia, 'Iowan Old Style', Palatino, 'Palatino Linotype',
-    'Times New Roman', serif;
-  --font-sans: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    var(--font-newsreader), Georgia, 'Iowan Old Style', Palatino,
+    'Palatino Linotype', 'Times New Roman', serif;
+  --font-sans:
+    var(--font-source-sans), system-ui, 'Segoe UI', Roboto, Helvetica, Arial,
+    sans-serif;
 
   --text-xs: 0.72rem;
   --text-sm: 0.78rem;
