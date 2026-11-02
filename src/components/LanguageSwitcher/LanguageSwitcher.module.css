@@ -1,0 +1,22 @@
+.switcher {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+}
+
+.option,
+.current {
+  padding-bottom: var(--space-1);
+}
+
+.option {
+  color: var(--color-muted);
+}
+
+.current {
+  border-bottom: 2px solid var(--color-accent);
+}

@@ -5,7 +5,7 @@ const meta = {
   title: 'Components/Button',
   component: Button,
   args: {
-    children: 'Opracowania',
+    children: 'Artykuły',
   },
   argTypes: {
     variant: {
@@ -21,14 +21,14 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     variant: 'primary',
-    children: 'Więcej opracowań',
+    children: 'Więcej artykułów',
   },
 };
 
 export const Secondary: Story = {
   args: {
     variant: 'secondary',
-    children: 'Opracowania',
+    children: 'Artykuły',
   },
 };
 
@@ -36,6 +36,6 @@ export const AsLink: Story = {
   args: {
     variant: 'primary',
     href: '/',
-    children: 'Więcej opracowań',
+    children: 'Więcej artykułów',
   },
 };

@@ -1,0 +1,26 @@
+{
+  "Metadata": {
+    "title": "Badania",
+    "description": "Articles de vulgarisation scientifique : un résumé et un compte rendu complet d’un article dans chaque actualité."
+  },
+  "Nav": {
+    "main": "Principal",
+    "stories": "Articles",
+    "language": "Langue"
+  },
+  "Home": {
+    "weeklyEdition": "Édition hebdomadaire",
+    "masthead": "La recherche, en perspective.",
+    "subtitle": "De grandes idées. Des preuves claires. Un peu plus de contexte.",
+    "kicker": "Article à la une",
+    "readStory": "Lire l’article",
+    "latestTitle": "Dernières découvertes",
+    "latestDek": "Nouvelles recherches, regards frais et questions ouvertes."
+  },
+  "News": {
+    "kicker": "Article de vulgarisation scientifique",
+    "bodyHeading": "Article",
+    "source": "Article source",
+    "moreStories": "Plus d’articles"
+  }
+}

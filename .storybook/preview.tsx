@@ -1,18 +1,22 @@
 import type { Decorator, Preview } from '@storybook/nextjs-vite';
+import { NextIntlClientProvider } from 'next-intl';
 import '@/design-system/tokens.css';
+import en from '../src/messages/en.json';
 
 const withDesignTokens: Decorator = (Story) => (
-  <div
-    style={{
-      minHeight: '100%',
-      padding: '1.5rem',
-      color: 'var(--color-ink)',
-      background: 'var(--color-bg)',
-      fontFamily: 'var(--font-sans)',
-    }}
-  >
-    <Story />
-  </div>
+  <NextIntlClientProvider locale="en" messages={en}>
+    <div
+      style={{
+        minHeight: '100%',
+        padding: '1.5rem',
+        color: 'var(--color-ink)',
+        background: 'var(--color-bg)',
+        fontFamily: 'var(--font-sans)',
+      }}
+    >
+      <Story />
+    </div>
+  </NextIntlClientProvider>
 );
 
 const preview: Preview = {

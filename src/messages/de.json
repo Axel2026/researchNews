@@ -1,0 +1,26 @@
+{
+  "Metadata": {
+    "title": "Badania",
+    "description": "Populärwissenschaftliche Artikel über Forschung: in jeder Story eine kurze und eine vollständige Darstellung einer Arbeit."
+  },
+  "Nav": {
+    "main": "Hauptnavigation",
+    "stories": "Artikel",
+    "language": "Sprache"
+  },
+  "Home": {
+    "weeklyEdition": "Wöchentliche Ausgabe",
+    "masthead": "Forschung, im Überblick.",
+    "subtitle": "Große Ideen. Klare Belege. Etwas mehr Kontext.",
+    "kicker": "Der große Artikel",
+    "readStory": "Artikel lesen",
+    "latestTitle": "Neueste Entdeckungen",
+    "latestDek": "Neue Forschung, frische Einblicke und offene Fragen."
+  },
+  "News": {
+    "kicker": "Populärwissenschaftlicher Artikel",
+    "bodyHeading": "Artikel",
+    "source": "Originalarbeit",
+    "moreStories": "Weitere Artikel"
+  }
+}

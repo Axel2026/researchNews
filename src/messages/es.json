@@ -1,0 +1,26 @@
+{
+  "Metadata": {
+    "title": "Badania",
+    "description": "Artículos de divulgación científica: un resumen y un relato completo de un artículo en cada noticia."
+  },
+  "Nav": {
+    "main": "Principal",
+    "stories": "Artículos",
+    "language": "Idioma"
+  },
+  "Home": {
+    "weeklyEdition": "Edición semanal",
+    "masthead": "La investigación, en perspectiva.",
+    "subtitle": "Grandes ideas. Pruebas claras. Un poco más de contexto.",
+    "kicker": "Artículo destacado",
+    "readStory": "Leer el artículo",
+    "latestTitle": "Últimos descubrimientos",
+    "latestDek": "Nueva investigación, ideas frescas y preguntas abiertas."
+  },
+  "News": {
+    "kicker": "Artículo de divulgación científica",
+    "bodyHeading": "Artículo",
+    "source": "Artículo original",
+    "moreStories": "Más artículos"
+  }
+}

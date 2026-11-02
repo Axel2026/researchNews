@@ -1,0 +1,26 @@
+{
+  "Metadata": {
+    "title": "Badania",
+    "description": "Artykuły popularnonaukowe o badaniach: skrót i pełny opis jednej pracy w każdym newsie."
+  },
+  "Nav": {
+    "main": "Główne",
+    "stories": "Artykuły",
+    "language": "Język"
+  },
+  "Home": {
+    "weeklyEdition": "Wydanie tygodniowe",
+    "masthead": "Badania, w perspektywie.",
+    "subtitle": "Wielkie idee. Jasne dowody. Trochę więcej kontekstu.",
+    "kicker": "Główny artykuł",
+    "readStory": "Czytaj artykuł",
+    "latestTitle": "Najnowsze odkrycia",
+    "latestDek": "Nowe badania, świeże wnioski i kolejne pytania."
+  },
+  "News": {
+    "kicker": "Artykuł popularnonaukowy",
+    "bodyHeading": "Artykuł",
+    "source": "Źródłowa praca",
+    "moreStories": "Więcej artykułów"
+  }
+}

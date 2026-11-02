@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import styles from './Button.module.css';
 
 type ButtonVariant = 'primary' | 'secondary';

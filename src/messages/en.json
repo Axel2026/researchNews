@@ -1,0 +1,26 @@
+{
+  "Metadata": {
+    "title": "Badania",
+    "description": "Popular-science articles about research: a short and full account of one paper in every story."
+  },
+  "Nav": {
+    "main": "Main",
+    "stories": "Articles",
+    "language": "Language"
+  },
+  "Home": {
+    "weeklyEdition": "Weekly edition",
+    "masthead": "Research, in perspective.",
+    "subtitle": "Big ideas. Clear evidence. A little more context.",
+    "kicker": "Featured article",
+    "readStory": "Read the article",
+    "latestTitle": "Latest discoveries",
+    "latestDek": "New research, fresh insights and growing questions."
+  },
+  "News": {
+    "kicker": "Popular-science article",
+    "bodyHeading": "Article",
+    "source": "Source paper",
+    "moreStories": "More articles"
+  }
+}
