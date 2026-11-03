@@ -1,5 +1,6 @@
 import {
   borders,
+  breakpoints,
   colors,
   fontSizes,
   fonts,
@@ -197,6 +198,30 @@ export function BordersGallery() {
   );
 }
 
+export function BreakpointsGallery() {
+  return (
+    <div>
+      <p className={styles.zNote}>
+        Viewport breakpoints cannot use <code>var()</code> inside{' '}
+        <code>@media</code>. Repeat the token length in the query, e.g.{' '}
+        <code>@media (min-width: 64rem)</code> for{' '}
+        <code>--breakpoint-lg</code>.
+      </p>
+      {breakpoints.map((token) => (
+        <div className={styles.row} key={token.variable}>
+          <strong>{token.name}</strong>
+          <p className={styles.zUse}>{token.use}</p>
+          <div className={styles.rowMeta}>
+            <code>{token.variable}</code>
+            <code>{token.value}</code>
+            <code>@media {token.media}</code>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export function ZIndexGallery() {
   return (
     <div>
@@ -257,6 +282,10 @@ export function DesignSystemOverview() {
       <section>
         <h2 className={styles.sectionTitle}>Z-index</h2>
         <ZIndexGallery />
+      </section>
+      <section>
+        <h2 className={styles.sectionTitle}>Breakpoints</h2>
+        <BreakpointsGallery />
       </section>
       <TypographyGallery />
     </div>

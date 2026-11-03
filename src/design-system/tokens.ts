@@ -94,6 +94,18 @@ export const borders = [
   { name: 'Chip border', variable: '--color-chip-border', value: '#d8d0c4' },
 ] as const;
 
+export const breakpoints = [
+  {
+    name: 'Large',
+    variable: '--breakpoint-lg',
+    value: '64rem',
+    media: '(min-width: 64rem)',
+    use: 'Four-column article grid, featured story split, and article sidebar.',
+  },
+] as const;
+
+export const mediaMinLg = breakpoints[0].media;
+
 export const zIndexes = [
   {
     name: 'Base',

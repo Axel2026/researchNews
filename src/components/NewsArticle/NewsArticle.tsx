@@ -1,9 +1,10 @@
+import { getTranslations } from 'next-intl/server';
+import { ArticleImage } from '@/components/ArticleImage';
 import { Button } from '@/components/Button/Button';
 import { CategoryChip } from '@/components/CategoryChip/CategoryChip';
 import { getArticleParagraphs, type ArticleDetail } from '@/data/articles';
 import type { AppLocale } from '@/i18n/routing';
 import { categoryPath } from '@/lib/seo';
-import { getTranslations } from 'next-intl/server';
 import styles from './NewsArticle.module.css';
 
 export type NewsArticleCopy = {
@@ -38,8 +39,11 @@ export function NewsArticleView({
       </div>
 
       <figure className={styles.hero}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={article.imageUrl} alt="" width={1600} height={900} />
+        <ArticleImage
+          src={article.imageUrl}
+          sizes="(min-width: 46rem) 46rem, 100vw"
+          priority
+        />
       </figure>
 
       <div className={styles.layout}>

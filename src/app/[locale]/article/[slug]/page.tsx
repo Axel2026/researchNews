@@ -89,7 +89,7 @@ export default async function ArticlePage({
     <div className={styles.page}>
       <header className={styles.header}>
         <Link className={styles.brand} href="/">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
+          {/* eslint-disable-next-line @next/next/no-img-element -- next/image does not optimize SVG */}
           <img
             className={styles.logo}
             src="/images/logo.svg"

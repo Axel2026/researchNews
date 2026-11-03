@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import {
   BordersGallery,
+  BreakpointsGallery,
   ColorGallery,
   DesignSystemOverview,
   RadiiGallery,
@@ -46,4 +47,8 @@ export const Borders: Story = {
 
 export const ZIndex: Story = {
   render: () => <ZIndexGallery />,
+};
+
+export const Breakpoints: Story = {
+  render: () => <BreakpointsGallery />,
 };

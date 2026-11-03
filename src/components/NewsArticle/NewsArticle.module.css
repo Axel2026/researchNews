@@ -39,6 +39,7 @@
 }
 
 .hero {
+  position: relative;
   overflow: hidden;
   width: 100%;
   max-width: 46rem;
@@ -146,7 +147,7 @@
   width: 100%;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 64rem) {
   .layout {
     grid-template-columns: minmax(0, 1fr) 16.5rem;
     align-items: start;

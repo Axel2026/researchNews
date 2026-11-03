@@ -1,5 +1,7 @@
+import { ArticleImage } from '@/components/ArticleImage';
 import { CategoryChip } from '@/components/CategoryChip/CategoryChip';
 import type { ArticleListItem } from '@/data/articles';
+import { mediaMinLg } from '@/design-system/tokens';
 import { Link } from '@/i18n/navigation';
 import styles from './Article.module.css';
 
@@ -15,8 +17,10 @@ export function Article({
   return (
     <article className={styles.card}>
       <div className={styles.media}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={article.imageUrl} alt="" width={1600} height={900} />
+        <ArticleImage
+          src={article.imageUrl}
+          sizes={`${mediaMinLg} 25vw, 16rem`}
+        />
       </div>
       {showCategoryChip ? (
         <CategoryChip field={article.field} />

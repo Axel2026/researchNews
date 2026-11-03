@@ -16,7 +16,7 @@
   .wrapGrid,
   .rowGrid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    column-gap: 0;
+    column-gap: var(--space-8);
     row-gap: 0;
   }
 
@@ -29,20 +29,18 @@
 
   .wrapGrid > li,
   .rowGrid > li {
+    position: relative;
     min-width: 0;
-    padding: 0 var(--space-5);
+  }
+
+  .wrapGrid > li:not(:nth-child(4n + 1))::before,
+  .rowGrid > li:not(:nth-child(4n + 1))::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(var(--space-8) / -2);
     border-left: var(--border-width) solid var(--color-rule);
-  }
-
-  .wrapGrid > li:nth-child(4n + 1),
-  .rowGrid > li:nth-child(4n + 1) {
-    padding-left: 0;
-    border-left: none;
-  }
-
-  .wrapGrid > li:nth-child(4n),
-  .rowGrid > li:nth-child(4n) {
-    padding-right: 0;
   }
 
   .wrapGrid > li:nth-child(n + 5) {

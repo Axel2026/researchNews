@@ -96,7 +96,7 @@ export default async function CategoryPage({
     <div className={homeStyles.page}>
       <header className={homeStyles.header}>
         <Link className={homeStyles.brand} href="/">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
+          {/* eslint-disable-next-line @next/next/no-img-element -- next/image does not optimize SVG */}
           <img
             className={homeStyles.logo}
             src="/images/logo.svg"

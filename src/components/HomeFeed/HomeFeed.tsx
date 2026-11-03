@@ -1,9 +1,11 @@
+import { getTranslations } from 'next-intl/server';
 import { ArticleCardGrid } from '@/components/ArticleCardGrid/ArticleCardGrid';
+import { ArticleImage } from '@/components/ArticleImage';
 import { CategoryChip } from '@/components/CategoryChip/CategoryChip';
 import type { ArticleCategory, ArticleListItem } from '@/data/articles';
+import { mediaMinLg } from '@/design-system/tokens';
 import { Link } from '@/i18n/navigation';
 import type { AppLocale } from '@/i18n/routing';
-import { getTranslations } from 'next-intl/server';
 import styles from '@/app/[locale]/page.module.css';
 
 const HOME_ROW_SIZE = 4;
@@ -34,8 +36,11 @@ export function HomeFeedView({
       {featured ? (
         <article className={styles.featured}>
           <div className={styles.featuredMedia}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={featured.imageUrl} alt="" width={1600} height={900} />
+            <ArticleImage
+              src={featured.imageUrl}
+              sizes={`${mediaMinLg} 50vw, 100vw`}
+              priority
+            />
           </div>
           <div className={styles.featuredCopy}>
             <p className={styles.kicker}>{copy.kicker}</p>
