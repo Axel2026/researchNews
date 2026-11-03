@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
+import { QueryProvider } from '@/components/QueryProvider/QueryProvider';
 import { newsreader, sourceSans } from '@/fonts';
 import '@/design-system/tokens.css';
 import '../globals.css';
@@ -47,7 +48,7 @@ export default async function LocaleLayout({
     >
       <body className={sourceSans.className}>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
+          <QueryProvider>{children}</QueryProvider>
         </NextIntlClientProvider>
       </body>
     </html>

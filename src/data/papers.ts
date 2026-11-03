@@ -1,37 +1,66 @@
-import papersData from './prace-badawcze.json';
+import { isAxiosError } from 'axios';
+import { api } from '@/lib/api';
 
-export type Paper = {
+export type PaperSummary = {
   id: string;
   slug: string;
-  authors: string[];
-  field: string;
   title: string;
-  realTitle: string;
+  field: string;
   shortPopularization: string;
-  mediumPopularization: string;
-  fullPopularization: string;
+  imageUrl: string;
+  publishedAt: string;
+  featured: boolean;
 };
 
-export const papers: Paper[] = papersData;
+export type Paper = PaperSummary & {
+  authors: string[];
+  realTitle: string;
+  mediumPopularization: string;
+  fullPopularization: string;
+  doi: string | null;
+  year: number | null;
+  journal: string | null;
+  sourceUrl: string | null;
+};
 
-export function getPaperBySlug(slug: string): Paper | undefined {
-  return papers.find((paper) => paper.slug === slug);
+export const paperKeys = {
+  all: ['papers'] as const,
+  list: (locale: string) => [...paperKeys.all, 'list', locale] as const,
+  detail: (locale: string, slug: string) =>
+    [...paperKeys.all, 'detail', locale, slug] as const,
+};
+
+export async function listPapers(locale: string): Promise<PaperSummary[]> {
+  const { data } = await api.get<PaperSummary[]>('/articles', {
+    params: { locale },
+  });
+  return data;
 }
 
-export function getPaperSlugs(): string[] {
-  return papers.map((paper) => paper.slug);
-}
-
-function splitParagraphs(text: string): string[] {
-  return text
-    .split(/\n\s*\n/)
-    .map((paragraph) => paragraph.trim())
-    .filter(Boolean);
+export async function getPaperBySlug(
+  slug: string,
+  locale: string,
+): Promise<Paper | null> {
+  try {
+    const { data } = await api.get<Paper>(
+      `/articles/${encodeURIComponent(slug)}`,
+      { params: { locale } },
+    );
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response?.status === 404) {
+      return null;
+    }
+    throw error;
+  }
 }
 
 export function getPaperParagraphs(
   paper: Paper,
   field: 'mediumPopularization' | 'fullPopularization',
 ): string[] {
-  return splitParagraphs(paper[field]);
+  return paper[field]
+    .split(/\n\s*\n/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
 }

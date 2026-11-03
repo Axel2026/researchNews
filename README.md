@@ -1,42 +1,41 @@
 # Badania
 
-Aplikacja webowa z newsami opisującymi badania naukowe. Każdy news dotyczy jednej pracy badawczej.
+A web app of popular-science articles. Each story covers one research paper.
 
-## Zakres obecnego etapu
-
-Etap 1 obejmuje konfigurację projektu (Next.js, TypeScript, pnpm, ESLint, Prettier) oraz puste strony do sprawdzenia routingu. Dane, model newsa i lista opracowań pojawią się później.
-
-## Wymagania
+## Requirements
 
 - Node.js 26.13.0
-- pnpm 12.16.1 (z pola `packageManager` w `package.json`)
+- pnpm 12.16.1 (from the `packageManager` field in `package.json`)
 
-## Instalacja i uruchomienie
+## Setup
+
+The home and article pages load content from the API (`GET /articles`, `GET /articles/:slug`) with Axios and TanStack Query. Default API URL: `http://localhost:4000` (`NEXT_PUBLIC_API_URL` in `.env.local`).
 
 ```bash
+cp .env.example .env.local
 pnpm install
 pnpm dev
 ```
 
-Lokalny adres aplikacji: [http://localhost:3000](http://localhost:3000)
+Local app: [http://localhost:3000](http://localhost:3000). The backend must be running separately.
 
-Design system i komponenty: [http://localhost:6006](http://localhost:6006) (`pnpm storybook`)
+Design system and components: [http://localhost:6006](http://localhost:6006) (`pnpm storybook`)
 
-## Polecenia
+## Scripts
 
-| Polecenie           | Opis                                         |
-| ------------------- | -------------------------------------------- |
-| `pnpm dev`          | Serwer deweloperski Next.js z Turbopackiem   |
-| `pnpm build`        | Produkcyjny build                            |
-| `pnpm start`        | Uruchomienie zbudowanej aplikacji            |
-| `pnpm lint`         | ESLint (zero ostrzeżeń)                      |
-| `pnpm typecheck`    | Sprawdzenie TypeScript bez emitowania plików |
-| `pnpm format`       | Formatowanie Prettierem                      |
-| `pnpm format:check` | Kontrola formatowania                        |
-| `pnpm storybook`    | Storybook z design systemem (port 6006)      |
-| `pnpm build-storybook` | Statyczny build Storybooka                |
+| Command | Description |
+| --- | --- |
+| `pnpm dev` | Next.js dev server with Turbopack |
+| `pnpm build` | Production build |
+| `pnpm start` | Run the production build |
+| `pnpm lint` | ESLint (zero warnings) |
+| `pnpm typecheck` | TypeScript check without emitting files |
+| `pnpm format` | Format with Prettier |
+| `pnpm format:check` | Check formatting |
+| `pnpm storybook` | Storybook with the design system (port 6006) |
+| `pnpm build-storybook` | Static Storybook build |
 
 ## Routing
 
-- `/` — strona główna (w przyszłości lista newsów)
-- `/news/[slug]` — strona pojedynczego opracowania (na razie placeholder dla dowolnego sluga)
+- `/` — home (article list from the API)
+- `/news/[slug]` — article page (404 if the API does not know the slug)

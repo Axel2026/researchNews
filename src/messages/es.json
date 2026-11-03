@@ -21,5 +21,9 @@
     "bodyHeading": "Artículo",
     "source": "Artículo original",
     "moreStories": "Más artículos"
+  },
+  "Status": {
+    "loading": "Cargando…",
+    "error": "No se pudo cargar el contenido."
   }
 }

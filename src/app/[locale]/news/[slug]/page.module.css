@@ -69,6 +69,12 @@
   padding: var(--space-10) var(--space-6) var(--space-16);
 }
 
+.status {
+  color: var(--color-muted);
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+}
+
 .kicker {
   margin-bottom: var(--space-3);
   color: var(--color-accent);

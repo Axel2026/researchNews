@@ -116,6 +116,13 @@
   line-height: var(--leading-normal);
 }
 
+.status {
+  margin-top: var(--space-8);
+  color: var(--color-muted);
+  font-family: var(--font-serif);
+  font-size: var(--text-lg);
+}
+
 .featured {
   display: grid;
   gap: var(--space-6);

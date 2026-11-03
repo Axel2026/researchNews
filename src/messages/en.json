@@ -21,5 +21,9 @@
     "bodyHeading": "Article",
     "source": "Source paper",
     "moreStories": "More articles"
+  },
+  "Status": {
+    "loading": "Loading…",
+    "error": "Could not load this content."
   }
 }

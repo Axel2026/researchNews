@@ -21,5 +21,9 @@
     "bodyHeading": "Article",
     "source": "Article source",
     "moreStories": "Plus d’articles"
+  },
+  "Status": {
+    "loading": "Chargement…",
+    "error": "Impossible de charger ce contenu."
   }
 }

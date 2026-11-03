@@ -21,5 +21,9 @@
     "bodyHeading": "Artykuł",
     "source": "Źródłowa praca",
     "moreStories": "Więcej artykułów"
+  },
+  "Status": {
+    "loading": "Ładowanie…",
+    "error": "Nie udało się wczytać treści."
   }
 }
