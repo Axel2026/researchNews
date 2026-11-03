@@ -82,13 +82,16 @@
   font-size: var(--text-base);
 }
 
-.navCurrent {
+.navLink {
   display: inline-flex;
   align-items: center;
   min-height: 1.5rem;
   padding-bottom: var(--space-1);
-  border-bottom: 2px solid var(--color-accent);
-  font-weight: var(--weight-semibold);
+  border-bottom: 2px solid transparent;
+}
+
+.navLink[aria-current='page'] {
+  border-bottom-color: var(--color-accent);
 }
 
 .main {

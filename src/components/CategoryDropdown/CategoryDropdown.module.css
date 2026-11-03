@@ -22,7 +22,6 @@
 .triggerCurrent,
 .trigger[aria-expanded='true'] {
   border-bottom-color: var(--color-accent);
-  font-weight: var(--weight-semibold);
 }
 
 .trigger:hover,

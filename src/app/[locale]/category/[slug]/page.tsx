@@ -107,7 +107,9 @@ export default async function CategoryPage({
         </Link>
         <div className={homeStyles.headerEnd}>
           <nav className={homeStyles.nav} aria-label={t('Nav.main')}>
-            <Link href="/">{t('Nav.stories')}</Link>
+            <Link className={homeStyles.navLink} href="/">
+              {t('Nav.stories')}
+            </Link>
             <CategoryDropdown categories={categories} currentSlug={slug} />
           </nav>
           <LanguageSwitcher />

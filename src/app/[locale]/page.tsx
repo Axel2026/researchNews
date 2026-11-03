@@ -53,7 +53,7 @@ export default async function Home({ params }: PageProps<'/[locale]'>) {
         </Link>
         <div className={styles.headerEnd}>
           <nav className={styles.nav} aria-label={t('Nav.main')}>
-            <Link className={styles.navCurrent} href="/" aria-current="page">
+            <Link className={styles.navLink} href="/" aria-current="page">
               {t('Nav.stories')}
             </Link>
             <CategoryDropdown categories={categories} />
