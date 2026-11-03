@@ -1,48 +1,33 @@
-'use client';
-
-import { useQuery } from '@tanstack/react-query';
-import { useLocale, useTranslations } from 'next-intl';
-import { notFound } from 'next/navigation';
 import { Button } from '@/components/Button/Button';
-import { getPaperBySlug, getPaperParagraphs, paperKeys } from '@/data/papers';
+import { getPaperParagraphs, type Paper } from '@/data/papers';
+import type { AppLocale } from '@/i18n/routing';
+import { getTranslations } from 'next-intl/server';
 import styles from '@/app/[locale]/news/[slug]/page.module.css';
 
-export function NewsArticle({ slug }: { slug: string }) {
-  const locale = useLocale();
-  const t = useTranslations();
-  const { data, isPending, isError } = useQuery({
-    queryKey: paperKeys.detail(locale, slug),
-    queryFn: () => getPaperBySlug(slug, locale),
-  });
-
-  if (isPending) {
-    return <p className={styles.status}>{t('Status.loading')}</p>;
-  }
-
-  if (isError) {
-    return <p className={styles.status}>{t('Status.error')}</p>;
-  }
-
-  if (!data) {
-    notFound();
-  }
-
-  const summary = getPaperParagraphs(data, 'mediumPopularization');
-  const article = getPaperParagraphs(data, 'fullPopularization');
+export async function NewsArticle({
+  paper,
+  locale,
+}: {
+  paper: Paper;
+  locale: AppLocale;
+}) {
+  const t = await getTranslations({ locale });
+  const summary = getPaperParagraphs(paper, 'mediumPopularization');
+  const article = getPaperParagraphs(paper, 'fullPopularization');
 
   return (
     <>
       <p className={styles.kicker}>{t('News.kicker')}</p>
-      <h1 className={styles.title}>{data.title}</h1>
-      <p className={styles.dek}>{data.shortPopularization}</p>
+      <h1 className={styles.title}>{paper.title}</h1>
+      <p className={styles.dek}>{paper.shortPopularization}</p>
       <div className={styles.meta}>
-        <span className={styles.chip}>{data.field}</span>
-        <span className={styles.byline}>{data.authors.join(' · ')}</span>
+        <span className={styles.chip}>{paper.field}</span>
+        <span className={styles.byline}>{paper.authors.join(' · ')}</span>
       </div>
 
       <figure className={styles.hero}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={data.imageUrl} alt="" width={1600} height={900} />
+        <img src={paper.imageUrl} alt="" width={1600} height={900} />
       </figure>
 
       <div className={styles.layout}>
@@ -62,9 +47,9 @@ export function NewsArticle({ slug }: { slug: string }) {
 
         <aside className={styles.aside}>
           <p className={styles.asideLabel}>{t('News.source')}</p>
-          <p className={styles.asideTitle}>{data.realTitle}</p>
-          <p className={styles.asideMeta}>{data.authors.join(', ')}</p>
-          <p className={styles.asideMeta}>{data.field}</p>
+          <p className={styles.asideTitle}>{paper.realTitle}</p>
+          <p className={styles.asideMeta}>{paper.authors.join(', ')}</p>
+          <p className={styles.asideMeta}>{paper.field}</p>
           <Button className={styles.asideAction} href="/" variant="primary">
             {t('News.moreStories')}
           </Button>

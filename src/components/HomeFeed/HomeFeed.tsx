@@ -1,28 +1,18 @@
-'use client';
-
-import { useQuery } from '@tanstack/react-query';
-import { useLocale, useTranslations } from 'next-intl';
-import { listPapers, paperKeys } from '@/data/papers';
+import type { PaperSummary } from '@/data/papers';
 import { Link } from '@/i18n/navigation';
+import type { AppLocale } from '@/i18n/routing';
+import { getTranslations } from 'next-intl/server';
 import styles from '@/app/[locale]/page.module.css';
 
-export function HomeFeed() {
-  const locale = useLocale();
-  const t = useTranslations();
-  const { data, isPending, isError } = useQuery({
-    queryKey: paperKeys.list(locale),
-    queryFn: () => listPapers(locale),
-  });
-
-  if (isPending) {
-    return <p className={styles.status}>{t('Status.loading')}</p>;
-  }
-
-  if (isError) {
-    return <p className={styles.status}>{t('Status.error')}</p>;
-  }
-
-  const [featured, ...latest] = data;
+export async function HomeFeed({
+  papers,
+  locale,
+}: {
+  papers: PaperSummary[];
+  locale: AppLocale;
+}) {
+  const t = await getTranslations({ locale });
+  const [featured, ...latest] = papers;
 
   return (
     <>

@@ -1,5 +1,7 @@
-import { isAxiosError } from 'axios';
-import { api } from '@/lib/api';
+import { unstable_cache } from 'next/cache';
+
+export const ARTICLES_REVALIDATE_SECONDS = 10800;
+export const ARTICLES_CACHE_TAG = 'articles';
 
 export type PaperSummary = {
   id: string;
@@ -23,37 +25,65 @@ export type Paper = PaperSummary & {
   sourceUrl: string | null;
 };
 
-export const paperKeys = {
-  all: ['papers'] as const,
-  list: (locale: string) => [...paperKeys.all, 'list', locale] as const,
-  detail: (locale: string, slug: string) =>
-    [...paperKeys.all, 'detail', locale, slug] as const,
+function apiUrl(): string {
+  return (
+    process.env.API_URL ??
+    process.env.NEXT_PUBLIC_API_URL ??
+    'http://localhost:4000'
+  );
+}
+
+function articlesUrl(path: string, locale: string): URL {
+  const url = new URL(path, apiUrl());
+  url.searchParams.set('locale', locale);
+  return url;
+}
+
+const fetchOptions: RequestInit = {
+  next: {
+    revalidate: ARTICLES_REVALIDATE_SECONDS,
+    tags: [ARTICLES_CACHE_TAG],
+  },
 };
 
 export async function listPapers(locale: string): Promise<PaperSummary[]> {
-  const { data } = await api.get<PaperSummary[]>('/articles', {
-    params: { locale },
-  });
-  return data;
+  const response = await fetch(articlesUrl('/articles', locale), fetchOptions);
+
+  if (!response.ok) {
+    throw new Error(`Failed to load articles: ${response.status}`);
+  }
+
+  return response.json() as Promise<PaperSummary[]>;
 }
 
 export async function getPaperBySlug(
   slug: string,
   locale: string,
 ): Promise<Paper | null> {
-  try {
-    const { data } = await api.get<Paper>(
-      `/articles/${encodeURIComponent(slug)}`,
-      { params: { locale } },
-    );
-    return data;
-  } catch (error) {
-    if (isAxiosError(error) && error.response?.status === 404) {
-      return null;
-    }
-    throw error;
+  const response = await fetch(
+    articlesUrl(`/articles/${encodeURIComponent(slug)}`, locale),
+    fetchOptions,
+  );
+
+  if (response.status === 404) {
+    return null;
   }
+
+  if (!response.ok) {
+    throw new Error(`Failed to load article: ${response.status}`);
+  }
+
+  return response.json() as Promise<Paper>;
 }
+
+export const getEditionDateIso = unstable_cache(
+  async () => Temporal.Now.plainDateISO().toString(),
+  ['edition-date'],
+  {
+    revalidate: ARTICLES_REVALIDATE_SECONDS,
+    tags: [ARTICLES_CACHE_TAG],
+  },
+);
 
 export function getPaperParagraphs(
   paper: Paper,

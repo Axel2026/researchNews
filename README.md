@@ -9,7 +9,7 @@ A web app of popular-science articles. Each story covers one research paper.
 
 ## Setup
 
-The home and article pages load content from the API (`GET /articles`, `GET /articles/:slug`) with Axios and TanStack Query. Default API URL: `http://localhost:4000` (`NEXT_PUBLIC_API_URL` in `.env.local`).
+The home and article pages are Incremental Static Regeneration: they `fetch` the API on the server (`GET /articles`, `GET /articles/:slug`) and revalidate every 3 hours. Default API URL: `http://localhost:4000` (`API_URL` in `.env.local`). The backend must be running for `pnpm build` and for regeneration. ISR is visible with `pnpm build` + `pnpm start`, not in `pnpm dev`.
 
 ```bash
 cp .env.example .env.local
@@ -23,17 +23,17 @@ Design system and components: [http://localhost:6006](http://localhost:6006) (`p
 
 ## Scripts
 
-| Command | Description |
-| --- | --- |
-| `pnpm dev` | Next.js dev server with Turbopack |
-| `pnpm build` | Production build |
-| `pnpm start` | Run the production build |
-| `pnpm lint` | ESLint (zero warnings) |
-| `pnpm typecheck` | TypeScript check without emitting files |
-| `pnpm format` | Format with Prettier |
-| `pnpm format:check` | Check formatting |
-| `pnpm storybook` | Storybook with the design system (port 6006) |
-| `pnpm build-storybook` | Static Storybook build |
+| Command                | Description                                  |
+| ---------------------- | -------------------------------------------- |
+| `pnpm dev`             | Next.js dev server with Turbopack            |
+| `pnpm build`           | Production build                             |
+| `pnpm start`           | Run the production build                     |
+| `pnpm lint`            | ESLint (zero warnings)                       |
+| `pnpm typecheck`       | TypeScript check without emitting files      |
+| `pnpm format`          | Format with Prettier                         |
+| `pnpm format:check`    | Check formatting                             |
+| `pnpm storybook`       | Storybook with the design system (port 6006) |
+| `pnpm build-storybook` | Static Storybook build                       |
 
 ## Routing
 

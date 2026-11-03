@@ -1,11 +1,17 @@
-import { getLocale, getTranslations } from 'next-intl/server';
+import { hasLocale } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
+import { notFound } from 'next/navigation';
 import { HomeFeed } from '@/components/HomeFeed/HomeFeed';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher/LanguageSwitcher';
+import { getEditionDateIso, listPapers } from '@/data/papers';
 import { Link } from '@/i18n/navigation';
+import { routing } from '@/i18n/routing';
 import styles from './page.module.css';
 
-function formatEditionDate(date: Temporal.PlainDate, locale: string) {
-  return date
+export const revalidate = 10800;
+
+function formatEditionDate(isoDate: string, locale: string) {
+  return Temporal.PlainDate.from(isoDate)
     .toLocaleString(locale, {
       month: 'short',
       day: 'numeric',
@@ -14,10 +20,19 @@ function formatEditionDate(date: Temporal.PlainDate, locale: string) {
     .toUpperCase();
 }
 
-export default async function Home() {
-  const t = await getTranslations();
-  const locale = await getLocale();
-  const editionDate = formatEditionDate(Temporal.Now.plainDateISO(), locale);
+export default async function Home({ params }: PageProps<'/[locale]'>) {
+  const { locale } = await params;
+
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
+
+  const t = await getTranslations({ locale });
+  const [papers, editionDateIso] = await Promise.all([
+    listPapers(locale),
+    getEditionDateIso(),
+  ]);
+  const editionDate = formatEditionDate(editionDateIso, locale);
 
   return (
     <div className={styles.page}>
@@ -39,7 +54,7 @@ export default async function Home() {
         <p className={styles.edition}>{editionDate}</p>
         <h1 className={styles.masthead}>{t('Home.masthead')}</h1>
         <p className={styles.subtitle}>{t('Home.subtitle')}</p>
-        <HomeFeed />
+        <HomeFeed papers={papers} locale={locale} />
       </main>
     </div>
   );
