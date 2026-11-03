@@ -9,6 +9,7 @@
     "stories": "Artículos",
     "fields": "Disciplinas",
     "language": "Idioma",
+    "close": "Cerrar",
     "skip": "Saltar al contenido"
   },
   "Home": {
@@ -35,5 +36,45 @@
   "Status": {
     "loading": "Cargando…",
     "error": "No se pudo cargar el contenido."
+  },
+  "Auth": {
+    "account": "Cuenta",
+    "login": "Entrar",
+    "register": "Crear cuenta",
+    "logout": "Salir",
+    "loading": "Cargando…",
+    "signedIn": "Sesión iniciada",
+    "loginTitle": "Entrar",
+    "registerTitle": "Crear cuenta",
+    "forgotTitle": "Restablecer la contraseña",
+    "resetTitle": "Nueva contraseña",
+    "email": "Correo",
+    "password": "Contraseña",
+    "confirmPassword": "Repetir la contraseña",
+    "submitLogin": "Entrar",
+    "submitRegister": "Crear cuenta",
+    "submitForgot": "Enviar el enlace",
+    "submitReset": "Guardar la contraseña",
+    "google": "Continuar con Google",
+    "or": "o",
+    "forgotLink": "He olvidado la contraseña",
+    "noAccount": "¿No tienes cuenta?",
+    "hasAccount": "¿Ya tienes cuenta?",
+    "checkEmail": "Revisa tu correo. Hemos enviado un enlace para completar este paso.",
+    "forgotSent": "Si la cuenta existe, hemos enviado un enlace para cambiar la contraseña.",
+    "passwordUpdated": "La contraseña se ha cambiado.",
+    "resetMissing": "El enlace ha caducado o está incompleto. Pide uno nuevo.",
+    "passwordMismatch": "Las contraseñas no coinciden.",
+    "passwordShort": "La contraseña debe tener al menos 8 caracteres.",
+    "emailInvalid": "Escribe un correo válido.",
+    "invalidCredentials": "Correo o contraseña incorrectos.",
+    "emailNotConfirmed": "Confirma el correo antes de entrar.",
+    "userExists": "Ya hay una cuenta con este correo. Entra.",
+    "weakPassword": "La contraseña es demasiado débil.",
+    "rateLimit": "Demasiados intentos. Prueba de nuevo en un momento.",
+    "genericError": "No se ha podido completar. Prueba de nuevo.",
+    "callbackError": "El inicio de sesión no se ha completado. Prueba de nuevo.",
+    "backHome": "Volver al inicio",
+    "requestNewLink": "Pedir un enlace nuevo"
   }
 }

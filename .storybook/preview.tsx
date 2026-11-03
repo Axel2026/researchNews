@@ -1,25 +1,50 @@
 import type { Decorator, Preview } from '@storybook/nextjs-vite';
 import { NextIntlClientProvider } from 'next-intl';
+import { useLayoutEffect, type ReactNode } from 'react';
 import { newsreader, sourceSans } from '@/fonts';
 import '@/design-system/tokens.css';
+import '@/app/globals.css';
 import en from '../src/messages/en.json';
 
+const fontVariableClasses = [newsreader.variable, sourceSans.variable];
+
+function DesignTokens({ children }: { children: ReactNode }) {
+  useLayoutEffect(() => {
+    const root = document.documentElement;
+    const body = document.body;
+
+    root.classList.add(...fontVariableClasses);
+    body.classList.add(sourceSans.className);
+
+    return () => {
+      root.classList.remove(...fontVariableClasses);
+      body.classList.remove(sourceSans.className);
+    };
+  }, []);
+
+  return (
+    <NextIntlClientProvider locale="en" messages={en}>
+      <div
+        className={sourceSans.className}
+        style={{
+          minHeight: '100%',
+          padding: '1.5rem',
+          color: 'var(--color-ink)',
+          background: 'var(--color-bg)',
+          fontFamily: 'var(--font-sans)',
+          fontOpticalSizing: 'auto',
+        }}
+      >
+        {children}
+      </div>
+    </NextIntlClientProvider>
+  );
+}
+
 const withDesignTokens: Decorator = (Story) => (
-  <NextIntlClientProvider locale="en" messages={en}>
-    <div
-      className={`${newsreader.variable} ${sourceSans.variable} ${sourceSans.className}`}
-      style={{
-        minHeight: '100%',
-        padding: '1.5rem',
-        color: 'var(--color-ink)',
-        background: 'var(--color-bg)',
-        fontFamily: 'var(--font-sans)',
-        fontOpticalSizing: 'auto',
-      }}
-    >
-      <Story />
-    </div>
-  </NextIntlClientProvider>
+  <DesignTokens>
+    <Story />
+  </DesignTokens>
 );
 
 const preview: Preview = {

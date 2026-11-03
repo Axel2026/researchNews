@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { hasLocale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
+import { AccountMenu } from '@/components/AccountMenu/AccountMenu';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher/LanguageSwitcher';
 import { NewsArticle } from '@/components/NewsArticle/NewsArticle';
 import { getArticleBySlug, listArticles } from '@/data/articles';
 import { getPathname, Link } from '@/i18n/navigation';
@@ -88,16 +90,20 @@ export default async function ArticlePage({
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <Link className={styles.brand} href="/">
-          {/* eslint-disable-next-line @next/next/no-img-element -- next/image does not optimize SVG */}
-          <img
-            className={styles.logo}
-            src="/images/logo.svg"
-            alt="ResearchNews"
-            width={2048}
-            height={683}
-          />
-        </Link>
+        <LanguageSwitcher />
+        <div className={styles.headerBar}>
+          <Link className={styles.brand} href="/">
+            {/* eslint-disable-next-line @next/next/no-img-element -- next/image does not optimize SVG */}
+            <img
+              className={styles.logo}
+              src="/images/logo.svg"
+              alt="ResearchNews"
+              width={2048}
+              height={683}
+            />
+          </Link>
+          <AccountMenu />
+        </div>
       </header>
 
       <main id="main" tabIndex={-1} className={styles.main}>

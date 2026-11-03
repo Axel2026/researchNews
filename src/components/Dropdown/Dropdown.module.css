@@ -1,0 +1,58 @@
+.root {
+  position: relative;
+}
+
+.list {
+  position: absolute;
+  top: calc(100% + var(--space-3));
+  z-index: var(--z-dropdown);
+  box-sizing: border-box;
+  width: 22rem;
+  max-width: calc(100vw - 1.5rem);
+  max-height: min(24rem, 70vh);
+  overflow: hidden auto;
+  overscroll-behavior: contain;
+  padding: var(--space-2) 0;
+  border: var(--border-width) solid var(--color-chip-border);
+  background: var(--color-surface);
+  list-style: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-rule) var(--color-hero);
+}
+
+.alignStart {
+  left: 0;
+}
+
+.alignEnd {
+  right: 0;
+}
+
+.list::-webkit-scrollbar {
+  width: 0.55rem;
+}
+
+.list::-webkit-scrollbar-track {
+  background: var(--color-hero);
+}
+
+.list::-webkit-scrollbar-thumb {
+  background: var(--color-rule);
+  border: 2px solid var(--color-hero);
+  border-radius: var(--radius-pill);
+}
+
+.list::-webkit-scrollbar-thumb:hover {
+  background: var(--color-control-border);
+}
+
+.list li {
+  max-width: 100%;
+}
+
+@media (forced-colors: active) {
+  .list {
+    border: 1px solid CanvasText;
+    scrollbar-color: CanvasText Canvas;
+  }
+}

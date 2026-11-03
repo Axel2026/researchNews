@@ -9,6 +9,7 @@
     "stories": "Artykuły",
     "fields": "Dziedziny",
     "language": "Język",
+    "close": "Zamknij",
     "skip": "Przejdź do treści"
   },
   "Home": {
@@ -35,5 +36,45 @@
   "Status": {
     "loading": "Ładowanie…",
     "error": "Nie udało się wczytać treści."
+  },
+  "Auth": {
+    "account": "Konto",
+    "login": "Zaloguj",
+    "register": "Załóż konto",
+    "logout": "Wyloguj",
+    "loading": "Ładowanie…",
+    "signedIn": "Zalogowano",
+    "loginTitle": "Zaloguj się",
+    "registerTitle": "Załóż konto",
+    "forgotTitle": "Reset hasła",
+    "resetTitle": "Nowe hasło",
+    "email": "E-mail",
+    "password": "Hasło",
+    "confirmPassword": "Powtórz hasło",
+    "submitLogin": "Zaloguj się",
+    "submitRegister": "Załóż konto",
+    "submitForgot": "Wyślij link",
+    "submitReset": "Zapisz hasło",
+    "google": "Kontynuuj z Google",
+    "or": "lub",
+    "forgotLink": "Nie pamiętam hasła",
+    "noAccount": "Nie masz konta?",
+    "hasAccount": "Masz już konto?",
+    "checkEmail": "Sprawdź skrzynkę. Wysłaliśmy link, który dokończy tę czynność.",
+    "forgotSent": "Jeśli konto istnieje, wysłaliśmy link do zmiany hasła.",
+    "passwordUpdated": "Hasło zostało zmienione.",
+    "resetMissing": "Link wygasł albo jest niepełny. Poproś o nowy.",
+    "passwordMismatch": "Hasła nie są takie same.",
+    "passwordShort": "Hasło musi mieć co najmniej 8 znaków.",
+    "emailInvalid": "Podaj poprawny adres e-mail.",
+    "invalidCredentials": "Nieprawidłowy e-mail albo hasło.",
+    "emailNotConfirmed": "Potwierdź adres e-mail, zanim się zalogujesz.",
+    "userExists": "Konto z tym adresem już istnieje. Zaloguj się.",
+    "weakPassword": "Hasło jest za słabe.",
+    "rateLimit": "Za dużo prób. Spróbuj za chwilę.",
+    "genericError": "Nie udało się. Spróbuj jeszcze raz.",
+    "callbackError": "Logowanie nie doszło do skutku. Spróbuj jeszcze raz.",
+    "backHome": "Wróć na stronę główną",
+    "requestNewLink": "Poproś o nowy link"
   }
 }

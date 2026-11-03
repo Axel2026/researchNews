@@ -6,7 +6,7 @@ const meta = {
   component: LanguageSwitcher,
   decorators: [
     (Story) => (
-      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <div style={{ position: 'relative', minHeight: '16rem' }}>
         <Story />
       </div>
     ),

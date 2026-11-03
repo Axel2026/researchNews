@@ -9,6 +9,7 @@
     "stories": "Articles",
     "fields": "Fields",
     "language": "Language",
+    "close": "Close",
     "skip": "Skip to content"
   },
   "Home": {
@@ -35,5 +36,45 @@
   "Status": {
     "loading": "Loading…",
     "error": "Could not load this content."
+  },
+  "Auth": {
+    "account": "Account",
+    "login": "Log in",
+    "register": "Create account",
+    "logout": "Log out",
+    "loading": "Loading…",
+    "signedIn": "Signed in",
+    "loginTitle": "Log in",
+    "registerTitle": "Create account",
+    "forgotTitle": "Reset password",
+    "resetTitle": "New password",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Repeat password",
+    "submitLogin": "Log in",
+    "submitRegister": "Create account",
+    "submitForgot": "Send link",
+    "submitReset": "Save password",
+    "google": "Continue with Google",
+    "or": "or",
+    "forgotLink": "Forgot password",
+    "noAccount": "No account yet?",
+    "hasAccount": "Already have an account?",
+    "checkEmail": "Check your inbox. We sent a link to finish this step.",
+    "forgotSent": "If an account exists, we sent a link to change the password.",
+    "passwordUpdated": "The password has been changed.",
+    "resetMissing": "This link expired or is incomplete. Request a new one.",
+    "passwordMismatch": "The passwords do not match.",
+    "passwordShort": "The password must be at least 8 characters.",
+    "emailInvalid": "Enter a valid email address.",
+    "invalidCredentials": "Incorrect email or password.",
+    "emailNotConfirmed": "Confirm your email before logging in.",
+    "userExists": "An account with this email already exists. Log in.",
+    "weakPassword": "The password is too weak.",
+    "rateLimit": "Too many attempts. Try again in a moment.",
+    "genericError": "That did not work. Try again.",
+    "callbackError": "Sign-in did not finish. Try again.",
+    "backHome": "Back to the home page",
+    "requestNewLink": "Request a new link"
   }
 }

@@ -1,6 +1,7 @@
 import { hasLocale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
+import { AccountMenu } from '@/components/AccountMenu/AccountMenu';
 import { CategoryDropdown } from '@/components/CategoryDropdown/CategoryDropdown';
 import { HomeFeed } from '@/components/HomeFeed/HomeFeed';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher/LanguageSwitcher';
@@ -41,24 +42,27 @@ export default async function Home({ params }: PageProps<'/[locale]'>) {
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <Link className={styles.brand} href="/">
-          {/* eslint-disable-next-line @next/next/no-img-element -- next/image does not optimize SVG */}
-          <img
-            className={styles.logo}
-            src="/images/logo.svg"
-            alt="ResearchNews"
-            width={2048}
-            height={683}
-          />
-        </Link>
-        <div className={styles.headerEnd}>
-          <nav className={styles.nav} aria-label={t('Nav.main')}>
-            <Link className={styles.navLink} href="/" aria-current="page">
-              {t('Nav.stories')}
+        <LanguageSwitcher />
+        <div className={styles.headerBar}>
+          <div className={styles.headerStart}>
+            <Link className={styles.brand} href="/">
+              {/* eslint-disable-next-line @next/next/no-img-element -- next/image does not optimize SVG */}
+              <img
+                className={styles.logo}
+                src="/images/logo.svg"
+                alt="ResearchNews"
+                width={2048}
+                height={683}
+              />
             </Link>
-            <CategoryDropdown categories={categories} />
-          </nav>
-          <LanguageSwitcher />
+            <nav className={styles.nav} aria-label={t('Nav.main')}>
+              <Link className={styles.navLink} href="/" aria-current="page">
+                {t('Nav.stories')}
+              </Link>
+              <CategoryDropdown categories={categories} />
+            </nav>
+          </div>
+          <AccountMenu />
         </div>
       </header>
 
@@ -68,11 +72,7 @@ export default async function Home({ params }: PageProps<'/[locale]'>) {
         </time>
         <h1 className={styles.masthead}>{t('Home.masthead')}</h1>
         <p className={styles.subtitle}>{t('Home.subtitle')}</p>
-        <HomeFeed
-          articles={articles}
-          categories={categories}
-          locale={locale}
-        />
+        <HomeFeed articles={articles} categories={categories} locale={locale} />
       </main>
     </div>
   );

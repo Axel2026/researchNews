@@ -1,7 +1,3 @@
-.root {
-  position: relative;
-}
-
 .trigger,
 .triggerCurrent {
   display: inline-flex;
@@ -39,27 +35,6 @@
   transform: rotate(180deg);
 }
 
-.list {
-  position: absolute;
-  top: calc(100% + var(--space-3));
-  right: 0;
-  z-index: var(--z-dropdown);
-  box-sizing: border-box;
-  width: 22rem;
-  max-width: calc(100vw - 1.5rem);
-  max-height: min(24rem, 70vh);
-  overflow: hidden auto;
-  overscroll-behavior: contain;
-  padding: var(--space-2) 0;
-  border: var(--border-width) solid var(--color-chip-border);
-  background: var(--color-surface);
-  list-style: none;
-}
-
-.list li {
-  max-width: 100%;
-}
-
 .option,
 .optionCurrent {
   display: block;
@@ -81,10 +56,4 @@
 
 .optionCurrent {
   font-weight: var(--weight-semibold);
-}
-
-@media (forced-colors: active) {
-  .list {
-    border: 1px solid CanvasText;
-  }
 }

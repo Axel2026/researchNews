@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { hasLocale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
+import { AccountMenu } from '@/components/AccountMenu/AccountMenu';
 import { CategoryDropdown } from '@/components/CategoryDropdown/CategoryDropdown';
 import { CategoryFeed } from '@/components/CategoryFeed/CategoryFeed';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher/LanguageSwitcher';
@@ -95,24 +96,27 @@ export default async function CategoryPage({
   return (
     <div className={homeStyles.page}>
       <header className={homeStyles.header}>
-        <Link className={homeStyles.brand} href="/">
-          {/* eslint-disable-next-line @next/next/no-img-element -- next/image does not optimize SVG */}
-          <img
-            className={homeStyles.logo}
-            src="/images/logo.svg"
-            alt="ResearchNews"
-            width={2048}
-            height={683}
-          />
-        </Link>
-        <div className={homeStyles.headerEnd}>
-          <nav className={homeStyles.nav} aria-label={t('Nav.main')}>
-            <Link className={homeStyles.navLink} href="/">
-              {t('Nav.stories')}
+        <LanguageSwitcher />
+        <div className={homeStyles.headerBar}>
+          <div className={homeStyles.headerStart}>
+            <Link className={homeStyles.brand} href="/">
+              {/* eslint-disable-next-line @next/next/no-img-element -- next/image does not optimize SVG */}
+              <img
+                className={homeStyles.logo}
+                src="/images/logo.svg"
+                alt="ResearchNews"
+                width={2048}
+                height={683}
+              />
             </Link>
-            <CategoryDropdown categories={categories} currentSlug={slug} />
-          </nav>
-          <LanguageSwitcher />
+            <nav className={homeStyles.nav} aria-label={t('Nav.main')}>
+              <Link className={homeStyles.navLink} href="/">
+                {t('Nav.stories')}
+              </Link>
+              <CategoryDropdown categories={categories} currentSlug={slug} />
+            </nav>
+          </div>
+          <AccountMenu />
         </div>
       </header>
 

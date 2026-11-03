@@ -9,6 +9,7 @@
     "stories": "Artikel",
     "fields": "Fachgebiete",
     "language": "Sprache",
+    "close": "Schließen",
     "skip": "Zum Inhalt springen"
   },
   "Home": {
@@ -35,5 +36,45 @@
   "Status": {
     "loading": "Wird geladen…",
     "error": "Der Inhalt konnte nicht geladen werden."
+  },
+  "Auth": {
+    "account": "Konto",
+    "login": "Anmelden",
+    "register": "Konto anlegen",
+    "logout": "Abmelden",
+    "loading": "Wird geladen…",
+    "signedIn": "Angemeldet",
+    "loginTitle": "Anmelden",
+    "registerTitle": "Konto anlegen",
+    "forgotTitle": "Passwort zurücksetzen",
+    "resetTitle": "Neues Passwort",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "confirmPassword": "Passwort wiederholen",
+    "submitLogin": "Anmelden",
+    "submitRegister": "Konto anlegen",
+    "submitForgot": "Link senden",
+    "submitReset": "Passwort speichern",
+    "google": "Weiter mit Google",
+    "or": "oder",
+    "forgotLink": "Passwort vergessen",
+    "noAccount": "Noch kein Konto?",
+    "hasAccount": "Schon ein Konto?",
+    "checkEmail": "Prüfen Sie Ihr Postfach. Wir haben einen Link geschickt, der diesen Schritt abschließt.",
+    "forgotSent": "Wenn ein Konto existiert, haben wir einen Link zum Zurücksetzen geschickt.",
+    "passwordUpdated": "Das Passwort wurde geändert.",
+    "resetMissing": "Der Link ist abgelaufen oder unvollständig. Bitten Sie um einen neuen.",
+    "passwordMismatch": "Die Passwörter stimmen nicht überein.",
+    "passwordShort": "Das Passwort muss mindestens 8 Zeichen haben.",
+    "emailInvalid": "Geben Sie eine gültige E-Mail-Adresse ein.",
+    "invalidCredentials": "E-Mail oder Passwort ist falsch.",
+    "emailNotConfirmed": "Bestätigen Sie die E-Mail-Adresse, bevor Sie sich anmelden.",
+    "userExists": "Ein Konto mit dieser Adresse gibt es schon. Melden Sie sich an.",
+    "weakPassword": "Das Passwort ist zu schwach.",
+    "rateLimit": "Zu viele Versuche. Versuchen Sie es gleich noch einmal.",
+    "genericError": "Das hat nicht geklappt. Versuchen Sie es noch einmal.",
+    "callbackError": "Die Anmeldung ist fehlgeschlagen. Versuchen Sie es noch einmal.",
+    "backHome": "Zur Startseite",
+    "requestNewLink": "Neuen Link anfordern"
   }
 }
