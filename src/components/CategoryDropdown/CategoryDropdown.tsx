@@ -9,7 +9,7 @@ import {
   type KeyboardEvent,
 } from 'react';
 import { useTranslations } from 'next-intl';
-import type { PaperCategorySummary } from '@/data/papers';
+import type { ArticleCategory } from '@/data/articles';
 import { Link } from '@/i18n/navigation';
 import styles from './CategoryDropdown.module.css';
 
@@ -17,7 +17,7 @@ export function CategoryDropdown({
   categories,
   currentSlug,
 }: {
-  categories: PaperCategorySummary[];
+  categories: ArticleCategory[];
   currentSlug?: string;
 }) {
   const t = useTranslations('Nav');

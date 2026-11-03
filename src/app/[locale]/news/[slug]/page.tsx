@@ -4,7 +4,7 @@ import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { Button } from '@/components/Button/Button';
 import { NewsArticle } from '@/components/NewsArticle/NewsArticle';
-import { getPaperBySlug, listPapers } from '@/data/papers';
+import { getArticleBySlug, listArticles } from '@/data/articles';
 import { getPathname, Link } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
 import {
@@ -26,37 +26,37 @@ export async function generateMetadata({
     return {};
   }
 
-  const paper = await getPaperBySlug(slug, locale);
+  const article = await getArticleBySlug(slug, locale);
 
-  if (!paper) {
+  if (!article) {
     return {};
   }
 
   const t = await getTranslations({ locale, namespace: 'Metadata' });
   const href = newsPath(slug);
-  const description = paper.shortPopularization;
-  const images = socialImages(paper.imageUrl, paper.title);
+  const description = article.shortPopularization;
+  const images = socialImages(article.imageUrl, article.title);
 
   return {
-    title: paper.title,
+    title: article.title,
     description,
-    authors: paper.authors.map((name) => ({ name })),
+    authors: article.authors.map((name) => ({ name })),
     alternates: pageAlternates(locale, href),
     openGraph: {
       type: 'article',
       locale: ogLocaleByAppLocale[locale],
       siteName: t('title'),
-      title: paper.title,
+      title: article.title,
       description,
       url: getPathname({ locale, href }),
-      publishedTime: paper.publishedAt,
-      authors: paper.authors,
-      section: paper.field,
+      publishedTime: article.publishedAt,
+      authors: article.authors,
+      section: article.field,
       images,
     },
     twitter: {
       card: 'summary_large_image',
-      title: paper.title,
+      title: article.title,
       description,
       images: images.map((image) => image.url),
     },
@@ -64,10 +64,10 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const papers = await listPapers(routing.defaultLocale);
+  const articles = await listArticles(routing.defaultLocale);
 
   return routing.locales.flatMap((locale) =>
-    papers.map((paper) => ({ locale, slug: paper.slug })),
+    articles.map((article) => ({ locale, slug: article.slug })),
   );
 }
 
@@ -80,9 +80,9 @@ export default async function NewsPage({
     notFound();
   }
 
-  const paper = await getPaperBySlug(slug, locale);
+  const article = await getArticleBySlug(slug, locale);
 
-  if (!paper) {
+  if (!article) {
     notFound();
   }
 
@@ -109,7 +109,7 @@ export default async function NewsPage({
       </header>
 
       <main id="main" tabIndex={-1} className={styles.main}>
-        <NewsArticle paper={paper} locale={locale} />
+        <NewsArticle article={article} locale={locale} />
       </main>
     </div>
   );

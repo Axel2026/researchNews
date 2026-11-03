@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import { CategoryDropdown } from '@/components/CategoryDropdown/CategoryDropdown';
 import { CategoryFeed } from '@/components/CategoryFeed/CategoryFeed';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher/LanguageSwitcher';
-import { getCategoryBySlug, listCategories } from '@/data/papers';
+import { getCategoryBySlug, listCategories } from '@/data/articles';
 import { getPathname, Link } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
 import {
@@ -118,7 +118,7 @@ export default async function CategoryPage({
         <p className={homeStyles.kicker}>{t('Category.kicker')}</p>
         <h1 className={styles.title}>{field}</h1>
         <section className={styles.feed} aria-label={field}>
-          <CategoryFeed papers={articles} />
+          <CategoryFeed articles={articles} />
         </section>
       </main>
     </div>

@@ -1,18 +1,18 @@
-import type { PaperSummary } from '@/data/papers';
+import type { ArticleListItem } from '@/data/articles';
 import { Link } from '@/i18n/navigation';
 import type { AppLocale } from '@/i18n/routing';
 import { getTranslations } from 'next-intl/server';
 import styles from '@/app/[locale]/page.module.css';
 
 export async function HomeFeed({
-  papers,
+  articles,
   locale,
 }: {
-  papers: PaperSummary[];
+  articles: ArticleListItem[];
   locale: AppLocale;
 }) {
   const t = await getTranslations({ locale });
-  const [featured, ...latest] = papers;
+  const [featured, ...latest] = articles;
 
   return (
     <>
@@ -43,23 +43,25 @@ export async function HomeFeed({
             <p>{t('Home.latestDek')}</p>
           </div>
           <ul className={styles.latestGrid}>
-            {latest.map((paper) => (
-              <li key={paper.id}>
+            {latest.map((article) => (
+              <li key={article.id}>
                 <article className={styles.card}>
                   <div className={styles.cardMedia}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={paper.imageUrl}
+                      src={article.imageUrl}
                       alt=""
                       width={1600}
                       height={900}
                     />
                   </div>
                   <h3 className={styles.cardTitle}>
-                    <Link href={`/news/${paper.slug}`}>{paper.title}</Link>
+                    <Link href={`/news/${article.slug}`}>{article.title}</Link>
                   </h3>
-                  <p className={styles.cardDek}>{paper.shortPopularization}</p>
-                  <p className={styles.chip}>{paper.field}</p>
+                  <p className={styles.cardDek}>
+                    {article.shortPopularization}
+                  </p>
+                  <p className={styles.chip}>{article.field}</p>
                 </article>
               </li>
             ))}

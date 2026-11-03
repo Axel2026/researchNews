@@ -1,33 +1,33 @@
 import { Button } from '@/components/Button/Button';
-import { getPaperParagraphs, type Paper } from '@/data/papers';
+import { getArticleParagraphs, type ArticleDetail } from '@/data/articles';
 import type { AppLocale } from '@/i18n/routing';
 import { getTranslations } from 'next-intl/server';
 import styles from '@/app/[locale]/news/[slug]/page.module.css';
 
 export async function NewsArticle({
-  paper,
+  article,
   locale,
 }: {
-  paper: Paper;
+  article: ArticleDetail;
   locale: AppLocale;
 }) {
   const t = await getTranslations({ locale });
-  const summary = getPaperParagraphs(paper, 'mediumPopularization');
-  const article = getPaperParagraphs(paper, 'fullPopularization');
+  const summary = getArticleParagraphs(article, 'mediumPopularization');
+  const body = getArticleParagraphs(article, 'fullPopularization');
 
   return (
     <>
       <p className={styles.kicker}>{t('News.kicker')}</p>
-      <h1 className={styles.title}>{paper.title}</h1>
-      <p className={styles.dek}>{paper.shortPopularization}</p>
+      <h1 className={styles.title}>{article.title}</h1>
+      <p className={styles.dek}>{article.shortPopularization}</p>
       <div className={styles.meta}>
-        <span className={styles.chip}>{paper.field}</span>
-        <span className={styles.byline}>{paper.authors.join(' · ')}</span>
+        <span className={styles.chip}>{article.field}</span>
+        <span className={styles.byline}>{article.authors.join(' · ')}</span>
       </div>
 
       <figure className={styles.hero}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={paper.imageUrl} alt="" width={1600} height={900} />
+        <img src={article.imageUrl} alt="" width={1600} height={900} />
       </figure>
 
       <div className={styles.layout}>
@@ -39,7 +39,7 @@ export async function NewsArticle({
           </section>
           <section className={styles.body}>
             <h2>{t('News.bodyHeading')}</h2>
-            {article.map((paragraph, index) => (
+            {body.map((paragraph, index) => (
               <p key={index}>{paragraph}</p>
             ))}
           </section>
@@ -49,9 +49,9 @@ export async function NewsArticle({
           <p id="source-heading" className={styles.asideLabel}>
             {t('News.source')}
           </p>
-          <p className={styles.asideTitle}>{paper.realTitle}</p>
-          <p className={styles.asideMeta}>{paper.authors.join(', ')}</p>
-          <p className={styles.asideMeta}>{paper.field}</p>
+          <p className={styles.asideTitle}>{article.realTitle}</p>
+          <p className={styles.asideMeta}>{article.authors.join(', ')}</p>
+          <p className={styles.asideMeta}>{article.field}</p>
           <Button className={styles.asideAction} href="/" variant="primary">
             {t('News.moreStories')}
           </Button>

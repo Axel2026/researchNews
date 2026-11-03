@@ -1,9 +1,10 @@
 import { unstable_cache } from 'next/cache';
+import type { AppLocale } from '@/i18n/routing';
 
 export const ARTICLES_REVALIDATE_SECONDS = 10800;
 export const ARTICLES_CACHE_TAG = 'articles';
 
-export type PaperSummary = {
+export type ArticleListItem = {
   id: string;
   slug: string;
   title: string;
@@ -14,7 +15,7 @@ export type PaperSummary = {
   featured: boolean;
 };
 
-export type Paper = PaperSummary & {
+export type ArticleDetail = ArticleListItem & {
   authors: string[];
   realTitle: string;
   mediumPopularization: string;
@@ -25,13 +26,13 @@ export type Paper = PaperSummary & {
   sourceUrl: string | null;
 };
 
-export type PaperCategorySummary = {
+export type ArticleCategory = {
   slug: string;
   field: string;
 };
 
-export type PaperCategory = PaperCategorySummary & {
-  articles: PaperSummary[];
+export type ArticleCategoryDetail = ArticleCategory & {
+  articles: ArticleListItem[];
 };
 
 function apiUrl(): string {
@@ -42,7 +43,7 @@ function apiUrl(): string {
   );
 }
 
-function articlesUrl(path: string, locale: string): URL {
+function articlesUrl(path: string, locale: AppLocale): URL {
   const url = new URL(path, apiUrl());
   url.searchParams.set('locale', locale);
   return url;
@@ -55,20 +56,22 @@ const fetchOptions: RequestInit = {
   },
 };
 
-export async function listPapers(locale: string): Promise<PaperSummary[]> {
+export async function listArticles(
+  locale: AppLocale,
+): Promise<ArticleListItem[]> {
   const response = await fetch(articlesUrl('/articles', locale), fetchOptions);
 
   if (!response.ok) {
     throw new Error(`Failed to load articles: ${response.status}`);
   }
 
-  return response.json() as Promise<PaperSummary[]>;
+  return response.json() as Promise<ArticleListItem[]>;
 }
 
-export async function getPaperBySlug(
+export async function getArticleBySlug(
   slug: string,
-  locale: string,
-): Promise<Paper | null> {
+  locale: AppLocale,
+): Promise<ArticleDetail | null> {
   const response = await fetch(
     articlesUrl(`/articles/${encodeURIComponent(slug)}`, locale),
     fetchOptions,
@@ -82,7 +85,7 @@ export async function getPaperBySlug(
     throw new Error(`Failed to load article: ${response.status}`);
   }
 
-  return response.json() as Promise<Paper>;
+  return response.json() as Promise<ArticleDetail>;
 }
 
 const EXCLUDED_FIELDS = new Set([
@@ -120,8 +123,8 @@ function isFieldOfStudy(field: string): boolean {
 }
 
 export async function listCategories(
-  locale: string,
-): Promise<PaperCategorySummary[]> {
+  locale: AppLocale,
+): Promise<ArticleCategory[]> {
   const response = await fetch(
     articlesUrl('/categories', locale),
     fetchOptions,
@@ -131,14 +134,14 @@ export async function listCategories(
     throw new Error(`Failed to load categories: ${response.status}`);
   }
 
-  const categories = (await response.json()) as PaperCategorySummary[];
+  const categories = (await response.json()) as ArticleCategory[];
   return categories.filter((category) => isFieldOfStudy(category.field));
 }
 
 export async function getCategoryBySlug(
   slug: string,
-  locale: string,
-): Promise<PaperCategory | null> {
+  locale: AppLocale,
+): Promise<ArticleCategoryDetail | null> {
   const response = await fetch(
     articlesUrl(`/categories/${encodeURIComponent(slug)}`, locale),
     fetchOptions,
@@ -152,7 +155,7 @@ export async function getCategoryBySlug(
     throw new Error(`Failed to load category: ${response.status}`);
   }
 
-  return response.json() as Promise<PaperCategory>;
+  return response.json() as Promise<ArticleCategoryDetail>;
 }
 
 export const getEditionDateIso = unstable_cache(
@@ -164,11 +167,11 @@ export const getEditionDateIso = unstable_cache(
   },
 );
 
-export function getPaperParagraphs(
-  paper: Paper,
+export function getArticleParagraphs(
+  article: ArticleDetail,
   field: 'mediumPopularization' | 'fullPopularization',
 ): string[] {
-  return paper[field]
+  return article[field]
     .split(/\n\s*\n/)
     .map((paragraph) => paragraph.trim())
     .filter(Boolean);

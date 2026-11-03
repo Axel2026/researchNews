@@ -4,7 +4,11 @@ import { notFound } from 'next/navigation';
 import { CategoryDropdown } from '@/components/CategoryDropdown/CategoryDropdown';
 import { HomeFeed } from '@/components/HomeFeed/HomeFeed';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher/LanguageSwitcher';
-import { getEditionDateIso, listCategories, listPapers } from '@/data/papers';
+import {
+  getEditionDateIso,
+  listArticles,
+  listCategories,
+} from '@/data/articles';
 import { Link } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
 import styles from './page.module.css';
@@ -27,8 +31,8 @@ export default async function Home({ params }: PageProps<'/[locale]'>) {
   }
 
   const t = await getTranslations({ locale });
-  const [papers, editionDateIso, categories] = await Promise.all([
-    listPapers(locale),
+  const [articles, editionDateIso, categories] = await Promise.all([
+    listArticles(locale),
     getEditionDateIso(),
     listCategories(locale),
   ]);
@@ -64,7 +68,7 @@ export default async function Home({ params }: PageProps<'/[locale]'>) {
         </time>
         <h1 className={styles.masthead}>{t('Home.masthead')}</h1>
         <p className={styles.subtitle}>{t('Home.subtitle')}</p>
-        <HomeFeed papers={papers} locale={locale} />
+        <HomeFeed articles={articles} locale={locale} />
       </main>
     </div>
   );
