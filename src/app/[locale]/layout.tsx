@@ -43,7 +43,7 @@ export async function generateMetadata({
     applicationName: title,
     title: {
       default: title,
-      template: `%s · ${title}`,
+      template: `${title} | %s`,
     },
     description,
     icons: siteIcons,
