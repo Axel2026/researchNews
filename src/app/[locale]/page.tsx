@@ -68,7 +68,11 @@ export default async function Home({ params }: PageProps<'/[locale]'>) {
         </time>
         <h1 className={styles.masthead}>{t('Home.masthead')}</h1>
         <p className={styles.subtitle}>{t('Home.subtitle')}</p>
-        <HomeFeed articles={articles} locale={locale} />
+        <HomeFeed
+          articles={articles}
+          categories={categories}
+          locale={locale}
+        />
       </main>
     </div>
   );

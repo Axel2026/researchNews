@@ -17,7 +17,9 @@
     "kicker": "Article à la une",
     "readStory": "Lire l’article",
     "latestTitle": "Dernières découvertes",
-    "latestDek": "Nouvelles recherches, regards frais et questions ouvertes."
+    "latestDek": "Nouvelles recherches, regards frais et questions ouvertes.",
+    "more": "Plus",
+    "moreIn": "Plus dans {field}"
   },
   "News": {
     "kicker": "Article de vulgarisation scientifique",

@@ -17,7 +17,9 @@
     "kicker": "Featured article",
     "readStory": "Read the article",
     "latestTitle": "Latest discoveries",
-    "latestDek": "New research, fresh insights and growing questions."
+    "latestDek": "New research, fresh insights and growing questions.",
+    "more": "More",
+    "moreIn": "More in {field}"
   },
   "News": {
     "kicker": "Popular-science article",

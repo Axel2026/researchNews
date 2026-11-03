@@ -17,7 +17,9 @@
     "kicker": "Der große Artikel",
     "readStory": "Artikel lesen",
     "latestTitle": "Neueste Entdeckungen",
-    "latestDek": "Neue Forschung, frische Einblicke und offene Fragen."
+    "latestDek": "Neue Forschung, frische Einblicke und offene Fragen.",
+    "more": "Mehr",
+    "moreIn": "Mehr aus {field}"
   },
   "News": {
     "kicker": "Populärwissenschaftlicher Artikel",

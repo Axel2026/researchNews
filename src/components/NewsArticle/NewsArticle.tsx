@@ -4,20 +4,26 @@ import type { AppLocale } from '@/i18n/routing';
 import { getTranslations } from 'next-intl/server';
 import styles from '@/app/[locale]/news/[slug]/page.module.css';
 
-export async function NewsArticle({
+export type NewsArticleCopy = {
+  kicker: string;
+  bodyHeading: string;
+  source: string;
+  moreStories: string;
+};
+
+export function NewsArticleView({
   article,
-  locale,
+  copy,
 }: {
   article: ArticleDetail;
-  locale: AppLocale;
+  copy: NewsArticleCopy;
 }) {
-  const t = await getTranslations({ locale });
   const summary = getArticleParagraphs(article, 'mediumPopularization');
   const body = getArticleParagraphs(article, 'fullPopularization');
 
   return (
     <>
-      <p className={styles.kicker}>{t('News.kicker')}</p>
+      <p className={styles.kicker}>{copy.kicker}</p>
       <h1 className={styles.title}>{article.title}</h1>
       <p className={styles.dek}>{article.shortPopularization}</p>
       <div className={styles.meta}>
@@ -38,7 +44,7 @@ export async function NewsArticle({
             ))}
           </section>
           <section className={styles.body}>
-            <h2>{t('News.bodyHeading')}</h2>
+            <h2>{copy.bodyHeading}</h2>
             {body.map((paragraph, index) => (
               <p key={index}>{paragraph}</p>
             ))}
@@ -47,16 +53,38 @@ export async function NewsArticle({
 
         <aside className={styles.aside} aria-labelledby="source-heading">
           <p id="source-heading" className={styles.asideLabel}>
-            {t('News.source')}
+            {copy.source}
           </p>
           <p className={styles.asideTitle}>{article.realTitle}</p>
           <p className={styles.asideMeta}>{article.authors.join(', ')}</p>
           <p className={styles.asideMeta}>{article.field}</p>
           <Button className={styles.asideAction} href="/" variant="primary">
-            {t('News.moreStories')}
+            {copy.moreStories}
           </Button>
         </aside>
       </div>
     </>
+  );
+}
+
+export async function NewsArticle({
+  article,
+  locale,
+}: {
+  article: ArticleDetail;
+  locale: AppLocale;
+}) {
+  const t = await getTranslations({ locale });
+
+  return (
+    <NewsArticleView
+      article={article}
+      copy={{
+        kicker: t('News.kicker'),
+        bodyHeading: t('News.bodyHeading'),
+        source: t('News.source'),
+        moreStories: t('News.moreStories'),
+      }}
+    />
   );
 }

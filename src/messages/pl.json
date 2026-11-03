@@ -17,7 +17,9 @@
     "kicker": "Główny artykuł",
     "readStory": "Czytaj artykuł",
     "latestTitle": "Najnowsze odkrycia",
-    "latestDek": "Nowe badania, świeże wnioski i kolejne pytania."
+    "latestDek": "Nowe badania, świeże wnioski i kolejne pytania.",
+    "more": "Więcej",
+    "moreIn": "Więcej z dziedziny {field}"
   },
   "News": {
     "kicker": "Artykuł popularnonaukowy",

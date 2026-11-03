@@ -1,0 +1,99 @@
+import type {
+  ArticleCategory,
+  ArticleDetail,
+  ArticleListItem,
+} from '@/data/articles';
+
+const imageUrl = '/images/news-placeholder.svg';
+
+export const sampleArticle: ArticleListItem = {
+  id: '1',
+  slug: 'frog-peptides',
+  title: 'A rare skin compound helps peptides last longer',
+  field: 'Biochemistry',
+  shortPopularization:
+    'Short peptides from a mountain frog fight bacteria. An unusual amino acid makes them harder to break down.',
+  imageUrl,
+  publishedAt: '2026-03-12T08:00:00.000Z',
+  featured: true,
+};
+
+export const sampleArticleDetail: ArticleDetail = {
+  ...sampleArticle,
+  authors: ['Ada Lovelace', 'Jane Doe'],
+  realTitle:
+    'D-alloisoleucine-containing antimicrobial peptides from Bombina variegata skin',
+  mediumPopularization:
+    'Researchers isolated short peptides from the skin of a mountain frog and tested how they act against bacteria.\n\nSome of the peptides contain D-alloisoleucine, an unusual amino acid that made them more resistant to a peptide-degrading enzyme in the lab.',
+  fullPopularization:
+    'The team sequenced the peptides and compared variants with and without the unusual residue.\n\nThe D-alloisoleucine versions lasted longer in enzyme assays, which may help explain their activity on the skin.\n\nThe authors note that this is a laboratory study and does not by itself show a new drug.',
+  doi: '10.1234/example.peptides',
+  year: 2026,
+  journal: 'Nature',
+  sourceUrl: 'https://example.com/paper',
+};
+
+export const sampleArticles: ArticleListItem[] = [
+  sampleArticle,
+  {
+    id: '2',
+    slug: 'axolotl-viruses',
+    title: 'Viruses on axolotl skin shift with the environment',
+    field: 'Microbial ecology',
+    shortPopularization:
+      'DNA from Ambystoma altamirani skin linked phage diversity to water conditions and the local bacteria.',
+    imageUrl,
+    publishedAt: '2026-03-11T08:00:00.000Z',
+    featured: false,
+  },
+  {
+    id: '3',
+    slug: 'cows-self-suckling',
+    title: 'Why some cows suckle their own milk',
+    field: 'Animal behaviour',
+    shortPopularization:
+      'Self-suckling is tied to rearing, feed and housing, and can mean lost milk and udder health risks.',
+    imageUrl,
+    publishedAt: '2026-03-10T08:00:00.000Z',
+    featured: false,
+  },
+  {
+    id: '4',
+    slug: 'delta-salinity',
+    title: 'River discharge shapes salinity near megadeltas',
+    field: 'Biochemistry',
+    shortPopularization:
+      'Inland streamflow through large catchments helps set sea surface salinity close to the world’s megadeltas.',
+    imageUrl,
+    publishedAt: '2026-03-09T08:00:00.000Z',
+    featured: false,
+  },
+  {
+    id: '5',
+    slug: 'campylobacter-pump',
+    title: 'How a Campylobacter efflux pump became more potent',
+    field: 'Microbial ecology',
+    shortPopularization:
+      'Mutations in the RE-CmeABC pump help Campylobacter jejuni shrug off several classes of antibiotics.',
+    imageUrl,
+    publishedAt: '2026-03-08T08:00:00.000Z',
+    featured: false,
+  },
+  {
+    id: '6',
+    slug: 'barn-light',
+    title: 'Barn lighting changes how calves rest',
+    field: 'Animal behaviour',
+    shortPopularization:
+      'A longer dusk period in the barn was linked to more lying time and fewer restless bouts overnight.',
+    imageUrl,
+    publishedAt: '2026-03-07T08:00:00.000Z',
+    featured: false,
+  },
+];
+
+export const sampleCategories: ArticleCategory[] = [
+  { slug: 'biochemistry', field: 'Biochemistry' },
+  { slug: 'microbial-ecology', field: 'Microbial ecology' },
+  { slug: 'animal-behaviour', field: 'Animal behaviour' },
+];

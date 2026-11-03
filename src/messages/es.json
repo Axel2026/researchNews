@@ -17,7 +17,9 @@
     "kicker": "Artículo destacado",
     "readStory": "Leer el artículo",
     "latestTitle": "Últimos descubrimientos",
-    "latestDek": "Nueva investigación, ideas frescas y preguntas abiertas."
+    "latestDek": "Nueva investigación, ideas frescas y preguntas abiertas.",
+    "more": "Más",
+    "moreIn": "Más en {field}"
   },
   "News": {
     "kicker": "Artículo de divulgación científica",

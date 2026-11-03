@@ -25,6 +25,12 @@ const withDesignTokens: Decorator = (Story) => (
 const preview: Preview = {
   decorators: [withDesignTokens],
   parameters: {
+    nextjs: {
+      appDirectory: true,
+      navigation: {
+        pathname: '/',
+      },
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,
