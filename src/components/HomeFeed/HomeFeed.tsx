@@ -39,11 +39,11 @@ export function HomeFeedView({
           <div className={styles.featuredCopy}>
             <p className={styles.kicker}>{copy.kicker}</p>
             <h2 className={styles.featuredTitle}>
-              <Link href={`/news/${featured.slug}`}>{featured.title}</Link>
+              <Link href={`/article/${featured.slug}`}>{featured.title}</Link>
             </h2>
             <p className={styles.featuredDek}>{featured.shortPopularization}</p>
             <p className={styles.chip}>{featured.field}</p>
-            <Link className={styles.storyLink} href={`/news/${featured.slug}`}>
+            <Link className={styles.storyLink} href={`/article/${featured.slug}`}>
               {copy.readStory} <span aria-hidden="true">→</span>
             </Link>
           </div>

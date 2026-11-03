@@ -2,13 +2,12 @@ import type { Metadata } from 'next';
 import { hasLocale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { Button } from '@/components/Button/Button';
 import { NewsArticle } from '@/components/NewsArticle/NewsArticle';
 import { getArticleBySlug, listArticles } from '@/data/articles';
 import { getPathname, Link } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
 import {
-  newsPath,
+  articlePath,
   ogLocaleByAppLocale,
   pageAlternates,
   socialImages,
@@ -19,7 +18,7 @@ export const revalidate = 10800;
 
 export async function generateMetadata({
   params,
-}: PageProps<'/[locale]/news/[slug]'>): Promise<Metadata> {
+}: PageProps<'/[locale]/article/[slug]'>): Promise<Metadata> {
   const { locale, slug } = await params;
 
   if (!hasLocale(routing.locales, locale)) {
@@ -33,7 +32,7 @@ export async function generateMetadata({
   }
 
   const t = await getTranslations({ locale, namespace: 'Metadata' });
-  const href = newsPath(slug);
+  const href = articlePath(slug);
   const description = article.shortPopularization;
   const images = socialImages(article.imageUrl, article.title);
 
@@ -71,9 +70,9 @@ export async function generateStaticParams() {
   );
 }
 
-export default async function NewsPage({
+export default async function ArticlePage({
   params,
-}: PageProps<'/[locale]/news/[slug]'>) {
+}: PageProps<'/[locale]/article/[slug]'>) {
   const { locale, slug } = await params;
 
   if (!hasLocale(routing.locales, locale)) {
@@ -85,8 +84,6 @@ export default async function NewsPage({
   if (!article) {
     notFound();
   }
-
-  const t = await getTranslations({ locale });
 
   return (
     <div className={styles.page}>
@@ -101,11 +98,6 @@ export default async function NewsPage({
             height={683}
           />
         </Link>
-        <nav className={styles.nav} aria-label={t('Nav.main')}>
-          <Button href="/" variant="secondary">
-            {t('Nav.stories')}
-          </Button>
-        </nav>
       </header>
 
       <main id="main" tabIndex={-1} className={styles.main}>

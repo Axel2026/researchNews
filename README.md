@@ -39,4 +39,4 @@ Design system and components: [http://localhost:6006](http://localhost:6006) (`p
 
 - `/` — home (article list from the API)
 - `/category/[slug]` — articles in one field (404 if nothing matches the slug)
-- `/news/[slug]` — article page (404 if the API does not know the slug)
+- `/article/[slug]` — article page (404 if the API does not know the slug)

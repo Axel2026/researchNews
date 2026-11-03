@@ -59,11 +59,6 @@
   width: auto;
 }
 
-.nav {
-  display: flex;
-  gap: var(--space-3);
-}
-
 .main {
   max-width: var(--content-max);
   margin: 0 auto;

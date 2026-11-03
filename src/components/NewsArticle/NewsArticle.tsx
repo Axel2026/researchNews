@@ -2,7 +2,7 @@ import { Button } from '@/components/Button/Button';
 import { getArticleParagraphs, type ArticleDetail } from '@/data/articles';
 import type { AppLocale } from '@/i18n/routing';
 import { getTranslations } from 'next-intl/server';
-import styles from '@/app/[locale]/news/[slug]/page.module.css';
+import styles from '@/app/[locale]/article/[slug]/page.module.css';
 
 export type NewsArticleCopy = {
   kicker: string;

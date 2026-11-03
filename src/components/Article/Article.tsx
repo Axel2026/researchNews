@@ -18,7 +18,7 @@ export function Article({
         <img src={article.imageUrl} alt="" width={1600} height={900} />
       </div>
       <Title className={styles.title}>
-        <Link href={`/news/${article.slug}`}>{article.title}</Link>
+        <Link href={`/article/${article.slug}`}>{article.title}</Link>
       </Title>
       <p className={styles.dek}>{article.shortPopularization}</p>
       {showCategoryChip ? <p className={styles.chip}>{article.field}</p> : null}

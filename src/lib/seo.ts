@@ -57,8 +57,8 @@ export const siteIcons = {
   apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
 } as const satisfies Metadata['icons'];
 
-export function newsPath(slug: string) {
-  return `/news/${slug}`;
+export function articlePath(slug: string) {
+  return `/article/${slug}`;
 }
 
 export function categoryPath(slug: string) {
