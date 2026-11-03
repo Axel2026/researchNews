@@ -26,12 +26,13 @@
 
 .header {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-6);
   max-width: var(--content-max);
   margin: 0 auto;
-  padding: var(--space-5) var(--space-6) calc(var(--space-5) + 8px);
+  padding: var(--space-2) var(--space-6) calc(var(--space-2) + 8px);
   border-bottom: none;
   background-image:
     linear-gradient(var(--color-rule), var(--color-rule)),
@@ -46,16 +47,16 @@
 }
 
 .brand {
-  color: var(--color-ink);
-  font-family: var(--font-serif);
-  font-size: var(--text-xl);
-  font-weight: var(--weight-bold);
-  letter-spacing: var(--tracking-display);
+  display: flex;
+  align-items: center;
+  line-height: 0;
   text-decoration: none;
 }
 
-.brand span {
-  color: var(--color-accent);
+.logo {
+  display: block;
+  height: 5rem;
+  width: auto;
 }
 
 .nav {

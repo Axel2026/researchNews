@@ -38,7 +38,13 @@ export default async function Home({ params }: PageProps<'/[locale]'>) {
     <div className={styles.page}>
       <header className={styles.header}>
         <Link className={styles.brand} href="/">
-          Badania<span>*</span>
+          <img
+            className={styles.logo}
+            src="/images/logo.svg"
+            alt={t('Metadata.title')}
+            width={2048}
+            height={683}
+          />
         </Link>
         <div className={styles.headerEnd}>
           <nav className={styles.nav} aria-label={t('Nav.main')}>

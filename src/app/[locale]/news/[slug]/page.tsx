@@ -39,7 +39,13 @@ export default async function NewsPage({
     <div className={styles.page}>
       <header className={styles.header}>
         <Link className={styles.brand} href="/">
-          Badania<span>*</span>
+          <img
+            className={styles.logo}
+            src="/images/logo.svg"
+            alt={t('Metadata.title')}
+            width={2048}
+            height={683}
+          />
         </Link>
         <nav className={styles.nav}>
           <Button href="/" variant="secondary">
