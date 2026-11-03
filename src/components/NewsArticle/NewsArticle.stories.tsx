@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import articleStyles from '@/app/[locale]/article/[slug]/page.module.css';
+import pageStyles from '@/app/[locale]/article/[slug]/page.module.css';
 import en from '@/messages/en.json';
 import { sampleArticleDetail } from '../storyData';
 import { NewsArticleView } from './NewsArticle';
@@ -18,8 +18,8 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <div className={articleStyles.page}>
-        <div className={articleStyles.main}>
+      <div className={pageStyles.page}>
+        <div className={pageStyles.main}>
           <Story />
         </div>
       </div>
