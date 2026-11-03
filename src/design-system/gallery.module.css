@@ -90,3 +90,49 @@
   height: 3rem;
   background: var(--color-surface);
 }
+
+.zNote {
+  margin: 0 0 var(--space-5);
+  max-width: var(--measure);
+  color: var(--color-muted);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+}
+
+.zStage {
+  position: relative;
+  isolation: isolate;
+  height: 18rem;
+  margin-bottom: var(--space-6);
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-hero);
+}
+
+.zCard {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  width: min(15rem, calc(100% - 11rem));
+  padding: var(--space-3) var(--space-4);
+  border: var(--border-width) solid var(--color-ink);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: 0 0.35rem 0.7rem
+    color-mix(in srgb, var(--color-ink) 14%, transparent);
+}
+
+.zCard code {
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  white-space: nowrap;
+}
+
+.zUse {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+}

@@ -93,3 +93,36 @@ export const borders = [
   { name: 'Rule color', variable: '--color-rule', value: '#b9ab96' },
   { name: 'Chip border', variable: '--color-chip-border', value: '#d8d0c4' },
 ] as const;
+
+export const zIndexes = [
+  {
+    name: 'Base',
+    variable: '--z-base',
+    value: '0',
+    use: 'Decorative layers behind content, such as paper grain.',
+  },
+  {
+    name: 'Content',
+    variable: '--z-content',
+    value: '1',
+    use: 'Default in-flow page sections and local overlays inside a card.',
+  },
+  {
+    name: 'Raised',
+    variable: '--z-raised',
+    value: '2',
+    use: 'Chrome that must overlay sibling content, such as the page header.',
+  },
+  {
+    name: 'Dropdown',
+    variable: '--z-dropdown',
+    value: '20',
+    use: 'Menus and disclosure panels. Still loses to page content unless the parent uses Raised.',
+  },
+  {
+    name: 'Skip',
+    variable: '--z-skip',
+    value: '30',
+    use: 'Skip link. Keep this the top layer in the document.',
+  },
+] as const;

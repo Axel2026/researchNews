@@ -9,7 +9,7 @@ A web app of popular-science articles. Each story covers one research paper.
 
 ## Setup
 
-The home and article pages are Incremental Static Regeneration: they `fetch` the API on the server (`GET /articles`, `GET /articles/:slug`) and revalidate every 3 hours. Default API URL: `http://localhost:4000` (`API_URL` in `.env.local`). The backend must be running for `pnpm build` and for regeneration. ISR is visible with `pnpm build` + `pnpm start`, not in `pnpm dev`.
+The home, category, and article pages are Incremental Static Regeneration: they `fetch` the API on the server (`GET /articles`, `GET /categories`, `GET /categories/:slug`, `GET /articles/:slug`) and revalidate every 3 hours. Default API URL: `http://localhost:4000` (`API_URL` in `.env.local`). The backend must be running for `pnpm build` and for regeneration. ISR is visible with `pnpm build` + `pnpm start`, not in `pnpm dev`.
 
 ```bash
 cp .env.example .env.local
@@ -38,4 +38,5 @@ Design system and components: [http://localhost:6006](http://localhost:6006) (`p
 ## Routing
 
 - `/` — home (article list from the API)
+- `/category/[slug]` — articles in one field (404 if nothing matches the slug)
 - `/news/[slug]` — article page (404 if the API does not know the slug)

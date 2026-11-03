@@ -6,6 +6,7 @@
   "Nav": {
     "main": "Hauptnavigation",
     "stories": "Artikel",
+    "fields": "Fachgebiete",
     "language": "Sprache",
     "skip": "Zum Inhalt springen"
   },
@@ -22,6 +23,9 @@
     "bodyHeading": "Artikel",
     "source": "Originalarbeit",
     "moreStories": "Weitere Artikel"
+  },
+  "Category": {
+    "kicker": "Kategorie"
   },
   "Status": {
     "loading": "Wird geladen…",

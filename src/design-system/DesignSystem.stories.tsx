@@ -6,6 +6,7 @@ import {
   RadiiGallery,
   SpacingGallery,
   TypographyGallery,
+  ZIndexGallery,
 } from './TokenGallery';
 
 const meta = {
@@ -41,4 +42,8 @@ export const Typography: Story = {
 
 export const Borders: Story = {
   render: () => <BordersGallery />,
+};
+
+export const ZIndex: Story = {
+  render: () => <ZIndexGallery />,
 };

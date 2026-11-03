@@ -1,9 +1,10 @@
 import { hasLocale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
+import { CategoryDropdown } from '@/components/CategoryDropdown/CategoryDropdown';
 import { HomeFeed } from '@/components/HomeFeed/HomeFeed';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher/LanguageSwitcher';
-import { getEditionDateIso, listPapers } from '@/data/papers';
+import { getEditionDateIso, listCategories, listPapers } from '@/data/papers';
 import { Link } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
 import styles from './page.module.css';
@@ -26,9 +27,10 @@ export default async function Home({ params }: PageProps<'/[locale]'>) {
   }
 
   const t = await getTranslations({ locale });
-  const [papers, editionDateIso] = await Promise.all([
+  const [papers, editionDateIso, categories] = await Promise.all([
     listPapers(locale),
     getEditionDateIso(),
+    listCategories(locale),
   ]);
   const editionDate = formatEditionDate(editionDateIso, locale);
 
@@ -50,6 +52,7 @@ export default async function Home({ params }: PageProps<'/[locale]'>) {
             <Link className={styles.navCurrent} href="/" aria-current="page">
               {t('Nav.stories')}
             </Link>
+            <CategoryDropdown categories={categories} />
           </nav>
           <LanguageSwitcher />
         </div>

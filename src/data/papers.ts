@@ -25,6 +25,15 @@ export type Paper = PaperSummary & {
   sourceUrl: string | null;
 };
 
+export type PaperCategorySummary = {
+  slug: string;
+  field: string;
+};
+
+export type PaperCategory = PaperCategorySummary & {
+  articles: PaperSummary[];
+};
+
 function apiUrl(): string {
   return (
     process.env.API_URL ??
@@ -74,6 +83,76 @@ export async function getPaperBySlug(
   }
 
   return response.json() as Promise<Paper>;
+}
+
+const EXCLUDED_FIELDS = new Set([
+  'dataset',
+  'book',
+  'book part',
+  'thesis',
+  'report',
+  'presentation',
+  'journal article',
+  'research article',
+  'article',
+  'artigo',
+  'artículo',
+  'preprint',
+  'research',
+  'nature',
+  'science',
+  'cell',
+  'lancet',
+  'pnas',
+]);
+
+function isFieldOfStudy(field: string): boolean {
+  const trimmed = field.trim();
+  if (trimmed.length < 3) {
+    return false;
+  }
+
+  if (/^[A-Z]{2,6}$/.test(trimmed)) {
+    return false;
+  }
+
+  return !EXCLUDED_FIELDS.has(trimmed.toLowerCase());
+}
+
+export async function listCategories(
+  locale: string,
+): Promise<PaperCategorySummary[]> {
+  const response = await fetch(
+    articlesUrl('/categories', locale),
+    fetchOptions,
+  );
+
+  if (!response.ok) {
+    throw new Error(`Failed to load categories: ${response.status}`);
+  }
+
+  const categories = (await response.json()) as PaperCategorySummary[];
+  return categories.filter((category) => isFieldOfStudy(category.field));
+}
+
+export async function getCategoryBySlug(
+  slug: string,
+  locale: string,
+): Promise<PaperCategory | null> {
+  const response = await fetch(
+    articlesUrl(`/categories/${encodeURIComponent(slug)}`, locale),
+    fetchOptions,
+  );
+
+  if (response.status === 404) {
+    return null;
+  }
+
+  if (!response.ok) {
+    throw new Error(`Failed to load category: ${response.status}`);
+  }
+
+  return response.json() as Promise<PaperCategory>;
 }
 
 export const getEditionDateIso = unstable_cache(

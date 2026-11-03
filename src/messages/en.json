@@ -6,6 +6,7 @@
   "Nav": {
     "main": "Main",
     "stories": "Articles",
+    "fields": "Fields",
     "language": "Language",
     "skip": "Skip to content"
   },
@@ -22,6 +23,9 @@
     "bodyHeading": "Article",
     "source": "Source paper",
     "moreStories": "More articles"
+  },
+  "Category": {
+    "kicker": "Category"
   },
   "Status": {
     "loading": "Loading…",

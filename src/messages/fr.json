@@ -6,6 +6,7 @@
   "Nav": {
     "main": "Principal",
     "stories": "Articles",
+    "fields": "Disciplines",
     "language": "Langue",
     "skip": "Aller au contenu"
   },
@@ -22,6 +23,9 @@
     "bodyHeading": "Article",
     "source": "Article source",
     "moreStories": "Plus d’articles"
+  },
+  "Category": {
+    "kicker": "Catégorie"
   },
   "Status": {
     "loading": "Chargement…",
