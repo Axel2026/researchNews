@@ -1,7 +1,8 @@
 {
   "Metadata": {
     "title": "Badania",
-    "description": "Artículos de divulgación científica: un resumen y un relato completo de un artículo en cada noticia."
+    "description": "Artículos de divulgación científica: un resumen y un relato completo de un artículo en cada noticia.",
+    "categoryDescription": "Artículos de divulgación científica en {field}."
   },
   "Nav": {
     "main": "Principal",

@@ -1,11 +1,24 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { newsreader, sourceSans } from '@/fonts';
+import { getPathname } from '@/i18n/navigation';
+import { routing } from '@/i18n/routing';
+import {
+  defaultSocialImage,
+  getSiteUrl,
+  ogLocaleByAppLocale,
+  pageAlternates,
+  SITE_THEME_COLOR,
+  siteIcons,
+} from '@/lib/seo';
 import '@/design-system/tokens.css';
 import '../globals.css';
-import { routing } from '@/i18n/routing';
+
+export const viewport: Viewport = {
+  themeColor: SITE_THEME_COLOR,
+};
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -21,13 +34,46 @@ export async function generateMetadata({
   }
 
   const t = await getTranslations({ locale, namespace: 'Metadata' });
+  const title = t('title');
+  const description = t('description');
+  const href = '/';
 
   return {
+    metadataBase: getSiteUrl(),
+    applicationName: title,
     title: {
-      default: t('title'),
-      template: `%s · ${t('title')}`,
+      default: title,
+      template: `%s · ${title}`,
     },
-    description: t('description'),
+    description,
+    icons: siteIcons,
+    robots: {
+      index: true,
+      follow: true,
+    },
+    alternates: pageAlternates(locale, href),
+    openGraph: {
+      type: 'website',
+      locale: ogLocaleByAppLocale[locale],
+      alternateLocale: routing.locales
+        .filter((item) => item !== locale)
+        .map((item) => ogLocaleByAppLocale[item]),
+      siteName: title,
+      title,
+      description,
+      url: getPathname({ locale, href }),
+      images: [{ ...defaultSocialImage, alt: title }],
+    },
+    twitter: {
+      card: 'summary',
+      title,
+      description,
+      images: [defaultSocialImage.url],
+    },
+    appleWebApp: {
+      title,
+      statusBarStyle: 'default',
+    },
   };
 }
 

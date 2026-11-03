@@ -1,7 +1,8 @@
 {
   "Metadata": {
     "title": "Badania",
-    "description": "Populärwissenschaftliche Artikel über Forschung: in jeder Story eine kurze und eine vollständige Darstellung einer Arbeit."
+    "description": "Populärwissenschaftliche Artikel über Forschung: in jeder Story eine kurze und eine vollständige Darstellung einer Arbeit.",
+    "categoryDescription": "Populärwissenschaftliche Artikel aus dem Bereich {field}."
   },
   "Nav": {
     "main": "Hauptnavigation",

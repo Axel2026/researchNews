@@ -5,8 +5,14 @@ import { notFound } from 'next/navigation';
 import { Button } from '@/components/Button/Button';
 import { NewsArticle } from '@/components/NewsArticle/NewsArticle';
 import { getPaperBySlug, listPapers } from '@/data/papers';
-import { Link } from '@/i18n/navigation';
+import { getPathname, Link } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
+import {
+  newsPath,
+  ogLocaleByAppLocale,
+  pageAlternates,
+  socialImages,
+} from '@/lib/seo';
 import styles from './page.module.css';
 
 export const revalidate = 10800;
@@ -26,8 +32,34 @@ export async function generateMetadata({
     return {};
   }
 
+  const t = await getTranslations({ locale, namespace: 'Metadata' });
+  const href = newsPath(slug);
+  const description = paper.shortPopularization;
+  const images = socialImages(paper.imageUrl, paper.title);
+
   return {
     title: paper.title,
+    description,
+    authors: paper.authors.map((name) => ({ name })),
+    alternates: pageAlternates(locale, href),
+    openGraph: {
+      type: 'article',
+      locale: ogLocaleByAppLocale[locale],
+      siteName: t('title'),
+      title: paper.title,
+      description,
+      url: getPathname({ locale, href }),
+      publishedTime: paper.publishedAt,
+      authors: paper.authors,
+      section: paper.field,
+      images,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: paper.title,
+      description,
+      images: images.map((image) => image.url),
+    },
   };
 }
 

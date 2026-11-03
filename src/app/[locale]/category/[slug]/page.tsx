@@ -6,8 +6,14 @@ import { CategoryDropdown } from '@/components/CategoryDropdown/CategoryDropdown
 import { CategoryFeed } from '@/components/CategoryFeed/CategoryFeed';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher/LanguageSwitcher';
 import { getCategoryBySlug, listCategories } from '@/data/papers';
-import { Link } from '@/i18n/navigation';
+import { getPathname, Link } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
+import {
+  categoryPath,
+  defaultSocialImage,
+  ogLocaleByAppLocale,
+  pageAlternates,
+} from '@/lib/seo';
 import homeStyles from '../../page.module.css';
 import styles from './page.module.css';
 
@@ -28,8 +34,29 @@ export async function generateMetadata({
     return {};
   }
 
+  const t = await getTranslations({ locale, namespace: 'Metadata' });
+  const href = categoryPath(slug);
+  const description = t('categoryDescription', { field: category.field });
+
   return {
     title: category.field,
+    description,
+    alternates: pageAlternates(locale, href),
+    openGraph: {
+      type: 'website',
+      locale: ogLocaleByAppLocale[locale],
+      siteName: t('title'),
+      title: category.field,
+      description,
+      url: getPathname({ locale, href }),
+      images: [{ ...defaultSocialImage, alt: category.field }],
+    },
+    twitter: {
+      card: 'summary',
+      title: category.field,
+      description,
+      images: [defaultSocialImage.url],
+    },
   };
 }
 
