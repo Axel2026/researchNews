@@ -16,7 +16,7 @@ const meta = {
       latestTitle: en.Home.latestTitle,
       latestDek: en.Home.latestDek,
       more: en.Home.more,
-      moreIn: en.Home.moreIn,
+      moreIn: (field) => en.Home.moreIn.replaceAll('{field}', field),
     },
   },
   decorators: [

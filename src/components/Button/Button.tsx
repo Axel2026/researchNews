@@ -30,6 +30,19 @@ export function Button({
     .join(' ');
 
   if ('href' in props && props.href) {
+    if (/^https?:\/\//i.test(props.href)) {
+      return (
+        <a
+          href={props.href}
+          className={classNames}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {children}
+        </a>
+      );
+    }
+
     return (
       <Link href={props.href} className={classNames}>
         {children}

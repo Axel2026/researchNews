@@ -1,3 +1,4 @@
+import { CategoryChip } from '@/components/CategoryChip/CategoryChip';
 import type { ArticleListItem } from '@/data/articles';
 import { Link } from '@/i18n/navigation';
 import styles from './Article.module.css';
@@ -17,11 +18,13 @@ export function Article({
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={article.imageUrl} alt="" width={1600} height={900} />
       </div>
+      {showCategoryChip ? (
+        <CategoryChip field={article.field} />
+      ) : null}
       <Title className={styles.title}>
         <Link href={`/article/${article.slug}`}>{article.title}</Link>
       </Title>
       <p className={styles.dek}>{article.shortPopularization}</p>
-      {showCategoryChip ? <p className={styles.chip}>{article.field}</p> : null}
     </article>
   );
 }

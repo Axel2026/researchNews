@@ -11,6 +11,7 @@ export const sampleArticle: ArticleListItem = {
   slug: 'frog-peptides',
   title: 'A rare skin compound helps peptides last longer',
   field: 'Biochemistry',
+  fieldSlug: 'biochemistry',
   shortPopularization:
     'Short peptides from a mountain frog fight bacteria. An unusual amino acid makes them harder to break down.',
   imageUrl,
@@ -30,7 +31,8 @@ export const sampleArticleDetail: ArticleDetail = {
   doi: '10.1234/example.peptides',
   year: 2026,
   journal: 'Nature',
-  sourceUrl: 'https://example.com/paper',
+  sourceUrl: 'https://doi.org/10.1234/example.peptides',
+  downloadUrl: 'https://example.com/paper.pdf',
 };
 
 export const sampleArticles: ArticleListItem[] = [
@@ -40,6 +42,7 @@ export const sampleArticles: ArticleListItem[] = [
     slug: 'axolotl-viruses',
     title: 'Viruses on axolotl skin shift with the environment',
     field: 'Microbial ecology',
+    fieldSlug: 'microbial-ecology',
     shortPopularization:
       'DNA from Ambystoma altamirani skin linked phage diversity to water conditions and the local bacteria.',
     imageUrl,
@@ -51,6 +54,7 @@ export const sampleArticles: ArticleListItem[] = [
     slug: 'cows-self-suckling',
     title: 'Why some cows suckle their own milk',
     field: 'Animal behaviour',
+    fieldSlug: 'animal-behaviour',
     shortPopularization:
       'Self-suckling is tied to rearing, feed and housing, and can mean lost milk and udder health risks.',
     imageUrl,
@@ -62,6 +66,7 @@ export const sampleArticles: ArticleListItem[] = [
     slug: 'delta-salinity',
     title: 'River discharge shapes salinity near megadeltas',
     field: 'Biochemistry',
+    fieldSlug: 'biochemistry',
     shortPopularization:
       'Inland streamflow through large catchments helps set sea surface salinity close to the world’s megadeltas.',
     imageUrl,
@@ -73,6 +78,7 @@ export const sampleArticles: ArticleListItem[] = [
     slug: 'campylobacter-pump',
     title: 'How a Campylobacter efflux pump became more potent',
     field: 'Microbial ecology',
+    fieldSlug: 'microbial-ecology',
     shortPopularization:
       'Mutations in the RE-CmeABC pump help Campylobacter jejuni shrug off several classes of antibiotics.',
     imageUrl,
@@ -84,6 +90,7 @@ export const sampleArticles: ArticleListItem[] = [
     slug: 'barn-light',
     title: 'Barn lighting changes how calves rest',
     field: 'Animal behaviour',
+    fieldSlug: 'animal-behaviour',
     shortPopularization:
       'A longer dusk period in the barn was linked to more lying time and fewer restless bouts overnight.',
     imageUrl,

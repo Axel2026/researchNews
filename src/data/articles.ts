@@ -9,6 +9,7 @@ export type ArticleListItem = {
   slug: string;
   title: string;
   field: string;
+  fieldSlug: string;
   shortPopularization: string;
   imageUrl: string;
   publishedAt: string;
@@ -24,6 +25,7 @@ export type ArticleDetail = ArticleListItem & {
   year: number | null;
   journal: string | null;
   sourceUrl: string | null;
+  downloadUrl: string | null;
 };
 
 export type ArticleCategory = {
@@ -49,12 +51,15 @@ function articlesUrl(path: string, locale: AppLocale): URL {
   return url;
 }
 
-const fetchOptions: RequestInit = {
-  next: {
-    revalidate: ARTICLES_REVALIDATE_SECONDS,
-    tags: [ARTICLES_CACHE_TAG],
-  },
-};
+const fetchOptions: RequestInit =
+  process.env.NODE_ENV === 'development'
+    ? { cache: 'no-store' }
+    : {
+        next: {
+          revalidate: ARTICLES_REVALIDATE_SECONDS,
+          tags: [ARTICLES_CACHE_TAG],
+        },
+      };
 
 export async function listArticles(
   locale: AppLocale,

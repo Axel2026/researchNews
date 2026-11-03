@@ -13,7 +13,8 @@ const meta = {
       kicker: en.News.kicker,
       bodyHeading: en.News.bodyHeading,
       source: en.News.source,
-      moreStories: en.News.moreStories,
+      viewOriginal: en.News.viewOriginal,
+      download: en.News.download,
     },
   },
   decorators: [
@@ -34,3 +35,12 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+export const WithoutDownload: Story = {
+  args: {
+    article: {
+      ...sampleArticleDetail,
+      downloadUrl: null,
+    },
+  },
+};

@@ -25,10 +25,12 @@
     "kicker": "Artículo de divulgación científica",
     "bodyHeading": "Artículo",
     "source": "Artículo original",
-    "moreStories": "Más artículos"
+    "viewOriginal": "Ver el artículo original",
+    "download": "Descargar"
   },
   "Category": {
-    "kicker": "Categoría"
+    "kicker": "Categoría",
+    "open": "Ir a la categoría {field}"
   },
   "Status": {
     "loading": "Cargando…",

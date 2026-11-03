@@ -33,15 +33,6 @@
   margin-top: var(--space-5);
 }
 
-.chip {
-  display: inline-flex;
-  padding: var(--space-1) var(--space-3);
-  border: var(--border-width) solid var(--color-chip-border);
-  border-radius: var(--radius-pill);
-  background: var(--color-surface);
-  font-size: var(--text-sm);
-}
-
 .byline {
   color: var(--color-muted);
   font-size: var(--text-md);
@@ -144,8 +135,15 @@
   line-height: 1.45;
 }
 
-.asideAction {
+.asideActions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
   margin-top: var(--space-4);
+}
+
+.asideAction {
+  width: 100%;
 }
 
 @media (min-width: 1024px) {

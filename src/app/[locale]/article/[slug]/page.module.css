@@ -2,7 +2,7 @@
   position: relative;
   isolation: isolate;
   flex: 1;
-  min-height: 100%;
+  min-height: 100dvh;
   color: var(--color-ink);
   background: var(--color-bg);
   font-family: var(--font-sans);

@@ -1,6 +1,8 @@
 import { Button } from '@/components/Button/Button';
+import { CategoryChip } from '@/components/CategoryChip/CategoryChip';
 import { getArticleParagraphs, type ArticleDetail } from '@/data/articles';
 import type { AppLocale } from '@/i18n/routing';
+import { categoryPath } from '@/lib/seo';
 import { getTranslations } from 'next-intl/server';
 import styles from './NewsArticle.module.css';
 
@@ -8,7 +10,8 @@ export type NewsArticleCopy = {
   kicker: string;
   bodyHeading: string;
   source: string;
-  moreStories: string;
+  viewOriginal: string;
+  download: string;
 };
 
 export function NewsArticleView({
@@ -27,7 +30,10 @@ export function NewsArticleView({
       <h1 className={styles.title}>{article.title}</h1>
       <p className={styles.dek}>{article.shortPopularization}</p>
       <div className={styles.meta}>
-        <span className={styles.chip}>{article.field}</span>
+        <CategoryChip
+          field={article.field}
+          href={categoryPath(article.fieldSlug)}
+        />
         <span className={styles.byline}>{article.authors.join(' · ')}</span>
       </div>
 
@@ -58,9 +64,26 @@ export function NewsArticleView({
           <p className={styles.asideTitle}>{article.realTitle}</p>
           <p className={styles.asideMeta}>{article.authors.join(', ')}</p>
           <p className={styles.asideMeta}>{article.field}</p>
-          <Button className={styles.asideAction} href="/" variant="primary">
-            {copy.moreStories}
-          </Button>
+          <div className={styles.asideActions}>
+            {article.sourceUrl ? (
+              <Button
+                className={styles.asideAction}
+                href={article.sourceUrl}
+                variant="primary"
+              >
+                {copy.viewOriginal}
+              </Button>
+            ) : null}
+            {article.downloadUrl ? (
+              <Button
+                className={styles.asideAction}
+                href={article.downloadUrl}
+                variant="secondary"
+              >
+                {copy.download}
+              </Button>
+            ) : null}
+          </div>
         </aside>
       </div>
     </>
@@ -83,7 +106,8 @@ export async function NewsArticle({
         kicker: t('News.kicker'),
         bodyHeading: t('News.bodyHeading'),
         source: t('News.source'),
-        moreStories: t('News.moreStories'),
+        viewOriginal: t('News.viewOriginal'),
+        download: t('News.download'),
       }}
     />
   );

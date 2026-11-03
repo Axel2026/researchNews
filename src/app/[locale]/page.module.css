@@ -2,7 +2,7 @@
   position: relative;
   isolation: isolate;
   flex: 1;
-  min-height: 100%;
+  min-height: 100dvh;
   color: var(--color-ink);
   background: var(--color-bg);
   font-family: var(--font-sans);
@@ -195,15 +195,6 @@
   font-family: var(--font-serif);
   font-size: var(--text-base);
   line-height: var(--leading-relaxed);
-}
-
-.chip {
-  display: inline-flex;
-  padding: var(--space-1) var(--space-3);
-  border: var(--border-width) solid var(--color-chip-border);
-  border-radius: var(--radius-pill);
-  background: var(--color-surface);
-  font-size: var(--text-sm);
 }
 
 .page .storyLink {

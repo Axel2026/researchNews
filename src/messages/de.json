@@ -25,10 +25,12 @@
     "kicker": "Populärwissenschaftlicher Artikel",
     "bodyHeading": "Artikel",
     "source": "Originalarbeit",
-    "moreStories": "Weitere Artikel"
+    "viewOriginal": "Originalarbeit ansehen",
+    "download": "Herunterladen"
   },
   "Category": {
-    "kicker": "Kategorie"
+    "kicker": "Kategorie",
+    "open": "Zur Kategorie {field}"
   },
   "Status": {
     "loading": "Wird geladen…",

@@ -1,0 +1,47 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  color: var(--color-accent);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  line-height: var(--leading-snug);
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+a.chip {
+  min-height: 1.5rem;
+  text-decoration: none;
+}
+
+a.chip:hover {
+  color: var(--color-accent-hover);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+:global(.page) a.chip {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+:global(.page) a.chip:hover {
+  color: var(--color-accent-hover);
+  text-decoration: underline;
+}
+
+@media (forced-colors: active) {
+  a.chip,
+  :global(.page) a.chip {
+    color: LinkText;
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+
+  a.chip:hover,
+  :global(.page) a.chip:hover {
+    color: LinkText;
+  }
+}

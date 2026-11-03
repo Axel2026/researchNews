@@ -25,10 +25,12 @@
     "kicker": "Article de vulgarisation scientifique",
     "bodyHeading": "Article",
     "source": "Article source",
-    "moreStories": "Plus d’articles"
+    "viewOriginal": "Voir l’article original",
+    "download": "Télécharger"
   },
   "Category": {
-    "kicker": "Catégorie"
+    "kicker": "Catégorie",
+    "open": "Aller à la catégorie {field}"
   },
   "Status": {
     "loading": "Chargement…",

@@ -25,10 +25,12 @@
     "kicker": "Artykuł popularnonaukowy",
     "bodyHeading": "Artykuł",
     "source": "Źródłowa praca",
-    "moreStories": "Więcej artykułów"
+    "viewOriginal": "Zobacz oryginalną pracę",
+    "download": "Pobierz"
   },
   "Category": {
-    "kicker": "Kategoria"
+    "kicker": "Kategoria",
+    "open": "Przejdź do kategorii {field}"
   },
   "Status": {
     "loading": "Ładowanie…",

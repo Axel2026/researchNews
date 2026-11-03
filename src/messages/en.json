@@ -25,10 +25,12 @@
     "kicker": "Popular-science article",
     "bodyHeading": "Article",
     "source": "Source paper",
-    "moreStories": "More articles"
+    "viewOriginal": "View original paper",
+    "download": "Download"
   },
   "Category": {
-    "kicker": "Category"
+    "kicker": "Category",
+    "open": "Go to category {field}"
   },
   "Status": {
     "loading": "Loading…",

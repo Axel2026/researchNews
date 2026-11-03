@@ -1,4 +1,5 @@
 import { ArticleCardGrid } from '@/components/ArticleCardGrid/ArticleCardGrid';
+import { CategoryChip } from '@/components/CategoryChip/CategoryChip';
 import type { ArticleCategory, ArticleListItem } from '@/data/articles';
 import { Link } from '@/i18n/navigation';
 import type { AppLocale } from '@/i18n/routing';
@@ -13,7 +14,7 @@ export type HomeFeedCopy = {
   latestTitle: string;
   latestDek: string;
   more: string;
-  moreIn: string;
+  moreIn: (field: string) => string;
 };
 
 export function HomeFeedView({
@@ -42,7 +43,7 @@ export function HomeFeedView({
               <Link href={`/article/${featured.slug}`}>{featured.title}</Link>
             </h2>
             <p className={styles.featuredDek}>{featured.shortPopularization}</p>
-            <p className={styles.chip}>{featured.field}</p>
+            <CategoryChip field={featured.field} />
             <Link className={styles.storyLink} href={`/article/${featured.slug}`}>
               {copy.readStory} <span aria-hidden="true">→</span>
             </Link>
@@ -64,7 +65,11 @@ export function HomeFeedView({
 
       {categories.map((category) => {
         const row = articles
-          .filter((article) => article.field === category.field)
+          .filter(
+            (article) =>
+              article.fieldSlug === category.slug ||
+              article.field === category.field,
+          )
           .slice(0, HOME_ROW_SIZE);
 
         if (row.length === 0) {
@@ -72,7 +77,7 @@ export function HomeFeedView({
         }
 
         const headingId = `category-${category.slug}-heading`;
-        const moreIn = copy.moreIn.replaceAll('{field}', category.field);
+        const moreIn = copy.moreIn(category.field);
 
         return (
           <section
@@ -125,7 +130,7 @@ export async function HomeFeed({
         latestTitle: t('Home.latestTitle'),
         latestDek: t('Home.latestDek'),
         more: t('Home.more'),
-        moreIn: t('Home.moreIn'),
+        moreIn: (field) => t('Home.moreIn', { field }),
       }}
     />
   );
