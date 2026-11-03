@@ -6,7 +6,8 @@
   "Nav": {
     "main": "Principal",
     "stories": "Artículos",
-    "language": "Idioma"
+    "language": "Idioma",
+    "skip": "Saltar al contenido"
   },
   "Home": {
     "masthead": "Trabajos de investigación, en claro.",

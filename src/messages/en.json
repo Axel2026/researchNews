@@ -6,7 +6,8 @@
   "Nav": {
     "main": "Main",
     "stories": "Articles",
-    "language": "Language"
+    "language": "Language",
+    "skip": "Skip to content"
   },
   "Home": {
     "masthead": "Research papers, plain language.",

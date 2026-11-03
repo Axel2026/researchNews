@@ -6,7 +6,8 @@
   "Nav": {
     "main": "Hauptnavigation",
     "stories": "Artikel",
-    "language": "Sprache"
+    "language": "Sprache",
+    "skip": "Zum Inhalt springen"
   },
   "Home": {
     "masthead": "Forschungspapiere, verständlich.",

@@ -6,7 +6,8 @@
   "Nav": {
     "main": "Główne",
     "stories": "Artykuły",
-    "language": "Język"
+    "language": "Język",
+    "skip": "Przejdź do treści"
   },
   "Home": {
     "masthead": "Prace badawcze, po ludzku.",

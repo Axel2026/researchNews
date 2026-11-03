@@ -45,8 +45,10 @@ export async function NewsArticle({
           </section>
         </article>
 
-        <aside className={styles.aside}>
-          <p className={styles.asideLabel}>{t('News.source')}</p>
+        <aside className={styles.aside} aria-labelledby="source-heading">
+          <p id="source-heading" className={styles.asideLabel}>
+            {t('News.source')}
+          </p>
           <p className={styles.asideTitle}>{paper.realTitle}</p>
           <p className={styles.asideMeta}>{paper.authors.join(', ')}</p>
           <p className={styles.asideMeta}>{paper.field}</p>

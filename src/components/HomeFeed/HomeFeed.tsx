@@ -18,13 +18,10 @@ export async function HomeFeed({
     <>
       {featured ? (
         <article className={styles.featured}>
-          <Link
-            className={styles.featuredMedia}
-            href={`/news/${featured.slug}`}
-          >
+          <div className={styles.featuredMedia}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={featured.imageUrl} alt="" width={1600} height={900} />
-          </Link>
+          </div>
           <div className={styles.featuredCopy}>
             <p className={styles.kicker}>{t('Home.kicker')}</p>
             <h2 className={styles.featuredTitle}>
@@ -49,10 +46,7 @@ export async function HomeFeed({
             {latest.map((paper) => (
               <li key={paper.id}>
                 <article className={styles.card}>
-                  <Link
-                    className={styles.cardMedia}
-                    href={`/news/${paper.slug}`}
-                  >
+                  <div className={styles.cardMedia}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={paper.imageUrl}
@@ -60,7 +54,7 @@ export async function HomeFeed({
                       width={1600}
                       height={900}
                     />
-                  </Link>
+                  </div>
                   <h3 className={styles.cardTitle}>
                     <Link href={`/news/${paper.slug}`}>{paper.title}</Link>
                   </h3>

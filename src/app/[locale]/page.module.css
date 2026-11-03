@@ -78,6 +78,9 @@
 }
 
 .navCurrent {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5rem;
   padding-bottom: var(--space-1);
   border-bottom: 2px solid var(--color-accent);
   font-weight: var(--weight-semibold);
@@ -126,6 +129,7 @@
 }
 
 .featured {
+  position: relative;
   display: grid;
   gap: var(--space-6);
   margin-top: var(--space-8);
@@ -176,6 +180,13 @@
   line-height: var(--leading-tight);
 }
 
+.featuredTitle a::after,
+.cardTitle a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
 .featuredTitle a:hover,
 .cardTitle a:hover {
   color: var(--color-accent);
@@ -198,13 +209,18 @@
   font-size: var(--text-sm);
 }
 
-.storyLink {
+.page .storyLink {
+  position: relative;
+  z-index: 1;
   color: var(--color-accent);
   font-size: var(--text-base);
   font-weight: var(--weight-semibold);
+  text-decoration: none;
+  border-bottom: 2px solid currentColor;
+  padding-bottom: 0.12em;
 }
 
-.storyLink:hover {
+.page .storyLink:hover {
   color: var(--color-accent-hover);
 }
 
@@ -241,6 +257,7 @@
 }
 
 .card {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;

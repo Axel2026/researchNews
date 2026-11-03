@@ -6,7 +6,8 @@
   "Nav": {
     "main": "Principal",
     "stories": "Articles",
-    "language": "Langue"
+    "language": "Langue",
+    "skip": "Aller au contenu"
   },
   "Home": {
     "masthead": "Travaux de recherche, en clair.",

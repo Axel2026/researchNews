@@ -1,15 +1,20 @@
 export const colors = [
   { name: 'Background', variable: '--color-bg', value: '#f6f1e8' },
   { name: 'Ink', variable: '--color-ink', value: '#3a291c' },
-  { name: 'Muted', variable: '--color-muted', value: '#7a6856' },
+  { name: 'Muted', variable: '--color-muted', value: '#655445' },
   { name: 'Line', variable: '--color-line', value: '#e4ddd2' },
   { name: 'Rule', variable: '--color-rule', value: '#b9ab96' },
-  { name: 'Accent', variable: '--color-accent', value: '#c45c26' },
-  { name: 'Accent hover', variable: '--color-accent-hover', value: '#a84c1e' },
+  { name: 'Accent', variable: '--color-accent', value: '#a84c1e' },
+  { name: 'Accent hover', variable: '--color-accent-hover', value: '#7f3a15' },
   { name: 'Surface', variable: '--color-surface', value: '#fffdf8' },
   { name: 'Peach', variable: '--color-peach', value: '#f3d5c0' },
   { name: 'Hero', variable: '--color-hero', value: '#ece4d6' },
   { name: 'Chip border', variable: '--color-chip-border', value: '#d8d0c4' },
+  {
+    name: 'Control border',
+    variable: '--color-control-border',
+    value: '#7d6b5a',
+  },
 ] as const;
 
 export const fonts = [

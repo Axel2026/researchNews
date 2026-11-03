@@ -23,7 +23,10 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: 'Metadata' });
 
   return {
-    title: t('title'),
+    title: {
+      default: t('title'),
+      template: `%s · ${t('title')}`,
+    },
     description: t('description'),
   };
 }
@@ -39,6 +42,7 @@ export default async function LocaleLayout({
   }
 
   const messages = await getMessages({ locale });
+  const t = await getTranslations({ locale, namespace: 'Nav' });
 
   return (
     <html
@@ -47,6 +51,9 @@ export default async function LocaleLayout({
     >
       <body className={sourceSans.className}>
         <NextIntlClientProvider locale={locale} messages={messages}>
+          <a className="skipLink" href="#main">
+            {t('skip')}
+          </a>
           {children}
         </NextIntlClientProvider>
       </body>

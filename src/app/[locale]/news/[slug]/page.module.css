@@ -199,9 +199,11 @@
 
 .asideLabel {
   margin-bottom: var(--space-2);
+  font-family: var(--font-sans);
   font-size: var(--text-xs);
   font-weight: var(--weight-semibold);
   letter-spacing: 0.08em;
+  line-height: var(--leading-snug);
   text-transform: uppercase;
 }
 

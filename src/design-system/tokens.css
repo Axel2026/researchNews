@@ -1,15 +1,16 @@
 :root {
   --color-bg: #f6f1e8;
   --color-ink: #3a291c;
-  --color-muted: #7a6856;
+  --color-muted: #655445;
   --color-line: #e4ddd2;
   --color-rule: #b9ab96;
-  --color-accent: #c45c26;
-  --color-accent-hover: #a84c1e;
+  --color-accent: #a84c1e;
+  --color-accent-hover: #7f3a15;
   --color-surface: #fffdf8;
   --color-peach: #f3d5c0;
   --color-hero: #ece4d6;
   --color-chip-border: #d8d0c4;
+  --color-control-border: #7d6b5a;
 
   --font-serif:
     var(--font-newsreader), Georgia, 'Iowan Old Style', Palatino,

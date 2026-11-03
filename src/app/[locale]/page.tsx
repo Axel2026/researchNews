@@ -11,13 +11,11 @@ import styles from './page.module.css';
 export const revalidate = 10800;
 
 function formatEditionDate(isoDate: string, locale: string) {
-  return Temporal.PlainDate.from(isoDate)
-    .toLocaleString(locale, {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-    })
-    .toUpperCase();
+  return Temporal.PlainDate.from(isoDate).toLocaleString(locale, {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
 }
 
 export default async function Home({ params }: PageProps<'/[locale]'>) {
@@ -38,17 +36,18 @@ export default async function Home({ params }: PageProps<'/[locale]'>) {
     <div className={styles.page}>
       <header className={styles.header}>
         <Link className={styles.brand} href="/">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className={styles.logo}
             src="/images/logo.svg"
-            alt={t('Metadata.title')}
+            alt="ResearchNews"
             width={2048}
             height={683}
           />
         </Link>
         <div className={styles.headerEnd}>
           <nav className={styles.nav} aria-label={t('Nav.main')}>
-            <Link className={styles.navCurrent} href="/">
+            <Link className={styles.navCurrent} href="/" aria-current="page">
               {t('Nav.stories')}
             </Link>
           </nav>
@@ -56,8 +55,10 @@ export default async function Home({ params }: PageProps<'/[locale]'>) {
         </div>
       </header>
 
-      <main className={styles.main}>
-        <p className={styles.edition}>{editionDate}</p>
+      <main id="main" tabIndex={-1} className={styles.main}>
+        <time className={styles.edition} dateTime={editionDateIso}>
+          {editionDate}
+        </time>
         <h1 className={styles.masthead}>{t('Home.masthead')}</h1>
         <p className={styles.subtitle}>{t('Home.subtitle')}</p>
         <HomeFeed papers={papers} locale={locale} />

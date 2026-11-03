@@ -16,3 +16,11 @@ export const localeLabels: Record<AppLocale, string> = {
   fr: 'FR',
   es: 'ES',
 };
+
+export const localeNames: Record<AppLocale, string> = {
+  en: 'English',
+  pl: 'Polski',
+  de: 'Deutsch',
+  fr: 'Français',
+  es: 'Español',
+};

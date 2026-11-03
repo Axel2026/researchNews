@@ -2,7 +2,7 @@
 
 import { useLocale, useTranslations } from 'next-intl';
 import { Link, usePathname } from '@/i18n/navigation';
-import { localeLabels, routing } from '@/i18n/routing';
+import { localeLabels, localeNames, routing } from '@/i18n/routing';
 import styles from './LanguageSwitcher.module.css';
 
 export function LanguageSwitcher() {
@@ -22,9 +22,11 @@ export function LanguageSwitcher() {
             href={pathname}
             locale={code}
             hrefLang={code}
+            lang={code}
             aria-current={isCurrent ? 'true' : undefined}
           >
             {localeLabels[code]}
+            <span className={styles.languageName}>{localeNames[code]}</span>
           </Link>
         );
       })}
