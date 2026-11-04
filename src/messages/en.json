@@ -23,11 +23,11 @@
     "moreIn": "More in {field}"
   },
   "News": {
-    "kicker": "Popular-science article",
     "bodyHeading": "Article",
     "source": "Source paper",
     "viewOriginal": "View original paper",
-    "download": "Download"
+    "download": "Download",
+    "opensNewTab": "opens in a new tab"
   },
   "Category": {
     "kicker": "Category",

@@ -23,11 +23,11 @@
     "moreIn": "Plus dans {field}"
   },
   "News": {
-    "kicker": "Article de vulgarisation scientifique",
     "bodyHeading": "Article",
     "source": "Article source",
     "viewOriginal": "Voir l’article original",
-    "download": "Télécharger"
+    "download": "Télécharger",
+    "opensNewTab": "s’ouvre dans un nouvel onglet"
   },
   "Category": {
     "kicker": "Catégorie",

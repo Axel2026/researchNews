@@ -52,6 +52,7 @@ export const ExternalLink: Story = {
   args: {
     variant: 'primary',
     href: 'https://example.com',
+    newWindowHint: 'opens in a new tab',
     children: 'View original paper',
   },
 };

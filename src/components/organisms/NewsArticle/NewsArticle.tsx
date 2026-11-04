@@ -16,11 +16,11 @@ export async function NewsArticle({
     <NewsArticleView
       article={article}
       copy={{
-        kicker: t('News.kicker'),
         bodyHeading: t('News.bodyHeading'),
         source: t('News.source'),
         viewOriginal: t('News.viewOriginal'),
         download: t('News.download'),
+        opensNewTab: t('News.opensNewTab'),
       }}
     />
   );

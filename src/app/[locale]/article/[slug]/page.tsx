@@ -90,9 +90,8 @@ export default async function ArticlePage({
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <LanguageSwitcher />
         <div className={styles.headerBar}>
-          <Link className={styles.brand} href="/">
+          <Link className={styles.brand} href="/" aria-label="ResearchNews">
             {/* eslint-disable-next-line @next/next/no-img-element -- next/image does not optimize SVG */}
             <img
               className={styles.logo}
@@ -102,7 +101,10 @@ export default async function ArticlePage({
               height={683}
             />
           </Link>
-          <AccountMenu />
+          <div className={styles.headerActions}>
+            <AccountMenu />
+            <LanguageSwitcher />
+          </div>
         </div>
       </header>
 

@@ -96,10 +96,9 @@ export default async function CategoryPage({
   return (
     <div className={homeStyles.page}>
       <header className={homeStyles.header}>
-        <LanguageSwitcher />
         <div className={homeStyles.headerBar}>
           <div className={homeStyles.headerStart}>
-            <Link className={homeStyles.brand} href="/">
+            <Link className={homeStyles.brand} href="/" aria-label="ResearchNews">
               {/* eslint-disable-next-line @next/next/no-img-element -- next/image does not optimize SVG */}
               <img
                 className={homeStyles.logo}
@@ -116,14 +115,19 @@ export default async function CategoryPage({
               <CategoryDropdown categories={categories} currentSlug={slug} />
             </nav>
           </div>
-          <AccountMenu />
+          <div className={homeStyles.headerActions}>
+            <AccountMenu />
+            <LanguageSwitcher />
+          </div>
         </div>
       </header>
 
       <main id="main" tabIndex={-1} className={homeStyles.main}>
         <p className={homeStyles.kicker}>{t('Category.kicker')}</p>
-        <h1 className={styles.title}>{field}</h1>
-        <section className={styles.feed} aria-label={field}>
+        <h1 id="category-heading" className={styles.title}>
+          {field}
+        </h1>
+        <section className={styles.feed} aria-labelledby="category-heading">
           <CategoryFeed articles={articles} />
         </section>
       </main>

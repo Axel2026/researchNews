@@ -23,11 +23,11 @@
     "moreIn": "Więcej z dziedziny {field}"
   },
   "News": {
-    "kicker": "Artykuł popularnonaukowy",
     "bodyHeading": "Artykuł",
     "source": "Źródłowa praca",
     "viewOriginal": "Zobacz oryginalną pracę",
-    "download": "Pobierz"
+    "download": "Pobierz",
+    "opensNewTab": "otwiera się w nowej karcie"
   },
   "Category": {
     "kicker": "Kategoria",

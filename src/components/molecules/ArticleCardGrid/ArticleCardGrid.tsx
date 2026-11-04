@@ -14,7 +14,10 @@ export function ArticleCardGrid({
   showCategoryChip?: boolean;
 }) {
   return (
-    <ul className={layout === 'row' ? styles.rowGrid : styles.wrapGrid}>
+    <ul
+      className={layout === 'row' ? styles.rowGrid : styles.wrapGrid}
+      role="list"
+    >
       {articles.map((article) => (
         <li key={article.id}>
           <Article

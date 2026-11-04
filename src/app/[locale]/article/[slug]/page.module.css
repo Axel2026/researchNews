@@ -33,7 +33,7 @@
   position: relative;
   max-width: var(--content-max);
   margin: 0 auto;
-  padding: 1.5rem var(--space-6) calc(var(--space-2) + 8px);
+  padding: 1rem var(--space-6) calc(var(--space-2) + 8px);
   border-bottom: none;
   background-image:
     linear-gradient(var(--color-rule), var(--color-rule)),
@@ -69,10 +69,22 @@
   width: 100%;
 }
 
+.headerActions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--space-3);
+}
+
 .main {
   max-width: var(--content-max);
   margin: 0 auto;
   padding: var(--space-10) var(--space-6) var(--space-16);
+}
+
+.main:focus {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
 }
 
 @media (max-width: 40rem) {

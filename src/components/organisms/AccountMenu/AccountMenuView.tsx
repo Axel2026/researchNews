@@ -20,7 +20,7 @@ export function AccountMenuView({
 
   if (status === 'pending') {
     return (
-      <p className={styles.pending} aria-live="polite">
+      <p className={styles.pending} role="status">
         {t('loading')}
       </p>
     );
@@ -28,32 +28,33 @@ export function AccountMenuView({
 
   if (status === 'authenticated') {
     return (
-      <Dropdown
-        icon
-        size="compact"
-        mobileAsModal
-        rootClassName={styles.root}
-        ariaLabel={t('account')}
-        title={t('account')}
-        closeLabel={tNav('close')}
-        label={<UserIcon />}
-      >
-        <li>
-          <Link className={styles.option} href="/">
-            {t('userPanel')}
-          </Link>
-        </li>
-        <li>
-          <Link className={styles.option} href="/">
-            {t('bookmarks')}
-          </Link>
-        </li>
-        <li>
-          <button className={styles.option} type="button" onClick={onSignOut}>
-            {t('logout')}
-          </button>
-        </li>
-      </Dropdown>
+      <nav className={styles.root} aria-label={t('account')}>
+        <Dropdown
+          icon
+          size="compact"
+          mobileAsModal
+          ariaLabel={t('account')}
+          title={t('account')}
+          closeLabel={tNav('close')}
+          label={<UserIcon />}
+        >
+          <li>
+            <Link className={styles.option} href="/">
+              {t('userPanel')}
+            </Link>
+          </li>
+          <li>
+            <Link className={styles.option} href="/">
+              {t('bookmarks')}
+            </Link>
+          </li>
+          <li>
+            <button className={styles.option} type="button" onClick={onSignOut}>
+              {t('logout')}
+            </button>
+          </li>
+        </Dropdown>
+      </nav>
     );
   }
 

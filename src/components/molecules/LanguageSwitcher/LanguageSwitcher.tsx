@@ -13,7 +13,7 @@ export function LanguageSwitcher() {
   const t = useTranslations('Nav');
 
   return (
-    <div className={styles.root}>
+    <nav className={styles.root} aria-label={t('language')}>
       <Dropdown
         icon
         size="compact"
@@ -66,6 +66,6 @@ export function LanguageSwitcher() {
           </li>
         ))}
       </Dropdown>
-    </div>
+    </nav>
   );
 }

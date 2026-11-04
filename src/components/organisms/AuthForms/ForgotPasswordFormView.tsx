@@ -7,6 +7,7 @@ import { authErrorKey } from '@/lib/auth/errors';
 import { authCallbackUrl } from '@/lib/auth/redirect';
 import { createClient } from '@/lib/supabase/client';
 import styles from './AuthForms.module.css';
+import { AuthTextField, focusFirstInvalidField } from './AuthTextField';
 import { fieldErrorMessage, forgotPasswordSchema } from './schema';
 
 export type ForgotPasswordFormStatus = 'form' | 'sent';
@@ -78,7 +79,10 @@ export function ForgotPasswordFormView({
       onSubmit={(event) => {
         event.preventDefault();
         event.stopPropagation();
-        void form.handleSubmit();
+        const formElement = event.currentTarget;
+        void form.handleSubmit().then(() => {
+          focusFirstInvalidField(formElement);
+        });
       }}
     >
       {formError ? (
@@ -87,29 +91,20 @@ export function ForgotPasswordFormView({
         </p>
       ) : null}
       <form.Field name="email">
-        {(field) => {
-          const message = fieldErrorMessage(field.state.meta.errors);
-
-          return (
-            <label className={styles.label}>
-              {t('email')}
-              <input
-                className={styles.input}
-                type="email"
-                name={field.name}
-                autoComplete="email"
-                spellCheck={false}
-                value={field.state.value}
-                aria-invalid={message ? true : undefined}
-                onBlur={field.handleBlur}
-                onChange={(event) => field.handleChange(event.target.value)}
-              />
-              {message ? (
-                <span className={styles.fieldError}>{message}</span>
-              ) : null}
-            </label>
-          );
-        }}
+        {(field) => (
+          <AuthTextField
+            label={t('email')}
+            error={fieldErrorMessage(field.state.meta.errors)}
+            type="email"
+            name={field.name}
+            autoComplete="email"
+            autoCapitalize="none"
+            spellCheck={false}
+            value={field.state.value}
+            onBlur={field.handleBlur}
+            onChange={(event) => field.handleChange(event.target.value)}
+          />
+        )}
       </form.Field>
       <form.Subscribe selector={(state) => state.isSubmitting}>
         {(isSubmitting) => (
@@ -117,6 +112,7 @@ export function ForgotPasswordFormView({
             className={styles.button}
             type="submit"
             disabled={isSubmitting}
+            aria-busy={isSubmitting || undefined}
           >
             {t('submitForgot')}
           </button>

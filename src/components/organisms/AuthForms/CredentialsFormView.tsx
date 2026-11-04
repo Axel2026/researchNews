@@ -7,6 +7,7 @@ import { authErrorKey } from '@/lib/auth/errors';
 import { authCallbackUrl } from '@/lib/auth/redirect';
 import { createClient } from '@/lib/supabase/client';
 import styles from './AuthForms.module.css';
+import { AuthTextField, focusFirstInvalidField } from './AuthTextField';
 import { fieldErrorMessage, loginSchema, registerSchema } from './schema';
 
 export type CredentialsMode = 'login' | 'register';
@@ -111,7 +112,11 @@ export function CredentialsFormView({
   });
 
   if (status === 'redirecting') {
-    return <p className={styles.notice}>{t('loading')}</p>;
+    return (
+      <p className={styles.notice} role="status">
+        {t('loading')}
+      </p>
+    );
   }
 
   if (status === 'checkEmail') {
@@ -130,6 +135,7 @@ export function CredentialsFormView({
             className={styles.google}
             type="button"
             disabled={isSubmitting || googlePending}
+            aria-busy={isSubmitting || googlePending || undefined}
             onClick={() => {
               onGoogle?.();
             }}
@@ -145,7 +151,10 @@ export function CredentialsFormView({
         onSubmit={(event) => {
           event.preventDefault();
           event.stopPropagation();
-          void form.handleSubmit();
+          const formElement = event.currentTarget;
+          void form.handleSubmit().then(() => {
+            focusFirstInvalidField(formElement);
+          });
         }}
       >
         {callbackFailed ? (
@@ -159,80 +168,51 @@ export function CredentialsFormView({
           </p>
         ) : null}
         <form.Field name="email">
-          {(field) => {
-            const message = fieldErrorMessage(field.state.meta.errors);
-
-            return (
-              <label className={styles.label}>
-                {t('email')}
-                <input
-                  className={styles.input}
-                  type="email"
-                  name={field.name}
-                  autoComplete="email"
-                  spellCheck={false}
-                  value={field.state.value}
-                  aria-invalid={message ? true : undefined}
-                  onBlur={field.handleBlur}
-                  onChange={(event) => field.handleChange(event.target.value)}
-                />
-                {message ? (
-                  <span className={styles.fieldError}>{message}</span>
-                ) : null}
-              </label>
-            );
-          }}
+          {(field) => (
+            <AuthTextField
+              label={t('email')}
+              error={fieldErrorMessage(field.state.meta.errors)}
+              type="email"
+              name={field.name}
+              autoComplete="email"
+              autoCapitalize="none"
+              spellCheck={false}
+              value={field.state.value}
+              onBlur={field.handleBlur}
+              onChange={(event) => field.handleChange(event.target.value)}
+            />
+          )}
         </form.Field>
         <form.Field name="password">
-          {(field) => {
-            const message = fieldErrorMessage(field.state.meta.errors);
-
-            return (
-              <label className={styles.label}>
-                {t('password')}
-                <input
-                  className={styles.input}
-                  type="password"
-                  name={field.name}
-                  autoComplete={
-                    mode === 'login' ? 'current-password' : 'new-password'
-                  }
-                  value={field.state.value}
-                  aria-invalid={message ? true : undefined}
-                  onBlur={field.handleBlur}
-                  onChange={(event) => field.handleChange(event.target.value)}
-                />
-                {message ? (
-                  <span className={styles.fieldError}>{message}</span>
-                ) : null}
-              </label>
-            );
-          }}
+          {(field) => (
+            <AuthTextField
+              label={t('password')}
+              error={fieldErrorMessage(field.state.meta.errors)}
+              type="password"
+              name={field.name}
+              autoComplete={
+                mode === 'login' ? 'current-password' : 'new-password'
+              }
+              value={field.state.value}
+              onBlur={field.handleBlur}
+              onChange={(event) => field.handleChange(event.target.value)}
+            />
+          )}
         </form.Field>
         {mode === 'register' ? (
           <form.Field name="confirmPassword">
-            {(field) => {
-              const message = fieldErrorMessage(field.state.meta.errors);
-
-              return (
-                <label className={styles.label}>
-                  {t('confirmPassword')}
-                  <input
-                    className={styles.input}
-                    type="password"
-                    name={field.name}
-                    autoComplete="new-password"
-                    value={field.state.value}
-                    aria-invalid={message ? true : undefined}
-                    onBlur={field.handleBlur}
-                    onChange={(event) => field.handleChange(event.target.value)}
-                  />
-                  {message ? (
-                    <span className={styles.fieldError}>{message}</span>
-                  ) : null}
-                </label>
-              );
-            }}
+            {(field) => (
+              <AuthTextField
+                label={t('confirmPassword')}
+                error={fieldErrorMessage(field.state.meta.errors)}
+                type="password"
+                name={field.name}
+                autoComplete="new-password"
+                value={field.state.value}
+                onBlur={field.handleBlur}
+                onChange={(event) => field.handleChange(event.target.value)}
+              />
+            )}
           </form.Field>
         ) : null}
         <form.Subscribe selector={(state) => state.isSubmitting}>
@@ -241,6 +221,7 @@ export function CredentialsFormView({
               className={styles.button}
               type="submit"
               disabled={isSubmitting || googlePending}
+              aria-busy={isSubmitting || undefined}
             >
               {mode === 'login' ? t('submitLogin') : t('submitRegister')}
             </button>

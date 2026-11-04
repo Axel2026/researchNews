@@ -32,7 +32,7 @@ export function HomeFeedView({
   return (
     <>
       {featured ? (
-        <article className={styles.featured}>
+        <article className={styles.featured} aria-labelledby="featured-heading">
           <div className={styles.featuredMedia}>
             <ArticleImage
               src={featured.imageUrl}
@@ -42,7 +42,7 @@ export function HomeFeedView({
           </div>
           <div className={styles.featuredCopy}>
             <p className={styles.kicker}>{copy.kicker}</p>
-            <h2 className={styles.featuredTitle}>
+            <h2 id="featured-heading" className={styles.featuredTitle}>
               <Link href={`/article/${featured.slug}`}>{featured.title}</Link>
             </h2>
             <p className={styles.featuredDek}>{featured.shortPopularization}</p>
@@ -50,6 +50,8 @@ export function HomeFeedView({
             <Link
               className={styles.storyLink}
               href={`/article/${featured.slug}`}
+              tabIndex={-1}
+              aria-hidden="true"
             >
               {copy.readStory} <span aria-hidden="true">→</span>
             </Link>

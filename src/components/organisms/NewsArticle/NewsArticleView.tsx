@@ -6,11 +6,11 @@ import { categoryPath } from '@/lib/seo';
 import styles from './NewsArticle.module.css';
 
 export type NewsArticleCopy = {
-  kicker: string;
   bodyHeading: string;
   source: string;
   viewOriginal: string;
   download: string;
+  opensNewTab: string;
 };
 
 export function NewsArticleView({
@@ -24,8 +24,7 @@ export function NewsArticleView({
   const body = getArticleParagraphs(article, 'fullPopularization');
 
   return (
-    <>
-      <p className={styles.kicker}>{copy.kicker}</p>
+    <article>
       <h1 className={styles.title}>{article.title}</h1>
       <p className={styles.dek}>{article.shortPopularization}</p>
       <div className={styles.meta}>
@@ -39,13 +38,14 @@ export function NewsArticleView({
       <figure className={styles.hero}>
         <ArticleImage
           src={article.imageUrl}
+          alt={article.title}
           sizes="(min-width: 46rem) 46rem, 100vw"
           priority
         />
       </figure>
 
       <div className={styles.layout}>
-        <article className={styles.story}>
+        <div className={styles.story}>
           <section className={styles.summary}>
             {summary.map((paragraph, index) => (
               <p key={index}>{paragraph}</p>
@@ -57,12 +57,12 @@ export function NewsArticleView({
               <p key={index}>{paragraph}</p>
             ))}
           </section>
-        </article>
+        </div>
 
         <aside className={styles.aside} aria-labelledby="source-heading">
-          <p id="source-heading" className={styles.asideLabel}>
+          <h2 id="source-heading" className={styles.asideLabel}>
             {copy.source}
-          </p>
+          </h2>
           <p className={styles.asideTitle}>{article.realTitle}</p>
           <p className={styles.asideMeta}>{article.authors.join(', ')}</p>
           <p className={styles.asideMeta}>{article.field}</p>
@@ -72,6 +72,7 @@ export function NewsArticleView({
                 className={styles.asideAction}
                 href={article.sourceUrl}
                 variant="primary"
+                newWindowHint={copy.opensNewTab}
               >
                 {copy.viewOriginal}
               </Button>
@@ -81,6 +82,7 @@ export function NewsArticleView({
                 className={styles.asideAction}
                 href={article.downloadUrl}
                 variant="secondary"
+                newWindowHint={copy.opensNewTab}
               >
                 {copy.download}
               </Button>
@@ -88,6 +90,6 @@ export function NewsArticleView({
           </div>
         </aside>
       </div>
-    </>
+    </article>
   );
 }

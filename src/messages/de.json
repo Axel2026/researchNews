@@ -23,11 +23,11 @@
     "moreIn": "Mehr aus {field}"
   },
   "News": {
-    "kicker": "Populärwissenschaftlicher Artikel",
     "bodyHeading": "Artikel",
     "source": "Originalarbeit",
     "viewOriginal": "Originalarbeit ansehen",
-    "download": "Herunterladen"
+    "download": "Herunterladen",
+    "opensNewTab": "öffnet in einem neuen Tab"
   },
   "Category": {
     "kicker": "Kategorie",

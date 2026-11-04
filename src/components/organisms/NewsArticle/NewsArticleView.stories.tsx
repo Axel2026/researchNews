@@ -10,11 +10,11 @@ const meta = {
   args: {
     article: sampleArticleDetail,
     copy: {
-      kicker: en.News.kicker,
       bodyHeading: en.News.bodyHeading,
       source: en.News.source,
       viewOriginal: en.News.viewOriginal,
       download: en.News.download,
+      opensNewTab: en.News.opensNewTab,
     },
   },
   decorators: [

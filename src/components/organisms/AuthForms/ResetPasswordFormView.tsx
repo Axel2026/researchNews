@@ -6,6 +6,7 @@ import { Link, useRouter } from '@/i18n/navigation';
 import { authErrorKey } from '@/lib/auth/errors';
 import { createClient } from '@/lib/supabase/client';
 import styles from './AuthForms.module.css';
+import { AuthTextField, focusFirstInvalidField } from './AuthTextField';
 import { fieldErrorMessage, resetPasswordSchema } from './schema';
 
 export type ResetPasswordFormStatus =
@@ -59,7 +60,11 @@ export function ResetPasswordFormView({
   });
 
   if (status === 'loading') {
-    return <p className={styles.notice}>{t('loading')}</p>;
+    return (
+      <p className={styles.notice} role="status">
+        {t('loading')}
+      </p>
+    );
   }
 
   if (status === 'missing') {
@@ -95,7 +100,10 @@ export function ResetPasswordFormView({
       onSubmit={(event) => {
         event.preventDefault();
         event.stopPropagation();
-        void form.handleSubmit();
+        const formElement = event.currentTarget;
+        void form.handleSubmit().then(() => {
+          focusFirstInvalidField(formElement);
+        });
       }}
     >
       {formError ? (
@@ -104,52 +112,32 @@ export function ResetPasswordFormView({
         </p>
       ) : null}
       <form.Field name="password">
-        {(field) => {
-          const message = fieldErrorMessage(field.state.meta.errors);
-
-          return (
-            <label className={styles.label}>
-              {t('password')}
-              <input
-                className={styles.input}
-                type="password"
-                name={field.name}
-                autoComplete="new-password"
-                value={field.state.value}
-                aria-invalid={message ? true : undefined}
-                onBlur={field.handleBlur}
-                onChange={(event) => field.handleChange(event.target.value)}
-              />
-              {message ? (
-                <span className={styles.fieldError}>{message}</span>
-              ) : null}
-            </label>
-          );
-        }}
+        {(field) => (
+          <AuthTextField
+            label={t('password')}
+            error={fieldErrorMessage(field.state.meta.errors)}
+            type="password"
+            name={field.name}
+            autoComplete="new-password"
+            value={field.state.value}
+            onBlur={field.handleBlur}
+            onChange={(event) => field.handleChange(event.target.value)}
+          />
+        )}
       </form.Field>
       <form.Field name="confirmPassword">
-        {(field) => {
-          const message = fieldErrorMessage(field.state.meta.errors);
-
-          return (
-            <label className={styles.label}>
-              {t('confirmPassword')}
-              <input
-                className={styles.input}
-                type="password"
-                name={field.name}
-                autoComplete="new-password"
-                value={field.state.value}
-                aria-invalid={message ? true : undefined}
-                onBlur={field.handleBlur}
-                onChange={(event) => field.handleChange(event.target.value)}
-              />
-              {message ? (
-                <span className={styles.fieldError}>{message}</span>
-              ) : null}
-            </label>
-          );
-        }}
+        {(field) => (
+          <AuthTextField
+            label={t('confirmPassword')}
+            error={fieldErrorMessage(field.state.meta.errors)}
+            type="password"
+            name={field.name}
+            autoComplete="new-password"
+            value={field.state.value}
+            onBlur={field.handleBlur}
+            onChange={(event) => field.handleChange(event.target.value)}
+          />
+        )}
       </form.Field>
       <form.Subscribe selector={(state) => state.isSubmitting}>
         {(isSubmitting) => (
@@ -157,6 +145,7 @@ export function ResetPasswordFormView({
             className={styles.button}
             type="submit"
             disabled={isSubmitting}
+            aria-busy={isSubmitting || undefined}
           >
             {t('submitReset')}
           </button>

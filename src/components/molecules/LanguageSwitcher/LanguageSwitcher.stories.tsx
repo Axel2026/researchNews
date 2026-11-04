@@ -7,7 +7,7 @@ const meta = {
   component: LanguageSwitcher,
   decorators: [
     (Story) => (
-      <div style={{ position: 'relative', minHeight: '16rem' }}>
+      <div style={{ minHeight: '16rem' }}>
         <Story />
       </div>
     ),

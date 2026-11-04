@@ -53,4 +53,8 @@
   .dialog::backdrop {
     background: Canvas;
   }
+
+  .close {
+    border: 1px solid ButtonText;
+  }
 }

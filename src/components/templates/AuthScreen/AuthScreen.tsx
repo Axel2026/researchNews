@@ -13,8 +13,7 @@ export function AuthScreen({
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <LanguageSwitcher />
-        <Link className={styles.brand} href="/">
+        <Link className={styles.brand} href="/" aria-label="ResearchNews">
           {/* eslint-disable-next-line @next/next/no-img-element -- next/image does not optimize SVG */}
           <img
             className={styles.logo}
@@ -24,6 +23,7 @@ export function AuthScreen({
             height={683}
           />
         </Link>
+        <LanguageSwitcher />
       </header>
       <main id="main" tabIndex={-1} className={styles.main}>
         <h1 className={styles.title}>{title}</h1>

@@ -67,6 +67,7 @@ export function Dropdown(props: DropdownProps) {
   const reactId = useId();
   const buttonId = `${reactId}-button`;
   const listId = `${reactId}-list`;
+  const dialogId = `${reactId}-dialog`;
   const rootRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
@@ -228,8 +229,8 @@ export function Dropdown(props: DropdownProps) {
         className={triggerClass}
         type="button"
         aria-expanded={open}
-        aria-controls={useModal ? undefined : listId}
-        aria-haspopup={useModal ? 'dialog' : 'menu'}
+        aria-controls={useModal ? dialogId : listId}
+        aria-haspopup={useModal ? 'dialog' : true}
         aria-label={ariaLabel}
         onClick={() => setOpen((value) => !value)}
         onKeyDown={onButtonKeyDown}
@@ -238,12 +239,13 @@ export function Dropdown(props: DropdownProps) {
       </button>
       {useModal && title && closeLabel ? (
         <Modal
+          id={dialogId}
           open={open}
-          onClose={() => setOpen(false)}
+          onClose={() => close(true)}
           title={title}
           closeLabel={closeLabel}
         >
-          <ul className={styles.modalList} onClick={onListClick}>
+          <ul className={styles.modalList} role="list" onClick={onListClick}>
             {children}
           </ul>
         </Modal>
@@ -253,6 +255,7 @@ export function Dropdown(props: DropdownProps) {
           id={listId}
           className={listClass}
           hidden={!open}
+          role="list"
           aria-labelledby={buttonId}
           onKeyDown={onListKeyDown}
           onClick={onListClick}

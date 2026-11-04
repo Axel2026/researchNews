@@ -23,11 +23,11 @@
     "moreIn": "Más en {field}"
   },
   "News": {
-    "kicker": "Artículo de divulgación científica",
     "bodyHeading": "Artículo",
     "source": "Artículo original",
     "viewOriginal": "Ver el artículo original",
-    "download": "Descargar"
+    "download": "Descargar",
+    "opensNewTab": "se abre en una pestaña nueva"
   },
   "Category": {
     "kicker": "Categoría",

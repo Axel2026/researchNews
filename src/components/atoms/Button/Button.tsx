@@ -12,11 +12,13 @@ type CommonProps = {
 
 type ButtonAsLink = CommonProps & {
   href: string;
+  newWindowHint?: string;
 };
 
 type ButtonAsButton = CommonProps & {
   href?: undefined;
   type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
 };
 
 export function Button({
@@ -30,6 +32,11 @@ export function Button({
     .join(' ');
 
   if ('href' in props && props.href) {
+    const hint = 'newWindowHint' in props ? props.newWindowHint : undefined;
+    const hintText = hint ? (
+      <span className={styles.visuallyHidden}>{hint}</span>
+    ) : null;
+
     if (/^https?:\/\//i.test(props.href)) {
       return (
         <a
@@ -39,6 +46,7 @@ export function Button({
           rel="noopener noreferrer"
         >
           {children}
+          {hintText}
         </a>
       );
     }
@@ -51,9 +59,10 @@ export function Button({
   }
 
   const type = 'type' in props && props.type ? props.type : 'button';
+  const disabled = 'disabled' in props ? props.disabled : undefined;
 
   return (
-    <button type={type} className={classNames}>
+    <button type={type} className={classNames} disabled={disabled}>
       {children}
     </button>
   );

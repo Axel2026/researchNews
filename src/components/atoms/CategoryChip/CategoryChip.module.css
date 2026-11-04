@@ -13,7 +13,8 @@
 
 a.chip {
   min-height: 1.5rem;
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
 }
 
 a.chip:hover {
@@ -24,7 +25,7 @@ a.chip:hover {
 
 :global(.page) a.chip {
   color: var(--color-accent);
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 :global(.page) a.chip:hover {

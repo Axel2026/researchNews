@@ -11,12 +11,14 @@ import { createPortal } from 'react-dom';
 import styles from './Modal.module.css';
 
 export function Modal({
+  id,
   open,
   onClose,
   title,
   closeLabel,
   children,
 }: {
+  id?: string;
   open: boolean;
   onClose: () => void;
   title: string;
@@ -59,8 +61,10 @@ export function Modal({
   return createPortal(
     <dialog
       ref={dialogRef}
+      id={id}
       className={styles.dialog}
       aria-labelledby={titleId}
+      aria-modal="true"
       onClose={onClose}
       onClick={onBackdropClick}
     >

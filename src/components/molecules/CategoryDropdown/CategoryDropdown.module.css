@@ -39,6 +39,7 @@
 .optionCurrent {
   display: block;
   max-width: 100%;
+  min-height: 2.75rem;
   padding: var(--space-2) var(--space-4);
   color: inherit;
   font-size: var(--text-md);
