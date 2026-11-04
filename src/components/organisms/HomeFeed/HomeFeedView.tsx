@@ -10,6 +10,16 @@ import { formatPaperPublishedAt } from '@/lib/dates';
 
 const HOME_ROW_SIZE = 4;
 
+function publicationTimestamp(article: ArticleListItem): number {
+  return Date.parse(article.paperPublishedAt ?? article.publishedAt);
+}
+
+function newestFirst(articles: ArticleListItem[]): ArticleListItem[] {
+  return [...articles].sort(
+    (left, right) => publicationTimestamp(right) - publicationTimestamp(left),
+  );
+}
+
 export type HomeFeedCopy = {
   kicker: string;
   readStory: string;
@@ -31,7 +41,7 @@ export function HomeFeedView({
   copy: HomeFeedCopy;
 }) {
   const [featured, ...rest] = articles;
-  const latest = rest.slice(0, HOME_ROW_SIZE);
+  const latest = newestFirst(rest).slice(0, HOME_ROW_SIZE);
 
   return (
     <>
@@ -84,13 +94,13 @@ export function HomeFeedView({
       ) : null}
 
       {categories.map((category) => {
-        const row = articles
-          .filter(
+        const row = newestFirst(
+          articles.filter(
             (article) =>
               article.fieldSlug === category.slug ||
               article.field === category.field,
-          )
-          .slice(0, HOME_ROW_SIZE);
+          ),
+        ).slice(0, HOME_ROW_SIZE);
 
         if (row.length === 0) {
           return null;
