@@ -16,8 +16,7 @@
   .wrapGrid,
   .rowGrid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    column-gap: var(--space-8);
-    row-gap: 0;
+    gap: 0 var(--space-8);
   }
 
   .rowGrid {

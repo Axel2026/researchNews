@@ -49,12 +49,12 @@
   overflow-wrap: break-word;
 }
 
+.optionCurrent {
+  font-weight: var(--weight-semibold);
+}
+
 .option:hover,
 .optionCurrent:hover {
   color: var(--color-accent);
   background: var(--color-hero);
-}
-
-.optionCurrent {
-  font-weight: var(--weight-semibold);
 }

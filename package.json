@@ -7,11 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --max-warnings=0",
+    "lint:css": "stylelint \"**/*.css\"",
     "typecheck": "next typegen && tsc --noEmit",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "prepare": "husky"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
@@ -34,10 +36,19 @@
     "eslint": "^9",
     "eslint-config-next": "16.4.4",
     "eslint-config-prettier": "^10",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.0",
     "prettier": "^3",
     "storybook": "10.6.5",
+    "stylelint": "16.26.1",
+    "stylelint-config-standard": "39.0.1",
     "typescript": "6.0.3",
     "vite": "^7"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs,json,md,css,yml,yaml}": "prettier --check --ignore-unknown",
+    "*.{js,jsx,ts,tsx,mjs,cjs}": "eslint --max-warnings=0",
+    "*.css": "stylelint"
   },
   "packageManager": "pnpm@12.16.1"
 }

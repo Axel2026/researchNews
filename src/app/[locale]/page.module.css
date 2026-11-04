@@ -29,10 +29,6 @@
   text-decoration: none;
 }
 
-.page > .header {
-  z-index: var(--z-raised);
-}
-
 .header {
   position: relative;
   max-width: var(--content-max);
@@ -49,6 +45,10 @@
   background-position:
     left calc(100% - 7px),
     left bottom;
+}
+
+.page > .header {
+  z-index: var(--z-raised);
 }
 
 .brand {
