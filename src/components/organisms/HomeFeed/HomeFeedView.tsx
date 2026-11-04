@@ -1,4 +1,4 @@
-import styles from '@/app/[locale]/page.module.css';
+import styles from './HomeFeed.module.css';
 import { ArticleImage } from '@/components/atoms/ArticleImage/ArticleImage';
 import { CategoryChip } from '@/components/atoms/CategoryChip/CategoryChip';
 import { ArticleCardGrid } from '@/components/molecules/ArticleCardGrid/ArticleCardGrid';

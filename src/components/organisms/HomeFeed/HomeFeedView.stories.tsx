@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import pageStyles from '@/app/[locale]/page.module.css';
-import en from '@/messages/en.json';
 import { sampleArticles, sampleCategories } from '@/components/storyData';
+import { PageShell } from '@/components/templates/PageShell/PageShell';
+import en from '@/messages/en.json';
 import { HomeFeedView } from './HomeFeedView';
 
 const meta = {
@@ -21,11 +21,9 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <div className={pageStyles.page}>
-        <div className={pageStyles.main}>
-          <Story />
-        </div>
-      </div>
+      <PageShell>
+        <Story />
+      </PageShell>
     ),
   ],
   parameters: {

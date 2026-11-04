@@ -2,12 +2,11 @@ import type { Metadata } from 'next';
 import { hasLocale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { CategoryDropdown } from '@/components/molecules/CategoryDropdown/CategoryDropdown';
-import { LanguageSwitcher } from '@/components/molecules/LanguageSwitcher/LanguageSwitcher';
-import { AccountMenu } from '@/components/organisms/AccountMenu/AccountMenu';
-import { CategoryFeed } from '@/components/organisms/CategoryFeed/CategoryFeed';
+import { Header } from '@/components/organisms/Header/Header';
+import { ArticleListing } from '@/components/templates/ArticleListing/ArticleListing';
+import { PageShell } from '@/components/templates/PageShell/PageShell';
 import { getCategoryBySlug, listCategories } from '@/data/articles';
-import { getPathname, Link } from '@/i18n/navigation';
+import { getPathname } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
 import {
   categoryPath,
@@ -15,8 +14,6 @@ import {
   ogLocaleByAppLocale,
   pageAlternates,
 } from '@/lib/seo';
-import homeStyles from '../../page.module.css';
-import styles from './page.module.css';
 
 export const revalidate = 10800;
 
@@ -94,47 +91,22 @@ export default async function CategoryPage({
   const t = await getTranslations({ locale });
 
   return (
-    <div className={homeStyles.page}>
-      <header className={homeStyles.header}>
-        <div className={homeStyles.headerBar}>
-          <div className={homeStyles.headerStart}>
-            <Link
-              className={homeStyles.brand}
-              href="/"
-              aria-label="ResearchNews"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element -- next/image does not optimize SVG */}
-              <img
-                className={homeStyles.logo}
-                src="/images/logo.svg"
-                alt="ResearchNews"
-                width={2048}
-                height={683}
-              />
-            </Link>
-            <nav className={homeStyles.nav} aria-label={t('Nav.main')}>
-              <Link className={homeStyles.navLink} href="/">
-                {t('Nav.stories')}
-              </Link>
-              <CategoryDropdown categories={categories} currentSlug={slug} />
-            </nav>
-          </div>
-          <div className={homeStyles.headerActions}>
-            <AccountMenu />
-            <LanguageSwitcher />
-          </div>
-        </div>
-      </header>
-
-      <main id="main" tabIndex={-1} className={homeStyles.main}>
-        <p className={homeStyles.kicker}>{t('Category.kicker')}</p>
-        <h1 id="category-heading" className={styles.title}>
-          {field}
-        </h1>
-        <section className={styles.feed} aria-labelledby="category-heading">
-          <CategoryFeed articles={articles} locale={locale} />
-        </section>
-      </main>
-    </div>
+    <PageShell
+      header={
+        <Header
+          current="category"
+          categories={categories}
+          currentCategorySlug={slug}
+        />
+      }
+    >
+      <ArticleListing
+        kicker={t('Category.kicker')}
+        title={field}
+        headingId="category-heading"
+        articles={articles}
+        locale={locale}
+      />
+    </PageShell>
   );
 }

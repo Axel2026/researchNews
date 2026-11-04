@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import pageStyles from '@/app/[locale]/article/[slug]/page.module.css';
 import { BookmarkButtonView } from '@/components/molecules/BookmarkButton/BookmarkButtonView';
+import { PageShell } from '@/components/templates/PageShell/PageShell';
 import en from '@/messages/en.json';
 import { sampleArticleDetail } from '@/components/storyData';
 import { NewsArticleView } from './NewsArticleView';
@@ -33,11 +33,9 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <div className={pageStyles.page}>
-        <div className={pageStyles.main}>
-          <Story />
-        </div>
-      </div>
+      <PageShell variant="article">
+        <Story />
+      </PageShell>
     ),
   ],
   parameters: {

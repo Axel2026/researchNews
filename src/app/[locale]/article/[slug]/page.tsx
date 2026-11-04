@@ -2,11 +2,11 @@ import type { Metadata } from 'next';
 import { hasLocale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { LanguageSwitcher } from '@/components/molecules/LanguageSwitcher/LanguageSwitcher';
-import { AccountMenu } from '@/components/organisms/AccountMenu/AccountMenu';
+import { Header } from '@/components/organisms/Header/Header';
 import { NewsArticle } from '@/components/organisms/NewsArticle/NewsArticle';
+import { PageShell } from '@/components/templates/PageShell/PageShell';
 import { getArticleBySlug, listArticles } from '@/data/articles';
-import { getPathname, Link } from '@/i18n/navigation';
+import { getPathname } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
 import {
   articlePath,
@@ -14,7 +14,6 @@ import {
   pageAlternates,
   socialImages,
 } from '@/lib/seo';
-import styles from './page.module.css';
 
 export const revalidate = 10800;
 
@@ -88,29 +87,8 @@ export default async function ArticlePage({
   }
 
   return (
-    <div className={styles.page}>
-      <header className={styles.header}>
-        <div className={styles.headerBar}>
-          <Link className={styles.brand} href="/" aria-label="ResearchNews">
-            {/* eslint-disable-next-line @next/next/no-img-element -- next/image does not optimize SVG */}
-            <img
-              className={styles.logo}
-              src="/images/logo.svg"
-              alt="ResearchNews"
-              width={2048}
-              height={683}
-            />
-          </Link>
-          <div className={styles.headerActions}>
-            <AccountMenu />
-            <LanguageSwitcher />
-          </div>
-        </div>
-      </header>
-
-      <main id="main" tabIndex={-1} className={styles.main}>
-        <NewsArticle article={article} locale={locale} />
-      </main>
-    </div>
+    <PageShell header={<Header />} variant="article">
+      <NewsArticle article={article} locale={locale} />
+    </PageShell>
   );
 }

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import pageStyles from '@/app/[locale]/article/[slug]/page.module.css';
 import { sampleArticleDetail } from '@/components/storyData';
+import { PageShell } from '@/components/templates/PageShell/PageShell';
 import { NewsArticle } from './NewsArticle';
 
 const meta = {
@@ -12,11 +12,9 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <div className={pageStyles.page}>
-        <div className={pageStyles.main}>
-          <Story />
-        </div>
-      </div>
+      <PageShell variant="article">
+        <Story />
+      </PageShell>
     ),
   ],
   parameters: {
