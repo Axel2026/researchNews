@@ -67,7 +67,7 @@ export function Header({
               src="/images/logo.svg"
               alt="ResearchNews"
               width={2048}
-              height={596}
+              height={578}
             />
           </Link>
           {nav}
