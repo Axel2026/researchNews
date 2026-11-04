@@ -18,6 +18,7 @@ export async function HomeFeed({
     <HomeFeedView
       articles={articles}
       categories={categories}
+      locale={locale}
       copy={{
         kicker: t('Home.kicker'),
         readStory: t('Home.readStory'),

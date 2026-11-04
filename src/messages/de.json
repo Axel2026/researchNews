@@ -25,6 +25,7 @@
   "News": {
     "bodyHeading": "Artikel",
     "source": "Originalarbeit",
+    "published": "Veröffentlicht {date}",
     "viewOriginal": "Originalarbeit ansehen",
     "download": "Herunterladen",
     "opensNewTab": "öffnet in einem neuen Tab"
@@ -36,6 +37,11 @@
   "Status": {
     "loading": "Wird geladen…",
     "error": "Der Inhalt konnte nicht geladen werden."
+  },
+  "Error": {
+    "notFoundTitle": "Diese Seite gibt es nicht.",
+    "serverTitle": "Etwas ist schiefgelaufen.",
+    "backHome": "Zur Startseite"
   },
   "Auth": {
     "account": "Konto",

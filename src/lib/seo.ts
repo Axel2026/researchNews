@@ -160,7 +160,9 @@ export function articleJsonLd({
     about.isPartOf = { '@type': 'Periodical', name: article.journal };
   }
 
-  if (article.year) {
+  if (article.paperPublishedAt) {
+    about.datePublished = article.paperPublishedAt;
+  } else if (article.year) {
     about.datePublished = String(article.year);
   }
 

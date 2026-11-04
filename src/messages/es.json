@@ -25,6 +25,7 @@
   "News": {
     "bodyHeading": "Artículo",
     "source": "Artículo original",
+    "published": "Publicado el {date}",
     "viewOriginal": "Ver el artículo original",
     "download": "Descargar",
     "opensNewTab": "se abre en una pestaña nueva"
@@ -36,6 +37,11 @@
   "Status": {
     "loading": "Cargando…",
     "error": "No se pudo cargar el contenido."
+  },
+  "Error": {
+    "notFoundTitle": "Esta página no existe.",
+    "serverTitle": "Algo ha salido mal.",
+    "backHome": "Volver al inicio"
   },
   "Auth": {
     "account": "Cuenta",

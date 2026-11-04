@@ -128,7 +128,7 @@ export default async function CategoryPage({
           {field}
         </h1>
         <section className={styles.feed} aria-labelledby="category-heading">
-          <CategoryFeed articles={articles} />
+          <CategoryFeed articles={articles} locale={locale} />
         </section>
       </main>
     </div>

@@ -16,6 +16,7 @@ export const sampleArticle: ArticleListItem = {
     'Short peptides from a mountain frog fight bacteria. An unusual amino acid makes them harder to break down.',
   imageUrl,
   publishedAt: '2026-03-12T08:00:00.000Z',
+  paperPublishedAt: '2026-03-12T00:00:00.000Z',
   featured: true,
 };
 
@@ -47,6 +48,7 @@ export const sampleArticles: ArticleListItem[] = [
       'DNA from Ambystoma altamirani skin linked phage diversity to water conditions and the local bacteria.',
     imageUrl,
     publishedAt: '2026-03-11T08:00:00.000Z',
+    paperPublishedAt: '2026-03-11T00:00:00.000Z',
     featured: false,
   },
   {
@@ -59,6 +61,7 @@ export const sampleArticles: ArticleListItem[] = [
       'Self-suckling is tied to rearing, feed and housing, and can mean lost milk and udder health risks.',
     imageUrl,
     publishedAt: '2026-03-10T08:00:00.000Z',
+    paperPublishedAt: '2026-03-10T00:00:00.000Z',
     featured: false,
   },
   {
@@ -71,6 +74,7 @@ export const sampleArticles: ArticleListItem[] = [
       'Inland streamflow through large catchments helps set sea surface salinity close to the world’s megadeltas.',
     imageUrl,
     publishedAt: '2026-03-09T08:00:00.000Z',
+    paperPublishedAt: '2026-03-09T00:00:00.000Z',
     featured: false,
   },
   {
@@ -83,6 +87,7 @@ export const sampleArticles: ArticleListItem[] = [
       'Mutations in the RE-CmeABC pump help Campylobacter jejuni shrug off several classes of antibiotics.',
     imageUrl,
     publishedAt: '2026-03-08T08:00:00.000Z',
+    paperPublishedAt: '2026-03-08T00:00:00.000Z',
     featured: false,
   },
   {
@@ -95,6 +100,7 @@ export const sampleArticles: ArticleListItem[] = [
       'A longer dusk period in the barn was linked to more lying time and fewer restless bouts overnight.',
     imageUrl,
     publishedAt: '2026-03-07T08:00:00.000Z',
+    paperPublishedAt: '2026-03-07T00:00:00.000Z',
     featured: false,
   },
 ];

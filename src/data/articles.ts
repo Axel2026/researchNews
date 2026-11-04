@@ -13,6 +13,7 @@ export type ArticleListItem = {
   shortPopularization: string;
   imageUrl: string;
   publishedAt: string;
+  paperPublishedAt: string | null;
   featured: boolean;
 };
 

@@ -12,6 +12,7 @@ const meta = {
     copy: {
       bodyHeading: en.News.bodyHeading,
       source: en.News.source,
+      published: (date) => en.News.published.replaceAll('{date}', date),
       viewOriginal: en.News.viewOriginal,
       download: en.News.download,
       opensNewTab: en.News.opensNewTab,

@@ -25,6 +25,7 @@
   "News": {
     "bodyHeading": "Artykuł",
     "source": "Źródłowa praca",
+    "published": "Opublikowano {date}",
     "viewOriginal": "Zobacz oryginalną pracę",
     "download": "Pobierz",
     "opensNewTab": "otwiera się w nowej karcie"
@@ -36,6 +37,11 @@
   "Status": {
     "loading": "Ładowanie…",
     "error": "Nie udało się wczytać treści."
+  },
+  "Error": {
+    "notFoundTitle": "Nie ma takiej strony.",
+    "serverTitle": "Coś poszło nie tak.",
+    "backHome": "Wróć na stronę główną"
   },
   "Auth": {
     "account": "Konto",

@@ -2,12 +2,15 @@ import { ArticleImage } from '@/components/atoms/ArticleImage/ArticleImage';
 import { Button } from '@/components/atoms/Button/Button';
 import { CategoryChip } from '@/components/atoms/CategoryChip/CategoryChip';
 import { getArticleParagraphs, type ArticleDetail } from '@/data/articles';
+import type { AppLocale } from '@/i18n/routing';
+import { formatPaperPublishedAt } from '@/lib/dates';
 import { categoryPath } from '@/lib/seo';
 import styles from './NewsArticle.module.css';
 
 export type NewsArticleCopy = {
   bodyHeading: string;
   source: string;
+  published: (date: string) => string;
   viewOriginal: string;
   download: string;
   opensNewTab: string;
@@ -15,13 +18,18 @@ export type NewsArticleCopy = {
 
 export function NewsArticleView({
   article,
+  locale = 'en',
   copy,
 }: {
   article: ArticleDetail;
+  locale?: AppLocale;
   copy: NewsArticleCopy;
 }) {
   const summary = getArticleParagraphs(article, 'mediumPopularization');
   const body = getArticleParagraphs(article, 'fullPopularization');
+  const paperDate = article.paperPublishedAt
+    ? formatPaperPublishedAt(article.paperPublishedAt, locale)
+    : null;
 
   return (
     <article>
@@ -33,6 +41,11 @@ export function NewsArticleView({
           href={categoryPath(article.fieldSlug)}
         />
         <span className={styles.byline}>{article.authors.join(' · ')}</span>
+        {article.paperPublishedAt && paperDate ? (
+          <time className={styles.byline} dateTime={article.paperPublishedAt}>
+            {copy.published(paperDate)}
+          </time>
+        ) : null}
       </div>
 
       <figure className={styles.hero}>
@@ -65,6 +78,13 @@ export function NewsArticleView({
           </h2>
           <p className={styles.asideTitle}>{article.realTitle}</p>
           <p className={styles.asideMeta}>{article.authors.join(', ')}</p>
+          {article.paperPublishedAt && paperDate ? (
+            <p className={styles.asideMeta}>
+              <time dateTime={article.paperPublishedAt}>
+                {copy.published(paperDate)}
+              </time>
+            </p>
+          ) : null}
           <p className={styles.asideMeta}>{article.field}</p>
           <div className={styles.asideActions}>
             {article.sourceUrl ? (

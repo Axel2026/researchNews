@@ -5,6 +5,8 @@ import { ArticleCardGrid } from '@/components/molecules/ArticleCardGrid/ArticleC
 import type { ArticleCategory, ArticleListItem } from '@/data/articles';
 import { mediaMinLg } from '@/design-system/tokens';
 import { Link } from '@/i18n/navigation';
+import type { AppLocale } from '@/i18n/routing';
+import { formatPaperPublishedAt } from '@/lib/dates';
 
 const HOME_ROW_SIZE = 4;
 
@@ -20,10 +22,12 @@ export type HomeFeedCopy = {
 export function HomeFeedView({
   articles,
   categories,
+  locale = 'en',
   copy,
 }: {
   articles: ArticleListItem[];
   categories: ArticleCategory[];
+  locale?: AppLocale;
   copy: HomeFeedCopy;
 }) {
   const [featured, ...rest] = articles;
@@ -47,6 +51,14 @@ export function HomeFeedView({
             </h2>
             <p className={styles.featuredDek}>{featured.shortPopularization}</p>
             <CategoryChip field={featured.field} />
+            {featured.paperPublishedAt ? (
+              <time
+                className={styles.featuredDate}
+                dateTime={featured.paperPublishedAt}
+              >
+                {formatPaperPublishedAt(featured.paperPublishedAt, locale)}
+              </time>
+            ) : null}
             <Link
               className={styles.storyLink}
               href={`/article/${featured.slug}`}
@@ -67,7 +79,7 @@ export function HomeFeedView({
               <p>{copy.latestDek}</p>
             </div>
           </div>
-          <ArticleCardGrid articles={latest} layout="row" />
+          <ArticleCardGrid articles={latest} locale={locale} layout="row" />
         </section>
       ) : null}
 
@@ -107,6 +119,7 @@ export function HomeFeedView({
             </div>
             <ArticleCardGrid
               articles={row}
+              locale={locale}
               layout="row"
               showCategoryChip={false}
             />

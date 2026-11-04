@@ -25,6 +25,7 @@
   "News": {
     "bodyHeading": "Article",
     "source": "Source paper",
+    "published": "Published {date}",
     "viewOriginal": "View original paper",
     "download": "Download",
     "opensNewTab": "opens in a new tab"
@@ -36,6 +37,11 @@
   "Status": {
     "loading": "Loading…",
     "error": "Could not load this content."
+  },
+  "Error": {
+    "notFoundTitle": "This page does not exist.",
+    "serverTitle": "Something went wrong.",
+    "backHome": "Back to the home page"
   },
   "Auth": {
     "account": "Account",

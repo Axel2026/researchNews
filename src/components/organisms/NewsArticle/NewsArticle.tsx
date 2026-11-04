@@ -25,9 +25,11 @@ export async function NewsArticle({
       />
       <NewsArticleView
         article={article}
+        locale={locale}
         copy={{
           bodyHeading: t('News.bodyHeading'),
           source: t('News.source'),
+          published: (date) => t('News.published', { date }),
           viewOriginal: t('News.viewOriginal'),
           download: t('News.download'),
           opensNewTab: t('News.opensNewTab'),
