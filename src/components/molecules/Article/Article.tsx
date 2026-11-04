@@ -27,15 +27,15 @@ export function Article({
         />
       </div>
       {showCategoryChip ? <CategoryChip field={article.field} /> : null}
+      <Title className={styles.title}>
+        <Link href={`/article/${article.slug}`}>{article.title}</Link>
+      </Title>
+      <p className={styles.dek}>{article.shortPopularization}</p>
       {article.paperPublishedAt ? (
         <time className={styles.date} dateTime={article.paperPublishedAt}>
           {formatPaperPublishedAt(article.paperPublishedAt, locale)}
         </time>
       ) : null}
-      <Title className={styles.title}>
-        <Link href={`/article/${article.slug}`}>{article.title}</Link>
-      </Title>
-      <p className={styles.dek}>{article.shortPopularization}</p>
     </article>
   );
 }

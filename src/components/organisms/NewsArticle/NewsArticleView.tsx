@@ -36,16 +36,16 @@ export function NewsArticleView({
       <h1 className={styles.title}>{article.title}</h1>
       <p className={styles.dek}>{article.shortPopularization}</p>
       <div className={styles.meta}>
-        <CategoryChip
-          field={article.field}
-          href={categoryPath(article.fieldSlug)}
-        />
-        <span className={styles.byline}>{article.authors.join(' · ')}</span>
         {article.paperPublishedAt && paperDate ? (
           <time className={styles.byline} dateTime={article.paperPublishedAt}>
             {copy.published(paperDate)}
           </time>
         ) : null}
+        <span className={styles.byline}>{article.authors.join(' · ')}</span>
+        <CategoryChip
+          field={article.field}
+          href={categoryPath(article.fieldSlug)}
+        />
       </div>
 
       <figure className={styles.hero}>
@@ -77,7 +77,6 @@ export function NewsArticleView({
             {copy.source}
           </h2>
           <p className={styles.asideTitle}>{article.realTitle}</p>
-          <p className={styles.asideMeta}>{article.authors.join(', ')}</p>
           {article.paperPublishedAt && paperDate ? (
             <p className={styles.asideMeta}>
               <time dateTime={article.paperPublishedAt}>
@@ -85,6 +84,7 @@ export function NewsArticleView({
               </time>
             </p>
           ) : null}
+          <p className={styles.asideMeta}>{article.authors.join(', ')}</p>
           <p className={styles.asideMeta}>{article.field}</p>
           <div className={styles.asideActions}>
             {article.sourceUrl ? (

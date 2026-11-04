@@ -51,14 +51,6 @@ export function HomeFeedView({
             </h2>
             <p className={styles.featuredDek}>{featured.shortPopularization}</p>
             <CategoryChip field={featured.field} />
-            {featured.paperPublishedAt ? (
-              <time
-                className={styles.featuredDate}
-                dateTime={featured.paperPublishedAt}
-              >
-                {formatPaperPublishedAt(featured.paperPublishedAt, locale)}
-              </time>
-            ) : null}
             <Link
               className={styles.storyLink}
               href={`/article/${featured.slug}`}
@@ -67,6 +59,14 @@ export function HomeFeedView({
             >
               {copy.readStory} <span aria-hidden="true">→</span>
             </Link>
+            {featured.paperPublishedAt ? (
+              <time
+                className={styles.featuredDate}
+                dateTime={featured.paperPublishedAt}
+              >
+                {formatPaperPublishedAt(featured.paperPublishedAt, locale)}
+              </time>
+            ) : null}
           </div>
         </article>
       ) : null}
