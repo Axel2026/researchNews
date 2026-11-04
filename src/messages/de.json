@@ -42,6 +42,8 @@
     "login": "Anmelden",
     "register": "Konto anlegen",
     "logout": "Abmelden",
+    "userPanel": "Benutzerbereich",
+    "bookmarks": "Lesezeichen",
     "loading": "Wird geladen…",
     "signedIn": "Angemeldet",
     "loginTitle": "Anmelden",

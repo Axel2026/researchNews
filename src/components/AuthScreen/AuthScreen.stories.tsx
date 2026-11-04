@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { CredentialsFormView } from '@/components/AuthForms/CredentialsForm';
-import { ForgotPasswordFormView } from '@/components/AuthForms/ForgotPasswordForm';
-import { ResetPasswordFormView } from '@/components/AuthForms/ResetPasswordForm';
+import { CredentialsFormView } from '@/components/AuthForms/CredentialsFormView';
+import { ForgotPasswordFormView } from '@/components/AuthForms/ForgotPasswordFormView';
+import { ResetPasswordFormView } from '@/components/AuthForms/ResetPasswordFormView';
 import en from '@/messages/en.json';
 import { AuthScreen } from './AuthScreen';
 

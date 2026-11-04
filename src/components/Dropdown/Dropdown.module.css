@@ -2,6 +2,24 @@
   position: relative;
 }
 
+.iconTrigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-ink);
+  cursor: pointer;
+}
+
+.iconTrigger:hover,
+.iconTrigger[aria-expanded='true'] {
+  color: var(--color-accent);
+}
+
 .list {
   position: absolute;
   top: calc(100% + var(--space-3));
@@ -26,6 +44,19 @@
 
 .alignEnd {
   right: 0;
+}
+
+.compact {
+  top: calc(100% + var(--space-1));
+  width: 14rem;
+  max-height: none;
+  overflow: visible;
+}
+
+.modalList {
+  margin: 0;
+  padding: var(--space-2) 0;
+  list-style: none;
 }
 
 .list::-webkit-scrollbar {

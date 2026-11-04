@@ -42,6 +42,8 @@
     "login": "Entrar",
     "register": "Crear cuenta",
     "logout": "Salir",
+    "userPanel": "Panel de usuario",
+    "bookmarks": "Marcadores",
     "loading": "Cargando…",
     "signedIn": "Sesión iniciada",
     "loginTitle": "Entrar",

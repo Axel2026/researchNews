@@ -42,6 +42,8 @@
     "login": "Connexion",
     "register": "Créer un compte",
     "logout": "Déconnexion",
+    "userPanel": "Espace utilisateur",
+    "bookmarks": "Signets",
     "loading": "Chargement…",
     "signedIn": "Connecté",
     "loginTitle": "Connexion",

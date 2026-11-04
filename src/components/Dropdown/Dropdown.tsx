@@ -5,25 +5,65 @@ import {
   useId,
   useRef,
   useState,
+  useSyncExternalStore,
   type FocusEvent,
   type KeyboardEvent,
+  type MouseEvent,
   type ReactNode,
 } from 'react';
+import { Modal } from '@/components/Modal/Modal';
 import styles from './Dropdown.module.css';
 
-export function Dropdown({
-  label,
-  triggerClassName,
-  panelClassName,
-  align = 'end',
-  children,
-}: {
+const mobileQuery = '(max-width: 40rem)';
+
+function subscribeMobile(onChange: () => void) {
+  const media = window.matchMedia(mobileQuery);
+  media.addEventListener('change', onChange);
+  return () => media.removeEventListener('change', onChange);
+}
+
+function subscribeNoop() {
+  return () => {};
+}
+
+function isMobile() {
+  return window.matchMedia(mobileQuery).matches;
+}
+
+function notMobile() {
+  return false;
+}
+
+export type DropdownProps = {
   label: ReactNode;
+  children: ReactNode;
   triggerClassName?: string;
   panelClassName?: string;
+  rootClassName?: string;
   align?: 'start' | 'end';
-  children: ReactNode;
-}) {
+  ariaLabel?: string;
+  icon?: boolean;
+  size?: 'default' | 'compact';
+  mobileAsModal?: boolean;
+  title?: string;
+  closeLabel?: string;
+};
+
+export function Dropdown(props: DropdownProps) {
+  const {
+    label,
+    triggerClassName,
+    panelClassName,
+    rootClassName,
+    align = 'end',
+    ariaLabel,
+    icon = false,
+    size = 'default',
+    children,
+  } = props;
+  const mobileAsModal = Boolean(props.mobileAsModal);
+  const title = props.title;
+  const closeLabel = props.closeLabel;
   const reactId = useId();
   const buttonId = `${reactId}-button`;
   const listId = `${reactId}-list`;
@@ -32,6 +72,12 @@ export function Dropdown({
   const listRef = useRef<HTMLUListElement>(null);
   const pendingFocus = useRef<'first' | 'last' | null>(null);
   const [open, setOpen] = useState(false);
+  const mobile = useSyncExternalStore(
+    mobileAsModal ? subscribeMobile : subscribeNoop,
+    mobileAsModal ? isMobile : notMobile,
+    notMobile,
+  );
+  const useModal = mobileAsModal && mobile;
 
   function items() {
     return [
@@ -42,7 +88,22 @@ export function Dropdown({
   }
 
   useEffect(() => {
-    if (!open) {
+    if (!mobileAsModal) {
+      return;
+    }
+
+    const media = window.matchMedia(mobileQuery);
+
+    function onChange() {
+      setOpen(false);
+    }
+
+    media.addEventListener('change', onChange);
+    return () => media.removeEventListener('change', onChange);
+  }, [mobileAsModal]);
+
+  useEffect(() => {
+    if (!open || useModal) {
       return;
     }
 
@@ -63,7 +124,7 @@ export function Dropdown({
 
     document.addEventListener('pointerdown', onPointerDown);
     return () => document.removeEventListener('pointerdown', onPointerDown);
-  }, [open]);
+  }, [open, useModal]);
 
   function close(restoreFocus = false) {
     setOpen(false);
@@ -123,6 +184,10 @@ export function Dropdown({
   }
 
   function onBlur(event: FocusEvent<HTMLDivElement>) {
+    if (useModal) {
+      return;
+    }
+
     const next = event.relatedTarget;
     if (next instanceof Node && event.currentTarget.contains(next)) {
       return;
@@ -131,36 +196,73 @@ export function Dropdown({
     setOpen(false);
   }
 
+  function onListClick(event: MouseEvent<HTMLUListElement>) {
+    const target = event.target;
+    if (target instanceof Element && target.closest('a, button')) {
+      setOpen(false);
+    }
+  }
+
+  const triggerClass = [
+    icon ? styles.iconTrigger : undefined,
+    triggerClassName,
+  ]
+    .filter(Boolean)
+    .join(' ');
+
+  const listClass = [
+    styles.list,
+    size === 'compact' ? styles.compact : undefined,
+    align === 'start' ? styles.alignStart : styles.alignEnd,
+    panelClassName,
+  ]
+    .filter(Boolean)
+    .join(' ');
+
   return (
-    <div className={styles.root} ref={rootRef} onBlur={onBlur}>
+    <div
+      className={[styles.root, rootClassName].filter(Boolean).join(' ')}
+      ref={rootRef}
+      onBlur={onBlur}
+    >
       <button
         ref={buttonRef}
         id={buttonId}
-        className={triggerClassName}
+        className={triggerClass}
         type="button"
         aria-expanded={open}
-        aria-controls={listId}
+        aria-controls={useModal ? undefined : listId}
+        aria-haspopup={useModal ? 'dialog' : 'menu'}
+        aria-label={ariaLabel}
         onClick={() => setOpen((value) => !value)}
         onKeyDown={onButtonKeyDown}
       >
         {label}
       </button>
-      <ul
-        ref={listRef}
-        id={listId}
-        className={[
-          styles.list,
-          align === 'start' ? styles.alignStart : styles.alignEnd,
-          panelClassName,
-        ]
-          .filter(Boolean)
-          .join(' ')}
-        hidden={!open}
-        aria-labelledby={buttonId}
-        onKeyDown={onListKeyDown}
-      >
-        {children}
-      </ul>
+      {useModal && title && closeLabel ? (
+        <Modal
+          open={open}
+          onClose={() => setOpen(false)}
+          title={title}
+          closeLabel={closeLabel}
+        >
+          <ul className={styles.modalList} onClick={onListClick}>
+            {children}
+          </ul>
+        </Modal>
+      ) : (
+        <ul
+          ref={listRef}
+          id={listId}
+          className={listClass}
+          hidden={!open}
+          aria-labelledby={buttonId}
+          onKeyDown={onListKeyDown}
+          onClick={onListClick}
+        >
+          {children}
+        </ul>
+      )}
     </div>
   );
 }

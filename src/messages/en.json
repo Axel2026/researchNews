@@ -42,6 +42,8 @@
     "login": "Log in",
     "register": "Create account",
     "logout": "Log out",
+    "userPanel": "User panel",
+    "bookmarks": "Bookmarks",
     "loading": "Loading…",
     "signedIn": "Signed in",
     "loginTitle": "Log in",

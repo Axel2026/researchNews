@@ -42,6 +42,8 @@
     "login": "Zaloguj",
     "register": "Załóż konto",
     "logout": "Wyloguj",
+    "userPanel": "Panel użytkownika",
+    "bookmarks": "Zakładki",
     "loading": "Ładowanie…",
     "signedIn": "Zalogowano",
     "loginTitle": "Zaloguj się",

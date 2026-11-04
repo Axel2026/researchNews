@@ -1,23 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import pageStyles from '@/app/[locale]/page.module.css';
-import en from '@/messages/en.json';
 import { sampleArticles, sampleCategories } from '../storyData';
-import { HomeFeedView } from './HomeFeed';
+import { HomeFeed } from './HomeFeed';
 
 const meta = {
   title: 'Components/HomeFeed',
-  component: HomeFeedView,
+  component: HomeFeed,
   args: {
     articles: sampleArticles,
     categories: sampleCategories,
-    copy: {
-      kicker: en.Home.kicker,
-      readStory: en.Home.readStory,
-      latestTitle: en.Home.latestTitle,
-      latestDek: en.Home.latestDek,
-      more: en.Home.more,
-      moreIn: (field) => en.Home.moreIn.replaceAll('{field}', field),
-    },
+    locale: 'en',
   },
   decorators: [
     (Story) => (
@@ -31,23 +23,9 @@ const meta = {
   parameters: {
     layout: 'fullscreen',
   },
-} satisfies Meta<typeof HomeFeedView>;
+} satisfies Meta<typeof HomeFeed>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
-
-export const FeaturedOnly: Story = {
-  args: {
-    articles: sampleArticles.slice(0, 1),
-    categories: sampleCategories.slice(0, 1),
-  },
-};
-
-export const Empty: Story = {
-  args: {
-    articles: [],
-    categories: [],
-  },
-};

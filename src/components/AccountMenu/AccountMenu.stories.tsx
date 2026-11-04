@@ -1,39 +1,27 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { AccountMenuView } from './AccountMenu';
+import { AccountMenu } from './AccountMenu';
 
 const meta = {
   title: 'Components/AccountMenu',
-  component: AccountMenuView,
+  component: AccountMenu,
   decorators: [
     (Story) => (
-      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          alignItems: 'flex-start',
+          position: 'relative',
+          minHeight: '16rem',
+        }}
+      >
         <Story />
       </div>
     ),
   ],
-} satisfies Meta<typeof AccountMenuView>;
+} satisfies Meta<typeof AccountMenu>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Pending: Story = {
-  args: {
-    status: 'pending',
-    email: null,
-  },
-};
-
-export const SignedOut: Story = {
-  args: {
-    status: 'anonymous',
-    email: null,
-  },
-};
-
-export const SignedIn: Story = {
-  args: {
-    status: 'authenticated',
-    email: 'ada@example.com',
-    onSignOut: () => {},
-  },
-};
+export const Default: Story = {};
