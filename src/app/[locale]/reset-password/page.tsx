@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { ResetPasswordForm } from '@/components/organisms/AuthForms/ResetPasswordForm';
 import { AuthScreen } from '@/components/templates/AuthScreen/AuthScreen';
 import { routing } from '@/i18n/routing';
+import { authPageMetadata } from '@/lib/seo';
 
 export async function generateMetadata({
   params,
@@ -16,7 +17,7 @@ export async function generateMetadata({
   }
 
   const t = await getTranslations({ locale, namespace: 'Auth' });
-  return { title: t('resetTitle') };
+  return authPageMetadata(locale, '/reset-password', t('resetTitle'));
 }
 
 export default async function ResetPasswordPage({

@@ -1,6 +1,8 @@
 import { getTranslations } from 'next-intl/server';
+import { JsonLd } from '@/components/atoms/JsonLd/JsonLd';
 import type { ArticleDetail } from '@/data/articles';
 import type { AppLocale } from '@/i18n/routing';
+import { articleJsonLd } from '@/lib/seo';
 import { NewsArticleView } from './NewsArticleView';
 
 export async function NewsArticle({
@@ -13,15 +15,24 @@ export async function NewsArticle({
   const t = await getTranslations({ locale });
 
   return (
-    <NewsArticleView
-      article={article}
-      copy={{
-        bodyHeading: t('News.bodyHeading'),
-        source: t('News.source'),
-        viewOriginal: t('News.viewOriginal'),
-        download: t('News.download'),
-        opensNewTab: t('News.opensNewTab'),
-      }}
-    />
+    <>
+      <JsonLd
+        data={articleJsonLd({
+          article,
+          locale,
+          siteName: t('Metadata.title'),
+        })}
+      />
+      <NewsArticleView
+        article={article}
+        copy={{
+          bodyHeading: t('News.bodyHeading'),
+          source: t('News.source'),
+          viewOriginal: t('News.viewOriginal'),
+          download: t('News.download'),
+          opensNewTab: t('News.opensNewTab'),
+        }}
+      />
+    </>
   );
 }

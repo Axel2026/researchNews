@@ -6,6 +6,7 @@ import { Suspense } from 'react';
 import { CredentialsForm } from '@/components/organisms/AuthForms/CredentialsForm';
 import { AuthScreen } from '@/components/templates/AuthScreen/AuthScreen';
 import { routing } from '@/i18n/routing';
+import { authPageMetadata } from '@/lib/seo';
 
 export async function generateMetadata({
   params,
@@ -17,7 +18,7 @@ export async function generateMetadata({
   }
 
   const t = await getTranslations({ locale, namespace: 'Auth' });
-  return { title: t('registerTitle') };
+  return authPageMetadata(locale, '/register', t('registerTitle'));
 }
 
 export default async function RegisterPage({
