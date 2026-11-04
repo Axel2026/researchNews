@@ -44,3 +44,13 @@ export const WithoutDownload: Story = {
     },
   },
 };
+
+export const WithoutSource: Story = {
+  args: {
+    article: {
+      ...sampleArticleDetail,
+      sourceUrl: null,
+      downloadUrl: null,
+    },
+  },
+};

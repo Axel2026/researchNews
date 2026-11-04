@@ -39,3 +39,19 @@ export const AsLink: Story = {
     children: 'More articles',
   },
 };
+
+export const SecondaryAsLink: Story = {
+  args: {
+    variant: 'secondary',
+    href: '/',
+    children: 'Articles',
+  },
+};
+
+export const ExternalLink: Story = {
+  args: {
+    variant: 'primary',
+    href: 'https://example.com',
+    children: 'View original paper',
+  },
+};

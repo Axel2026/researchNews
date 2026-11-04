@@ -69,6 +69,12 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
+export const AlignStart: Story = {
+  args: {
+    align: 'start',
+  },
+};
+
 export const Scrollable: Story = {
   args: {
     itemCount: 24,

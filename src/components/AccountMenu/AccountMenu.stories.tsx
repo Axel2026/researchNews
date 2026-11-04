@@ -16,6 +16,13 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+export const Pending: Story = {
+  args: {
+    status: 'pending',
+    email: null,
+  },
+};
+
 export const SignedOut: Story = {
   args: {
     status: 'anonymous',

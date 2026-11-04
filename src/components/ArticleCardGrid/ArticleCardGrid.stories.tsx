@@ -35,3 +35,9 @@ export const WithoutCategoryChip: Story = {
     showCategoryChip: false,
   },
 };
+
+export const Empty: Story = {
+  args: {
+    articles: [],
+  },
+};

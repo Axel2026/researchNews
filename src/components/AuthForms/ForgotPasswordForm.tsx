@@ -10,11 +10,21 @@ import { createClient } from '@/lib/supabase/client';
 import styles from './AuthForms.module.css';
 import { fieldErrorMessage, forgotPasswordSchema } from './schema';
 
-export function ForgotPasswordForm() {
+export type ForgotPasswordFormStatus = 'form' | 'sent';
+
+export function ForgotPasswordFormView({
+  status = 'form',
+  formError = null,
+  onFormError,
+  onSent,
+}: {
+  status?: ForgotPasswordFormStatus;
+  formError?: string | null;
+  onFormError?: (message: string | null) => void;
+  onSent?: () => void;
+}) {
   const t = useTranslations('Auth');
   const locale = useLocale();
-  const [formError, setFormError] = useState<string | null>(null);
-  const [sent, setSent] = useState(false);
 
   const form = useForm({
     defaultValues: {
@@ -24,7 +34,7 @@ export function ForgotPasswordForm() {
       onSubmit: forgotPasswordSchema(t('emailInvalid')),
     },
     onSubmit: async ({ value }) => {
-      setFormError(null);
+      onFormError?.(null);
 
       try {
         const supabase = createClient();
@@ -43,18 +53,18 @@ export function ForgotPasswordForm() {
           (authError.code === 'over_request_rate_limit' ||
             authError.code === 'over_email_send_rate_limit')
         ) {
-          setFormError(t(authErrorKey(authError.code)));
+          onFormError?.(t(authErrorKey(authError.code)));
           return;
         }
 
-        setSent(true);
+        onSent?.();
       } catch {
-        setFormError(t('genericError'));
+        onFormError?.(t('genericError'));
       }
     },
   });
 
-  if (sent) {
+  if (status === 'sent') {
     return (
       <p className={styles.notice} role="status">
         {t('forgotSent')}
@@ -119,5 +129,19 @@ export function ForgotPasswordForm() {
         </Link>
       </p>
     </form>
+  );
+}
+
+export function ForgotPasswordForm() {
+  const [formError, setFormError] = useState<string | null>(null);
+  const [status, setStatus] = useState<ForgotPasswordFormStatus>('form');
+
+  return (
+    <ForgotPasswordFormView
+      status={status}
+      formError={formError}
+      onFormError={setFormError}
+      onSent={() => setStatus('sent')}
+    />
   );
 }

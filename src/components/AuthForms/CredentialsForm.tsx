@@ -13,16 +13,32 @@ import { fieldErrorMessage, loginSchema, registerSchema } from './schema';
 
 type CredentialsMode = 'login' | 'register';
 
-export function CredentialsForm({ mode }: { mode: CredentialsMode }) {
+export type CredentialsFormStatus = 'form' | 'checkEmail' | 'redirecting';
+
+export function CredentialsFormView({
+  mode,
+  status = 'form',
+  callbackFailed = false,
+  formError = null,
+  googlePending = false,
+  onGoogle,
+  onSubmitSuccess,
+  onCheckEmail,
+  onFormError,
+}: {
+  mode: CredentialsMode;
+  status?: CredentialsFormStatus;
+  callbackFailed?: boolean;
+  formError?: string | null;
+  googlePending?: boolean;
+  onGoogle?: () => void;
+  onSubmitSuccess?: () => void;
+  onCheckEmail?: () => void;
+  onFormError?: (message: string | null) => void;
+}) {
   const t = useTranslations('Auth');
   const locale = useLocale();
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const [formError, setFormError] = useState<string | null>(null);
-  const [googlePending, setGooglePending] = useState(false);
-  const [checkEmail, setCheckEmail] = useState(false);
-  const [redirecting, setRedirecting] = useState(false);
-  const callbackFailed = searchParams.get('error') === 'auth';
   const homePath = getPathname({ locale, href: '/' });
   const loginPath = getPathname({ locale, href: '/login' });
   const messages = {
@@ -42,7 +58,7 @@ export function CredentialsForm({ mode }: { mode: CredentialsMode }) {
         mode === 'login' ? loginSchema(messages) : registerSchema(messages),
     },
     onSubmit: async ({ value }) => {
-      setFormError(null);
+      onFormError?.(null);
 
       try {
         const supabase = createClient();
@@ -54,10 +70,11 @@ export function CredentialsForm({ mode }: { mode: CredentialsMode }) {
           });
 
           if (authError) {
-            setFormError(t(authErrorKey(authError.code)));
+            onFormError?.(t(authErrorKey(authError.code)));
             return;
           }
 
+          onSubmitSuccess?.();
           router.replace('/');
           router.refresh();
           return;
@@ -72,78 +89,34 @@ export function CredentialsForm({ mode }: { mode: CredentialsMode }) {
         });
 
         if (authError) {
-          setFormError(t(authErrorKey(authError.code)));
+          onFormError?.(t(authErrorKey(authError.code)));
           return;
         }
 
         if (data.user && data.user.identities?.length === 0) {
-          setFormError(t('userExists'));
+          onFormError?.(t('userExists'));
           return;
         }
 
         if (data.session) {
+          onSubmitSuccess?.();
           router.replace('/');
           router.refresh();
           return;
         }
 
-        setCheckEmail(true);
+        onCheckEmail?.();
       } catch {
-        setFormError(t('genericError'));
+        onFormError?.(t('genericError'));
       }
     },
   });
 
-  useEffect(() => {
-    let active = true;
-
-    try {
-      const supabase = createClient();
-      void supabase.auth.getSession().then(({ data }) => {
-        if (!active || !data.session) {
-          return;
-        }
-
-        setRedirecting(true);
-        router.replace('/');
-      });
-    } catch {
-      return;
-    }
-
-    return () => {
-      active = false;
-    };
-  }, [router]);
-
-  async function signInWithGoogle() {
-    setFormError(null);
-    setGooglePending(true);
-
-    try {
-      const supabase = createClient();
-      const { error: authError } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: authCallbackUrl(homePath, loginPath),
-        },
-      });
-
-      if (authError) {
-        setFormError(t(authErrorKey(authError.code)));
-        setGooglePending(false);
-      }
-    } catch {
-      setFormError(t('genericError'));
-      setGooglePending(false);
-    }
-  }
-
-  if (redirecting) {
+  if (status === 'redirecting') {
     return <p className={styles.notice}>{t('loading')}</p>;
   }
 
-  if (checkEmail) {
+  if (status === 'checkEmail') {
     return (
       <p className={styles.notice} role="status">
         {t('checkEmail')}
@@ -160,7 +133,7 @@ export function CredentialsForm({ mode }: { mode: CredentialsMode }) {
             type="button"
             disabled={isSubmitting || googlePending}
             onClick={() => {
-              void signInWithGoogle();
+              onGoogle?.();
             }}
           >
             {t('google')}
@@ -293,5 +266,78 @@ export function CredentialsForm({ mode }: { mode: CredentialsMode }) {
         )}
       </p>
     </div>
+  );
+}
+
+export function CredentialsForm({ mode }: { mode: CredentialsMode }) {
+  const t = useTranslations('Auth');
+  const locale = useLocale();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [formError, setFormError] = useState<string | null>(null);
+  const [googlePending, setGooglePending] = useState(false);
+  const [status, setStatus] = useState<CredentialsFormStatus>('form');
+  const callbackFailed = searchParams.get('error') === 'auth';
+  const homePath = getPathname({ locale, href: '/' });
+  const loginPath = getPathname({ locale, href: '/login' });
+
+  useEffect(() => {
+    let active = true;
+
+    try {
+      const supabase = createClient();
+      void supabase.auth.getSession().then(({ data }) => {
+        if (!active || !data.session) {
+          return;
+        }
+
+        setStatus('redirecting');
+        router.replace('/');
+      });
+    } catch {
+      return;
+    }
+
+    return () => {
+      active = false;
+    };
+  }, [router]);
+
+  async function signInWithGoogle() {
+    setFormError(null);
+    setGooglePending(true);
+
+    try {
+      const supabase = createClient();
+      const { error: authError } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: authCallbackUrl(homePath, loginPath),
+        },
+      });
+
+      if (authError) {
+        setFormError(t(authErrorKey(authError.code)));
+        setGooglePending(false);
+      }
+    } catch {
+      setFormError(t('genericError'));
+      setGooglePending(false);
+    }
+  }
+
+  return (
+    <CredentialsFormView
+      mode={mode}
+      status={status}
+      callbackFailed={callbackFailed}
+      formError={formError}
+      googlePending={googlePending}
+      onGoogle={() => {
+        void signInWithGoogle();
+      }}
+      onCheckEmail={() => setStatus('checkEmail')}
+      onFormError={setFormError}
+    />
   );
 }

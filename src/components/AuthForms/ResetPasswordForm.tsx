@@ -10,14 +10,25 @@ import { publicSupabaseEnv } from '@/lib/supabase/env';
 import styles from './AuthForms.module.css';
 import { fieldErrorMessage, resetPasswordSchema } from './schema';
 
-export function ResetPasswordForm() {
+export type ResetPasswordFormStatus =
+  | 'loading'
+  | 'missing'
+  | 'form'
+  | 'updated';
+
+export function ResetPasswordFormView({
+  status,
+  formError = null,
+  onFormError,
+  onUpdated,
+}: {
+  status: ResetPasswordFormStatus;
+  formError?: string | null;
+  onFormError?: (message: string | null) => void;
+  onUpdated?: () => void;
+}) {
   const t = useTranslations('Auth');
   const router = useRouter();
-  const configured = publicSupabaseEnv() !== null;
-  const [formError, setFormError] = useState<string | null>(null);
-  const [ready, setReady] = useState(!configured);
-  const [hasSession, setHasSession] = useState(false);
-  const [updated, setUpdated] = useState(false);
 
   const form = useForm({
     defaultValues: {
@@ -31,7 +42,7 @@ export function ResetPasswordForm() {
       }),
     },
     onSubmit: async ({ value }) => {
-      setFormError(null);
+      onFormError?.(null);
 
       try {
         const supabase = createClient();
@@ -40,55 +51,23 @@ export function ResetPasswordForm() {
         });
 
         if (authError) {
-          setFormError(t(authErrorKey(authError.code)));
+          onFormError?.(t(authErrorKey(authError.code)));
           return;
         }
 
-        setUpdated(true);
+        onUpdated?.();
         router.refresh();
       } catch {
-        setFormError(t('genericError'));
+        onFormError?.(t('genericError'));
       }
     },
   });
 
-  useEffect(() => {
-    if (!configured) {
-      return;
-    }
-
-    let active = true;
-    const supabase = createClient();
-
-    void supabase.auth.getSession().then(
-      ({ data }) => {
-        if (!active) {
-          return;
-        }
-
-        setHasSession(Boolean(data.session));
-        setReady(true);
-      },
-      () => {
-        if (!active) {
-          return;
-        }
-
-        setHasSession(false);
-        setReady(true);
-      },
-    );
-
-    return () => {
-      active = false;
-    };
-  }, [configured]);
-
-  if (!ready) {
+  if (status === 'loading') {
     return <p className={styles.notice}>{t('loading')}</p>;
   }
 
-  if (!hasSession) {
+  if (status === 'missing') {
     return (
       <div className={styles.notice}>
         <p role="alert">{t('resetMissing')}</p>
@@ -101,7 +80,7 @@ export function ResetPasswordForm() {
     );
   }
 
-  if (updated) {
+  if (status === 'updated') {
     return (
       <div className={styles.notice} role="status">
         <p>{t('passwordUpdated')}</p>
@@ -189,5 +168,62 @@ export function ResetPasswordForm() {
         )}
       </form.Subscribe>
     </form>
+  );
+}
+
+export function ResetPasswordForm() {
+  const configured = publicSupabaseEnv() !== null;
+  const [formError, setFormError] = useState<string | null>(null);
+  const [ready, setReady] = useState(!configured);
+  const [hasSession, setHasSession] = useState(false);
+  const [updated, setUpdated] = useState(false);
+
+  useEffect(() => {
+    if (!configured) {
+      return;
+    }
+
+    let active = true;
+    const supabase = createClient();
+
+    void supabase.auth.getSession().then(
+      ({ data }) => {
+        if (!active) {
+          return;
+        }
+
+        setHasSession(Boolean(data.session));
+        setReady(true);
+      },
+      () => {
+        if (!active) {
+          return;
+        }
+
+        setHasSession(false);
+        setReady(true);
+      },
+    );
+
+    return () => {
+      active = false;
+    };
+  }, [configured]);
+
+  const status: ResetPasswordFormStatus = !ready
+    ? 'loading'
+    : !hasSession
+      ? 'missing'
+      : updated
+        ? 'updated'
+        : 'form';
+
+  return (
+    <ResetPasswordFormView
+      status={status}
+      formError={formError}
+      onFormError={setFormError}
+      onUpdated={() => setUpdated(true)}
+    />
   );
 }

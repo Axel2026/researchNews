@@ -36,3 +36,9 @@ export const WithoutCategoryChip: Story = {
     showCategoryChip: false,
   },
 };
+
+export const TitleAsHeading2: Story = {
+  args: {
+    titleAs: 'h2',
+  },
+};

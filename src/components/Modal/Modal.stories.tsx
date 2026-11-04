@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { useState } from 'react';
 import { Modal } from './Modal';
 
-function ModalDemo() {
-  const [open, setOpen] = useState(false);
+function ModalDemo({ defaultOpen = false }: { defaultOpen?: boolean }) {
+  const [open, setOpen] = useState(defaultOpen);
 
   return (
     <>
@@ -31,3 +31,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+export const Open: Story = {
+  args: {
+    defaultOpen: true,
+  },
+};
