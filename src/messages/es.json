@@ -30,6 +30,14 @@
     "download": "Descargar",
     "opensNewTab": "se abre en una pestaña nueva"
   },
+  "Bookmarks": {
+    "title": "Marcadores",
+    "dek": "Artículos que has guardado para más tarde.",
+    "empty": "Todavía no has guardado ningún artículo.",
+    "add": "Guardar en marcadores",
+    "remove": "Quitar de marcadores",
+    "signIn": "Entra para guardar este artículo"
+  },
   "Category": {
     "kicker": "Categoría",
     "open": "Ir a la categoría {field}"

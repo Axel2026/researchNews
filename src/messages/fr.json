@@ -30,6 +30,14 @@
     "download": "Télécharger",
     "opensNewTab": "s’ouvre dans un nouvel onglet"
   },
+  "Bookmarks": {
+    "title": "Signets",
+    "dek": "Les articles que vous avez enregistrés pour plus tard.",
+    "empty": "Vous n’avez encore enregistré aucun article.",
+    "add": "Ajouter aux signets",
+    "remove": "Retirer des signets",
+    "signIn": "Connectez-vous pour enregistrer cet article"
+  },
   "Category": {
     "kicker": "Catégorie",
     "open": "Aller à la catégorie {field}"

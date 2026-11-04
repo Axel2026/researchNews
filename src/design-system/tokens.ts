@@ -129,7 +129,7 @@ export const zIndexes = [
     name: 'Dropdown',
     variable: '--z-dropdown',
     value: '20',
-    use: 'Menus and disclosure panels. Still loses to page content unless the parent uses Raised.',
+    use: 'Menus and disclosure panels. Popover top layer keeps them above page content.',
   },
   {
     name: 'Skip',

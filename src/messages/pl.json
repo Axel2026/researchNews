@@ -30,6 +30,14 @@
     "download": "Pobierz",
     "opensNewTab": "otwiera się w nowej karcie"
   },
+  "Bookmarks": {
+    "title": "Zakładki",
+    "dek": "Artykuły zapisane na później.",
+    "empty": "Nie masz jeszcze zapisanych artykułów.",
+    "add": "Dodaj do zakładek",
+    "remove": "Usuń z zakładek",
+    "signIn": "Zaloguj się, aby zapisać ten artykuł"
+  },
   "Category": {
     "kicker": "Kategoria",
     "open": "Przejdź do kategorii {field}"

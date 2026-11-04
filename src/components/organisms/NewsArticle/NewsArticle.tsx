@@ -3,6 +3,7 @@ import { JsonLd } from '@/components/atoms/JsonLd/JsonLd';
 import type { ArticleDetail } from '@/data/articles';
 import type { AppLocale } from '@/i18n/routing';
 import { articleJsonLd } from '@/lib/seo';
+import { BookmarkButton } from '@/components/molecules/BookmarkButton/BookmarkButton';
 import { NewsArticleView } from './NewsArticleView';
 
 export async function NewsArticle({
@@ -26,6 +27,7 @@ export async function NewsArticle({
       <NewsArticleView
         article={article}
         locale={locale}
+        bookmarkAction={<BookmarkButton slug={article.slug} />}
         copy={{
           bodyHeading: t('News.bodyHeading'),
           source: t('News.source'),

@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { ArticleImage } from '@/components/atoms/ArticleImage/ArticleImage';
 import { Button } from '@/components/atoms/Button/Button';
 import { CategoryChip } from '@/components/atoms/CategoryChip/CategoryChip';
@@ -20,10 +21,12 @@ export function NewsArticleView({
   article,
   locale = 'en',
   copy,
+  bookmarkAction,
 }: {
   article: ArticleDetail;
   locale?: AppLocale;
   copy: NewsArticleCopy;
+  bookmarkAction?: ReactNode;
 }) {
   const summary = getArticleParagraphs(article, 'mediumPopularization');
   const body = getArticleParagraphs(article, 'fullPopularization');
@@ -46,6 +49,9 @@ export function NewsArticleView({
           field={article.field}
           href={categoryPath(article.fieldSlug)}
         />
+        {bookmarkAction ? (
+          <div className={styles.bookmark}>{bookmarkAction}</div>
+        ) : null}
       </div>
 
       <figure className={styles.hero}>

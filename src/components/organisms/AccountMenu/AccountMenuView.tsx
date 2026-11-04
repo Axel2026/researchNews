@@ -44,7 +44,7 @@ export function AccountMenuView({
             </Link>
           </li>
           <li>
-            <Link className={styles.option} href="/">
+            <Link className={styles.option} href="/bookmarks">
               {t('bookmarks')}
             </Link>
           </li>

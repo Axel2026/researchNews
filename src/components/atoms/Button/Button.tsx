@@ -1,6 +1,8 @@
-import type { ReactNode } from 'react';
+import type { ComponentProps, ReactNode } from 'react';
 import { Link } from '@/i18n/navigation';
 import styles from './Button.module.css';
+
+type AppHref = ComponentProps<typeof Link>['href'];
 
 type ButtonVariant = 'primary' | 'secondary';
 
@@ -11,7 +13,7 @@ type CommonProps = {
 };
 
 type ButtonAsLink = CommonProps & {
-  href: string;
+  href: AppHref;
   newWindowHint?: string;
 };
 
@@ -19,6 +21,9 @@ type ButtonAsButton = CommonProps & {
   href?: undefined;
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
+  onClick?: () => void;
+  'aria-pressed'?: boolean;
+  'aria-busy'?: boolean;
 };
 
 export function Button({
@@ -37,7 +42,7 @@ export function Button({
       <span className={styles.visuallyHidden}>{hint}</span>
     ) : null;
 
-    if (/^https?:\/\//i.test(props.href)) {
+    if (typeof props.href === 'string' && /^https?:\/\//i.test(props.href)) {
       return (
         <a
           href={props.href}
@@ -60,9 +65,19 @@ export function Button({
 
   const type = 'type' in props && props.type ? props.type : 'button';
   const disabled = 'disabled' in props ? props.disabled : undefined;
+  const onClick = 'onClick' in props ? props.onClick : undefined;
+  const pressed = 'aria-pressed' in props ? props['aria-pressed'] : undefined;
+  const busy = 'aria-busy' in props ? props['aria-busy'] : undefined;
 
   return (
-    <button type={type} className={classNames} disabled={disabled}>
+    <button
+      type={type}
+      className={classNames}
+      disabled={disabled}
+      onClick={onClick}
+      aria-pressed={pressed}
+      aria-busy={busy}
+    >
       {children}
     </button>
   );

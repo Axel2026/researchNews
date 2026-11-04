@@ -36,7 +36,12 @@ export const noIndexRobots = {
 
 export function authPageMetadata(
   locale: AppLocale,
-  href: '/login' | '/register' | '/forgot-password' | '/reset-password',
+  href:
+    | '/login'
+    | '/register'
+    | '/forgot-password'
+    | '/reset-password'
+    | '/bookmarks',
   title: string,
 ): Metadata {
   return {

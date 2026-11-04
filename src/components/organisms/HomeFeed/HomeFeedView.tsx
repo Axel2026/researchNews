@@ -6,7 +6,6 @@ import type { ArticleCategory, ArticleListItem } from '@/data/articles';
 import { mediaMinLg } from '@/design-system/tokens';
 import { Link } from '@/i18n/navigation';
 import type { AppLocale } from '@/i18n/routing';
-import { formatPaperPublishedAt } from '@/lib/dates';
 
 const HOME_ROW_SIZE = 4;
 
@@ -69,14 +68,6 @@ export function HomeFeedView({
             >
               {copy.readStory} <span aria-hidden="true">→</span>
             </Link>
-            {featured.paperPublishedAt ? (
-              <time
-                className={styles.featuredDate}
-                dateTime={featured.paperPublishedAt}
-              >
-                {formatPaperPublishedAt(featured.paperPublishedAt, locale)}
-              </time>
-            ) : null}
           </div>
         </article>
       ) : null}

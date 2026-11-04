@@ -3,9 +3,11 @@
 import {
   useEffect,
   useId,
+  useLayoutEffect,
   useRef,
   useState,
   useSyncExternalStore,
+  type CSSProperties,
   type FocusEvent,
   type KeyboardEvent,
   type MouseEvent,
@@ -32,6 +34,20 @@ function isMobile() {
 
 function notMobile() {
   return false;
+}
+
+function panelStyle(
+  button: HTMLElement,
+  align: 'start' | 'end',
+): CSSProperties {
+  const box = button.getBoundingClientRect();
+
+  return {
+    top: box.bottom,
+    ...(align === 'start'
+      ? { left: box.left }
+      : { right: window.innerWidth - box.right }),
+  };
 }
 
 export type DropdownProps = {
@@ -73,6 +89,7 @@ export function Dropdown(props: DropdownProps) {
   const listRef = useRef<HTMLUListElement>(null);
   const pendingFocus = useRef<'first' | 'last' | null>(null);
   const [open, setOpen] = useState(false);
+  const [listStyle, setListStyle] = useState<CSSProperties>();
   const mobile = useSyncExternalStore(
     mobileAsModal ? subscribeMobile : subscribeNoop,
     mobileAsModal ? isMobile : notMobile,
@@ -103,6 +120,42 @@ export function Dropdown(props: DropdownProps) {
     return () => media.removeEventListener('change', onChange);
   }, [mobileAsModal]);
 
+  useLayoutEffect(() => {
+    const list = listRef.current;
+    const button = buttonRef.current;
+
+    if (!list || useModal) {
+      return;
+    }
+
+    function updatePosition() {
+      if (!buttonRef.current) {
+        return;
+      }
+
+      setListStyle(panelStyle(buttonRef.current, align));
+    }
+
+    if (open && button) {
+      updatePosition();
+      if (!list.matches(':popover-open')) {
+        list.showPopover();
+      }
+      window.addEventListener('resize', updatePosition);
+      window.addEventListener('scroll', updatePosition, true);
+      return () => {
+        window.removeEventListener('resize', updatePosition);
+        window.removeEventListener('scroll', updatePosition, true);
+      };
+    }
+
+    if (list.matches(':popover-open')) {
+      list.hidePopover();
+    }
+
+    return undefined;
+  }, [align, open, useModal]);
+
   useEffect(() => {
     if (!open || useModal) {
       return;
@@ -118,9 +171,15 @@ export function Dropdown(props: DropdownProps) {
     pendingFocus.current = null;
 
     function onPointerDown(event: PointerEvent) {
-      if (!rootRef.current?.contains(event.target as Node)) {
-        setOpen(false);
+      const path = event.composedPath();
+      if (
+        path.includes(rootRef.current as EventTarget) ||
+        path.includes(listRef.current as EventTarget)
+      ) {
+        return;
       }
+
+      setOpen(false);
     }
 
     document.addEventListener('pointerdown', onPointerDown);
@@ -190,7 +249,11 @@ export function Dropdown(props: DropdownProps) {
     }
 
     const next = event.relatedTarget;
-    if (next instanceof Node && event.currentTarget.contains(next)) {
+    if (
+      !(next instanceof Node) ||
+      rootRef.current?.contains(next) ||
+      listRef.current?.contains(next)
+    ) {
       return;
     }
 
@@ -211,7 +274,6 @@ export function Dropdown(props: DropdownProps) {
   const listClass = [
     styles.list,
     size === 'compact' ? styles.compact : undefined,
-    align === 'start' ? styles.alignStart : styles.alignEnd,
     panelClassName,
   ]
     .filter(Boolean)
@@ -254,10 +316,12 @@ export function Dropdown(props: DropdownProps) {
           ref={listRef}
           id={listId}
           className={listClass}
-          hidden={!open}
+          popover="manual"
           role="list"
           aria-labelledby={buttonId}
+          style={open ? listStyle : undefined}
           onKeyDown={onListKeyDown}
+          onPointerDown={(event) => event.stopPropagation()}
           onClick={onListClick}
         >
           {children}

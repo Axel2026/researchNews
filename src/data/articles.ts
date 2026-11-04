@@ -1,5 +1,6 @@
 import { unstable_cache } from 'next/cache';
 import type { AppLocale } from '@/i18n/routing';
+import { apiUrl } from '@/lib/api';
 
 export const ARTICLES_REVALIDATE_SECONDS = 10800;
 export const ARTICLES_CACHE_TAG = 'articles';
@@ -37,14 +38,6 @@ export type ArticleCategory = {
 export type ArticleCategoryDetail = ArticleCategory & {
   articles: ArticleListItem[];
 };
-
-function apiUrl(): string {
-  return (
-    process.env.API_URL ??
-    process.env.NEXT_PUBLIC_API_URL ??
-    'http://localhost:4000'
-  );
-}
 
 function articlesUrl(path: string, locale: AppLocale): URL {
   const url = new URL(path, apiUrl());

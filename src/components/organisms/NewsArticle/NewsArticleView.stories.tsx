@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import pageStyles from '@/app/[locale]/article/[slug]/page.module.css';
+import { BookmarkButtonView } from '@/components/molecules/BookmarkButton/BookmarkButtonView';
 import en from '@/messages/en.json';
 import { sampleArticleDetail } from '@/components/storyData';
 import { NewsArticleView } from './NewsArticleView';
@@ -17,6 +18,18 @@ const meta = {
       download: en.News.download,
       opensNewTab: en.News.opensNewTab,
     },
+    bookmarkAction: (
+      <BookmarkButtonView
+        status="unsaved"
+        nextPath="/article/sample"
+        copy={{
+          add: en.Bookmarks.add,
+          remove: en.Bookmarks.remove,
+          signIn: en.Bookmarks.signIn,
+          loading: en.Auth.loading,
+        }}
+      />
+    ),
   },
   decorators: [
     (Story) => (

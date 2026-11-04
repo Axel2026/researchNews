@@ -19,3 +19,16 @@ export function authCallbackUrl(nextPath: string, loginPath: string) {
   url.searchParams.set('login', safeNextPath(loginPath, '/login'));
   return url.toString();
 }
+
+export function loginHref(nextPath: string) {
+  const next = safeNextPath(nextPath);
+
+  if (next === '/') {
+    return '/login';
+  }
+
+  return {
+    pathname: '/login' as const,
+    query: { next },
+  };
+}

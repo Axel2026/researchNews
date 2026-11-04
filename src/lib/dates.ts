@@ -1,7 +1,4 @@
-export function formatPaperPublishedAt(
-  iso: string,
-  locale: string,
-): string {
+export function formatPaperPublishedAt(iso: string, locale: string): string {
   const zoned = Temporal.Instant.from(iso).toZonedDateTimeISO('UTC');
   const date = zoned.toPlainDate();
 

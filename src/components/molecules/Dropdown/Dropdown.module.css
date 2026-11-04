@@ -21,8 +21,9 @@
 }
 
 .list {
-  position: absolute;
-  top: calc(100% + var(--space-3));
+  position: fixed;
+  inset: unset;
+  margin: var(--space-3) 0 0;
   z-index: var(--z-dropdown);
   box-sizing: border-box;
   width: 22rem;
@@ -38,16 +39,8 @@
   scrollbar-color: var(--color-rule) var(--color-hero);
 }
 
-.alignStart {
-  left: 0;
-}
-
-.alignEnd {
-  right: 0;
-}
-
 .compact {
-  top: calc(100% + var(--space-1));
+  margin: var(--space-1) 0 0;
   width: 14rem;
   max-height: none;
   overflow: visible;

@@ -30,6 +30,14 @@
     "download": "Herunterladen",
     "opensNewTab": "öffnet in einem neuen Tab"
   },
+  "Bookmarks": {
+    "title": "Lesezeichen",
+    "dek": "Artikel, die Sie für später gespeichert haben.",
+    "empty": "Sie haben noch keine Artikel gespeichert.",
+    "add": "Zu Lesezeichen hinzufügen",
+    "remove": "Aus Lesezeichen entfernen",
+    "signIn": "Anmelden, um diesen Artikel zu speichern"
+  },
   "Category": {
     "kicker": "Kategorie",
     "open": "Zur Kategorie {field}"

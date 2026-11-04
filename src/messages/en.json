@@ -30,6 +30,14 @@
     "download": "Download",
     "opensNewTab": "opens in a new tab"
   },
+  "Bookmarks": {
+    "title": "Bookmarks",
+    "dek": "Articles you saved for later.",
+    "empty": "You have not saved any articles yet.",
+    "add": "Save to bookmarks",
+    "remove": "Remove from bookmarks",
+    "signIn": "Log in to save this article"
+  },
   "Category": {
     "kicker": "Category",
     "open": "Go to category {field}"

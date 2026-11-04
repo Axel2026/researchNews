@@ -9,10 +9,7 @@ import './globals.css';
 
 export default function GlobalError() {
   return (
-    <html
-      lang="en"
-      className={`${newsreader.variable} ${sourceSans.variable}`}
-    >
+    <html lang="en" className={`${newsreader.variable} ${sourceSans.variable}`}>
       <body className={sourceSans.className}>
         <NextIntlClientProvider locale="en" messages={en}>
           <ErrorScreen

@@ -1,0 +1,67 @@
+import type { ArticleListItem } from './articles';
+import { apiUrl } from '@/lib/api';
+import type { AppLocale } from '@/i18n/routing';
+
+export type BookmarkList = {
+  slugs: string[];
+  articles: ArticleListItem[];
+};
+
+export type BookmarkUpdate = {
+  slugs: string[];
+  bookmarked: boolean;
+};
+
+function bookmarksUrl(locale: AppLocale): URL {
+  const url = new URL('/me/bookmarks', apiUrl());
+  url.searchParams.set('locale', locale);
+  return url;
+}
+
+export async function listBookmarks(
+  locale: AppLocale,
+  accessToken: string,
+): Promise<BookmarkList> {
+  const response = await fetch(bookmarksUrl(locale), {
+    cache: 'no-store',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  if (response.status === 401) {
+    throw new Error('unauthorized');
+  }
+
+  if (!response.ok) {
+    throw new Error(`Failed to load bookmarks: ${response.status}`);
+  }
+
+  return response.json() as Promise<BookmarkList>;
+}
+
+export async function setBookmark(
+  slug: string,
+  bookmarked: boolean,
+  accessToken: string,
+): Promise<BookmarkUpdate> {
+  const response = await fetch(new URL('/me/bookmarks', apiUrl()), {
+    method: 'PUT',
+    cache: 'no-store',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ slug, bookmarked }),
+  });
+
+  if (response.status === 401) {
+    throw new Error('unauthorized');
+  }
+
+  if (!response.ok) {
+    throw new Error(`Failed to update bookmark: ${response.status}`);
+  }
+
+  return response.json() as Promise<BookmarkUpdate>;
+}

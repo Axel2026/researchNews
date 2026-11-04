@@ -17,6 +17,7 @@ export type CredentialsFormStatus = 'form' | 'checkEmail' | 'redirecting';
 export function CredentialsFormView({
   mode,
   status = 'form',
+  nextHref = '/',
   callbackFailed = false,
   formError = null,
   googlePending = false,
@@ -27,6 +28,7 @@ export function CredentialsFormView({
 }: {
   mode: CredentialsMode;
   status?: CredentialsFormStatus;
+  nextHref?: string;
   callbackFailed?: boolean;
   formError?: string | null;
   googlePending?: boolean;
@@ -38,7 +40,7 @@ export function CredentialsFormView({
   const t = useTranslations('Auth');
   const locale = useLocale();
   const router = useRouter();
-  const homePath = getPathname({ locale, href: '/' });
+  const homePath = getPathname({ locale, href: nextHref });
   const loginPath = getPathname({ locale, href: '/login' });
   const messages = {
     emailInvalid: t('emailInvalid'),
@@ -74,7 +76,7 @@ export function CredentialsFormView({
           }
 
           onSubmitSuccess?.();
-          router.replace('/');
+          router.replace(nextHref);
           router.refresh();
           return;
         }
@@ -99,7 +101,7 @@ export function CredentialsFormView({
 
         if (data.session) {
           onSubmitSuccess?.();
-          router.replace('/');
+          router.replace(nextHref);
           router.refresh();
           return;
         }

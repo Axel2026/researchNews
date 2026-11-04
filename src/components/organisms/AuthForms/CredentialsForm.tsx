@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { getPathname, useRouter } from '@/i18n/navigation';
 import { authErrorKey } from '@/lib/auth/errors';
-import { authCallbackUrl } from '@/lib/auth/redirect';
+import { authCallbackUrl, safeNextPath } from '@/lib/auth/redirect';
 import { createClient } from '@/lib/supabase/client';
 import {
   CredentialsFormView,
@@ -22,7 +22,8 @@ export function CredentialsForm({ mode }: { mode: CredentialsMode }) {
   const [googlePending, setGooglePending] = useState(false);
   const [status, setStatus] = useState<CredentialsFormStatus>('form');
   const callbackFailed = searchParams.get('error') === 'auth';
-  const homePath = getPathname({ locale, href: '/' });
+  const nextHref = safeNextPath(searchParams.get('next'));
+  const nextPath = getPathname({ locale, href: nextHref });
   const loginPath = getPathname({ locale, href: '/login' });
 
   useEffect(() => {
@@ -36,7 +37,7 @@ export function CredentialsForm({ mode }: { mode: CredentialsMode }) {
         }
 
         setStatus('redirecting');
-        router.replace('/');
+        router.replace(nextHref);
       });
     } catch {
       return;
@@ -45,7 +46,7 @@ export function CredentialsForm({ mode }: { mode: CredentialsMode }) {
     return () => {
       active = false;
     };
-  }, [router]);
+  }, [nextHref, router]);
 
   async function signInWithGoogle() {
     setFormError(null);
@@ -56,7 +57,7 @@ export function CredentialsForm({ mode }: { mode: CredentialsMode }) {
       const { error: authError } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: authCallbackUrl(homePath, loginPath),
+          redirectTo: authCallbackUrl(nextPath, loginPath),
         },
       });
 
@@ -74,6 +75,7 @@ export function CredentialsForm({ mode }: { mode: CredentialsMode }) {
     <CredentialsFormView
       mode={mode}
       status={status}
+      nextHref={nextHref}
       callbackFailed={callbackFailed}
       formError={formError}
       googlePending={googlePending}
