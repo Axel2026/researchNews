@@ -21,6 +21,8 @@ Local app: [http://localhost:3000](http://localhost:3000). The backend must be r
 
 Design system and components: [http://localhost:6006](http://localhost:6006) (`pnpm storybook`)
 
+UI components follow Atomic Design in `src/components`: `atoms`, `molecules`, `organisms`, and `templates`. Pages stay in the App Router.
+
 ## Scripts
 
 | Command                | Description                                  |

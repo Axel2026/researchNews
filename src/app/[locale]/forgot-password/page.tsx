@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { hasLocale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { ForgotPasswordForm } from '@/components/AuthForms/ForgotPasswordForm';
-import { AuthScreen } from '@/components/AuthScreen/AuthScreen';
+import { ForgotPasswordForm } from '@/components/organisms/AuthForms/ForgotPasswordForm';
+import { AuthScreen } from '@/components/templates/AuthScreen/AuthScreen';
 import { routing } from '@/i18n/routing';
 
 export async function generateMetadata({

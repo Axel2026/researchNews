@@ -1,10 +1,10 @@
 import { hasLocale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { AccountMenu } from '@/components/AccountMenu/AccountMenu';
-import { CategoryDropdown } from '@/components/CategoryDropdown/CategoryDropdown';
-import { HomeFeed } from '@/components/HomeFeed/HomeFeed';
-import { LanguageSwitcher } from '@/components/LanguageSwitcher/LanguageSwitcher';
+import { CategoryDropdown } from '@/components/molecules/CategoryDropdown/CategoryDropdown';
+import { LanguageSwitcher } from '@/components/molecules/LanguageSwitcher/LanguageSwitcher';
+import { AccountMenu } from '@/components/organisms/AccountMenu/AccountMenu';
+import { HomeFeed } from '@/components/organisms/HomeFeed/HomeFeed';
 import {
   getEditionDateIso,
   listArticles,

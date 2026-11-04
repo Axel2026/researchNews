@@ -1,0 +1,6 @@
+.root {
+  position: absolute;
+  top: 0.2rem;
+  right: var(--space-4);
+  z-index: var(--z-dropdown);
+}

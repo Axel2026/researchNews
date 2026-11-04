@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { WithMobileViewport } from './WithMobileViewport';
 
 const meta = {
-  title: 'Components/WithMobileViewport',
+  title: 'Storybook/WithMobileViewport',
   component: WithMobileViewport,
 } satisfies Meta<typeof WithMobileViewport>;
 

@@ -3,8 +3,8 @@ import { hasLocale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
-import { AuthScreen } from '@/components/AuthScreen/AuthScreen';
-import { CredentialsForm } from '@/components/AuthForms/CredentialsForm';
+import { CredentialsForm } from '@/components/organisms/AuthForms/CredentialsForm';
+import { AuthScreen } from '@/components/templates/AuthScreen/AuthScreen';
 import { routing } from '@/i18n/routing';
 
 export async function generateMetadata({

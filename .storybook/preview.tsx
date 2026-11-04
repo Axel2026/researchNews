@@ -70,6 +70,18 @@ const preview: Preview = {
         { name: 'ink', value: '#1c1917' },
       ],
     },
+    options: {
+      storySort: {
+        order: [
+          'Design System',
+          'Atoms',
+          'Molecules',
+          'Organisms',
+          'Templates',
+          'Storybook',
+        ],
+      },
+    },
   },
 };
 
