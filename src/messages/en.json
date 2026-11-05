@@ -38,6 +38,31 @@
     "remove": "Remove from bookmarks",
     "signIn": "Log in to save this article"
   },
+  "Discussion": {
+    "title": "Discussion",
+    "empty": "No comments yet.",
+    "signIn": "Log in to join the discussion",
+    "placeholder": "Write a comment",
+    "replyPlaceholder": "Write a reply",
+    "submit": "Post comment",
+    "replySubmit": "Post reply",
+    "reply": "Reply",
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "deleted": "This comment was removed.",
+    "edited": "edited",
+    "truncated": "Showing the latest 100 comments.",
+    "required": "Write something before posting.",
+    "tooLong": "Comments can be at most 2000 characters.",
+    "rateLimited": "Too many comments. Try again in a few minutes.",
+    "invalidBody": "That comment could not be saved.",
+    "genericError": "That did not work. Try again.",
+    "composerLabel": "Your comment",
+    "replyLabel": "Your reply",
+    "editLabel": "Edit comment"
+  },
   "Category": {
     "kicker": "Category",
     "open": "Go to category {field}"

@@ -38,6 +38,31 @@
     "remove": "Usuń z zakładek",
     "signIn": "Zaloguj się, aby zapisać ten artykuł"
   },
+  "Discussion": {
+    "title": "Dyskusja",
+    "empty": "Nie ma jeszcze komentarzy.",
+    "signIn": "Zaloguj się, aby dołączyć do dyskusji",
+    "placeholder": "Napisz komentarz",
+    "replyPlaceholder": "Napisz odpowiedź",
+    "submit": "Opublikuj komentarz",
+    "replySubmit": "Opublikuj odpowiedź",
+    "reply": "Odpowiedz",
+    "edit": "Edytuj",
+    "save": "Zapisz",
+    "cancel": "Anuluj",
+    "delete": "Usuń",
+    "deleted": "Ten komentarz został usunięty.",
+    "edited": "edytowano",
+    "truncated": "Pokazujemy 100 najnowszych komentarzy.",
+    "required": "Napisz coś przed publikacją.",
+    "tooLong": "Komentarz może mieć najwyżej 2000 znaków.",
+    "rateLimited": "Za dużo komentarzy. Spróbuj ponownie za kilka minut.",
+    "invalidBody": "Nie udało się zapisać tego komentarza.",
+    "genericError": "To się nie udało. Spróbuj ponownie.",
+    "composerLabel": "Twój komentarz",
+    "replyLabel": "Twoja odpowiedź",
+    "editLabel": "Edycja komentarza"
+  },
   "Category": {
     "kicker": "Kategoria",
     "open": "Przejdź do kategorii {field}"

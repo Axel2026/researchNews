@@ -22,11 +22,13 @@ export function NewsArticleView({
   locale = 'en',
   copy,
   bookmarkAction,
+  discussion,
 }: {
   article: ArticleDetail;
   locale?: AppLocale;
   copy: NewsArticleCopy;
   bookmarkAction?: ReactNode;
+  discussion?: ReactNode;
 }) {
   const summary = getArticleParagraphs(article, 'mediumPopularization');
   const body = getArticleParagraphs(article, 'fullPopularization');
@@ -39,12 +41,14 @@ export function NewsArticleView({
       <h1 className={styles.title}>{article.title}</h1>
       <p className={styles.dek}>{article.shortPopularization}</p>
       <div className={styles.meta}>
-        {article.paperPublishedAt && paperDate ? (
-          <time className={styles.byline} dateTime={article.paperPublishedAt}>
-            {copy.published(paperDate)}
-          </time>
-        ) : null}
-        <span className={styles.byline}>{article.authors.join(' · ')}</span>
+        <div className={styles.byline}>
+          {article.paperPublishedAt && paperDate ? (
+            <time dateTime={article.paperPublishedAt}>
+              {copy.published(paperDate)}
+            </time>
+          ) : null}
+          <span>{article.authors.join(' · ')}</span>
+        </div>
         <CategoryChip
           field={article.field}
           href={categoryPath(article.fieldSlug)}
@@ -116,6 +120,9 @@ export function NewsArticleView({
           </div>
         </aside>
       </div>
+      {discussion ? (
+        <div className={styles.discussion}>{discussion}</div>
+      ) : null}
     </article>
   );
 }

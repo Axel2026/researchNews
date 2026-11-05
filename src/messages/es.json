@@ -38,6 +38,31 @@
     "remove": "Quitar de marcadores",
     "signIn": "Entra para guardar este artículo"
   },
+  "Discussion": {
+    "title": "Discusión",
+    "empty": "Aún no hay comentarios.",
+    "signIn": "Entra para unirte a la discusión",
+    "placeholder": "Escribe un comentario",
+    "replyPlaceholder": "Escribe una respuesta",
+    "submit": "Publicar comentario",
+    "replySubmit": "Publicar respuesta",
+    "reply": "Responder",
+    "edit": "Editar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "deleted": "Este comentario se ha eliminado.",
+    "edited": "editado",
+    "truncated": "Se muestran los 100 comentarios más recientes.",
+    "required": "Escribe algo antes de publicar.",
+    "tooLong": "Los comentarios pueden tener como máximo 2000 caracteres.",
+    "rateLimited": "Demasiados comentarios. Inténtalo de nuevo en unos minutos.",
+    "invalidBody": "No se ha podido guardar este comentario.",
+    "genericError": "No ha funcionado. Inténtalo de nuevo.",
+    "composerLabel": "Tu comentario",
+    "replyLabel": "Tu respuesta",
+    "editLabel": "Editar comentario"
+  },
   "Category": {
     "kicker": "Categoría",
     "open": "Ir a la categoría {field}"

@@ -38,6 +38,31 @@
     "remove": "Aus Lesezeichen entfernen",
     "signIn": "Anmelden, um diesen Artikel zu speichern"
   },
+  "Discussion": {
+    "title": "Diskussion",
+    "empty": "Noch keine Kommentare.",
+    "signIn": "Melden Sie sich an, um mitzudiskutieren",
+    "placeholder": "Kommentar schreiben",
+    "replyPlaceholder": "Antwort schreiben",
+    "submit": "Kommentar veröffentlichen",
+    "replySubmit": "Antwort veröffentlichen",
+    "reply": "Antworten",
+    "edit": "Bearbeiten",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "deleted": "Dieser Kommentar wurde entfernt.",
+    "edited": "bearbeitet",
+    "truncated": "Die neuesten 100 Kommentare werden angezeigt.",
+    "required": "Schreiben Sie etwas, bevor Sie senden.",
+    "tooLong": "Kommentare dürfen höchstens 2000 Zeichen lang sein.",
+    "rateLimited": "Zu viele Kommentare. Versuchen Sie es in ein paar Minuten erneut.",
+    "invalidBody": "Der Kommentar konnte nicht gespeichert werden.",
+    "genericError": "Das hat nicht geklappt. Versuchen Sie es erneut.",
+    "composerLabel": "Ihr Kommentar",
+    "replyLabel": "Ihre Antwort",
+    "editLabel": "Kommentar bearbeiten"
+  },
   "Category": {
     "kicker": "Kategorie",
     "open": "Zur Kategorie {field}"

@@ -10,6 +10,27 @@
   grid-auto-columns: minmax(16rem, 1fr);
   overflow-x: auto;
   padding-bottom: var(--space-2);
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-rule) var(--color-hero);
+}
+
+.rowGrid::-webkit-scrollbar {
+  height: 0.55rem;
+}
+
+.rowGrid::-webkit-scrollbar-track {
+  background: var(--color-hero);
+}
+
+.rowGrid::-webkit-scrollbar-thumb {
+  background: var(--color-rule);
+  border: 2px solid var(--color-hero);
+  border-radius: var(--radius-pill);
+}
+
+.rowGrid::-webkit-scrollbar-thumb:hover {
+  background: var(--color-control-border);
 }
 
 @media (min-width: 64rem) {
@@ -46,5 +67,11 @@
     margin-top: var(--space-8);
     padding-top: var(--space-8);
     border-top: var(--border-width) solid var(--color-rule);
+  }
+}
+
+@media (forced-colors: active) {
+  .rowGrid {
+    scrollbar-color: CanvasText Canvas;
   }
 }
