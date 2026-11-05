@@ -7,6 +7,7 @@
   "Nav": {
     "main": "Hauptnavigation",
     "stories": "Artikel",
+    "sources": "Quellen",
     "fields": "Fachgebiete",
     "language": "Sprache",
     "close": "Schließen",
@@ -29,6 +30,13 @@
     "viewOriginal": "Originalarbeit ansehen",
     "download": "Herunterladen",
     "opensNewTab": "öffnet in einem neuen Tab"
+  },
+  "Sources": {
+    "title": "Quellen",
+    "dek": "Woher wir die Arbeiten nehmen, über die wir schreiben.",
+    "kicker": "Herkunft",
+    "visit": "Webseite der Quelle",
+    "empty": "Es gibt noch keine Quellen."
   },
   "Bookmarks": {
     "title": "Lesezeichen",

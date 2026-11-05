@@ -30,6 +30,13 @@ export const Category: Story = {
   },
 };
 
+export const Sources: Story = {
+  args: {
+    current: 'sources',
+    categories: sampleCategories,
+  },
+};
+
 export const Article: Story = {};
 
 export const Auth: Story = {

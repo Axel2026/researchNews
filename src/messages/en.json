@@ -7,6 +7,7 @@
   "Nav": {
     "main": "Main",
     "stories": "Articles",
+    "sources": "Sources",
     "fields": "Fields",
     "language": "Language",
     "close": "Close",
@@ -29,6 +30,13 @@
     "viewOriginal": "View original paper",
     "download": "Download",
     "opensNewTab": "opens in a new tab"
+  },
+  "Sources": {
+    "title": "Sources",
+    "dek": "Where we get the papers we write about.",
+    "kicker": "Origin",
+    "visit": "Source website",
+    "empty": "There are no sources yet."
   },
   "Bookmarks": {
     "title": "Bookmarks",

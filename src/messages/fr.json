@@ -7,6 +7,7 @@
   "Nav": {
     "main": "Principal",
     "stories": "Articles",
+    "sources": "Sources",
     "fields": "Disciplines",
     "language": "Langue",
     "close": "Fermer",
@@ -29,6 +30,13 @@
     "viewOriginal": "Voir l’article original",
     "download": "Télécharger",
     "opensNewTab": "s’ouvre dans un nouvel onglet"
+  },
+  "Sources": {
+    "title": "Sources",
+    "dek": "D’où viennent les travaux dont nous parlons.",
+    "kicker": "Origine",
+    "visit": "Site de la source",
+    "empty": "Il n’y a pas encore de sources."
   },
   "Bookmarks": {
     "title": "Signets",

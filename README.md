@@ -40,5 +40,6 @@ UI components follow Atomic Design in `src/components`: `atoms`, `molecules`, `o
 ## Routing
 
 - `/` — home (article list from the API)
+- `/sources` — paper sources used for ingest
 - `/category/[slug]` — articles in one field (404 if nothing matches the slug)
 - `/article/[slug]` — article page (404 if the API does not know the slug)

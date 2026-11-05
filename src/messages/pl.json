@@ -7,6 +7,7 @@
   "Nav": {
     "main": "Główne",
     "stories": "Artykuły",
+    "sources": "Źródła",
     "fields": "Dziedziny",
     "language": "Język",
     "close": "Zamknij",
@@ -29,6 +30,13 @@
     "viewOriginal": "Zobacz oryginalną pracę",
     "download": "Pobierz",
     "opensNewTab": "otwiera się w nowej karcie"
+  },
+  "Sources": {
+    "title": "Źródła",
+    "dek": "Skąd bierzemy prace, o których piszemy.",
+    "kicker": "Pochodzenie",
+    "visit": "Strona źródła",
+    "empty": "Nie ma jeszcze żadnych źródeł."
   },
   "Bookmarks": {
     "title": "Zakładki",

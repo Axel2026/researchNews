@@ -3,6 +3,7 @@ import type {
   ArticleDetail,
   ArticleListItem,
 } from '@/data/articles';
+import type { SourceListItem } from '@/data/sources';
 
 const imageUrl = '/images/news-placeholder.svg';
 
@@ -109,4 +110,14 @@ export const sampleCategories: ArticleCategory[] = [
   { slug: 'biochemistry', field: 'Biochemistry' },
   { slug: 'microbial-ecology', field: 'Microbial ecology' },
   { slug: 'animal-behaviour', field: 'Animal behaviour' },
+];
+
+export const sampleSources: SourceListItem[] = [
+  {
+    id: 'core',
+    name: 'CORE API',
+    url: 'https://core.ac.uk/',
+    summary:
+      'An open repository of research papers. We fetch articles from journals such as Nature, Science, Cell, Lancet and PNAS.',
+  },
 ];

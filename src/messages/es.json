@@ -7,6 +7,7 @@
   "Nav": {
     "main": "Principal",
     "stories": "Artículos",
+    "sources": "Fuentes",
     "fields": "Disciplinas",
     "language": "Idioma",
     "close": "Cerrar",
@@ -29,6 +30,13 @@
     "viewOriginal": "Ver el artículo original",
     "download": "Descargar",
     "opensNewTab": "se abre en una pestaña nueva"
+  },
+  "Sources": {
+    "title": "Fuentes",
+    "dek": "De dónde tomamos los trabajos sobre los que escribimos.",
+    "kicker": "Origen",
+    "visit": "Sitio de la fuente",
+    "empty": "Aún no hay fuentes."
   },
   "Bookmarks": {
     "title": "Marcadores",

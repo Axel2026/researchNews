@@ -9,7 +9,7 @@ import type { ArticleCategory } from '@/data/articles';
 import { Link } from '@/i18n/navigation';
 import styles from './Header.module.css';
 
-export type HeaderCurrent = 'stories' | 'category';
+export type HeaderCurrent = 'stories' | 'category' | 'sources';
 
 export function Header({
   current,
@@ -48,6 +48,13 @@ export function Header({
           aria-current={current === 'stories' ? 'page' : undefined}
         >
           {t('stories')}
+        </Link>
+        <Link
+          className={styles.navLink}
+          href="/sources"
+          aria-current={current === 'sources' ? 'page' : undefined}
+        >
+          {t('sources')}
         </Link>
         <CategoryDropdown
           categories={categories}
