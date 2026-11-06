@@ -76,6 +76,11 @@
 }
 
 .action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  min-height: 1.5rem;
   padding: 0;
   border: 0;
   background: none;
@@ -104,7 +109,7 @@
   gap: var(--space-5);
   margin: var(--space-2) 0 0;
   padding: 0 0 0 var(--space-5);
-  border-left: var(--border-width) solid var(--color-line);
+  border-left: var(--border-width) solid var(--color-control-border);
   list-style: none;
 }
 
@@ -124,6 +129,11 @@
 .label {
   font-size: var(--text-sm);
   font-weight: var(--weight-semibold);
+}
+
+.textarea::placeholder {
+  color: var(--color-muted);
+  opacity: 1;
 }
 
 .textarea {

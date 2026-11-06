@@ -12,6 +12,9 @@
 }
 
 a.chip {
+  position: relative;
+  z-index: var(--z-content);
+  min-width: 1.5rem;
   min-height: 1.5rem;
   text-decoration: underline;
   text-underline-offset: 0.18em;

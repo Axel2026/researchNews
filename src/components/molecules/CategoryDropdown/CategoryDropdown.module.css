@@ -55,6 +55,21 @@
 
 .option:hover,
 .optionCurrent:hover {
-  color: var(--color-accent);
+  color: var(--color-accent-hover);
   background: var(--color-hero);
+  box-shadow: inset 0 -2px 0 var(--color-accent-hover);
+}
+
+@media (forced-colors: active) {
+  .option:hover,
+  .optionCurrent:hover {
+    background: Highlight;
+    color: HighlightText;
+    box-shadow: none;
+  }
+
+  .triggerCurrent,
+  .trigger[aria-expanded='true'] {
+    border-bottom-color: Highlight;
+  }
 }

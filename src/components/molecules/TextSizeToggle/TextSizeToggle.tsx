@@ -22,15 +22,19 @@ export function TextSizeToggle() {
     setTextSizeLarge({ large: !large });
   }
 
+  const mark = large ? 'A-' : 'A+';
+  const actionLabel = large ? t('defaultText') : t('largerText');
+  const name = `${mark}, ${actionLabel}`;
+
   return (
     <button
       type="button"
       className={styles.button}
       aria-pressed={large}
-      aria-label={t('largerText')}
+      aria-label={name}
       onClick={toggleTextSize}
     >
-      <span aria-hidden="true">{large ? 'A-' : 'A+'}</span>
+      <span aria-hidden="true">{mark}</span>
     </button>
   );
 }

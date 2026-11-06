@@ -11,6 +11,9 @@ export default function GlobalError() {
   return (
     <html lang="en" className={`${newsreader.variable} ${sourceSans.variable}`}>
       <body className={sourceSans.className}>
+        <a className="skipLink" href="#main">
+          {en.Nav.skip}
+        </a>
         <NextIntlClientProvider locale="en" messages={en}>
           <ErrorScreen
             code="500"

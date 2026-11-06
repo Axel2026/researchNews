@@ -28,7 +28,7 @@
   z-index: var(--z-raised);
 }
 
-.plainLinks a {
+:where(.plainLinks) a {
   color: inherit;
   text-decoration: none;
 }

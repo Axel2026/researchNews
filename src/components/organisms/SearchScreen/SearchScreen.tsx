@@ -213,7 +213,9 @@ export function SearchScreen({
   const status = loading ? (
     <Loader label={tStatus('loading')} />
   ) : failed ? (
-    <p className={styles.error}>{tStatus('error')}</p>
+    <p className={styles.error} role="alert">
+      {tStatus('error')}
+    </p>
   ) : undefined;
   const pageCount = paginationCount({
     total: pageInfo.total,

@@ -238,7 +238,7 @@ export function Dropdown({
     .filter(Boolean)
     .join(' ');
   const controlsId = useModal ? dialogId : listId;
-  const popupType = useModal ? 'dialog' : true;
+  const popupType = useModal ? 'dialog' : undefined;
   const listPosition = open ? listStyle : undefined;
 
   function toggleOpen() {

@@ -30,7 +30,9 @@ export function ArticleListing({
             <CategoryFeed articles={articles} locale={locale} />
           </section>
         ) : (
-          <p className={styles.empty}>{empty}</p>
+          <p className={styles.empty} role="status">
+            {empty}
+          </p>
         ))}
       {status ? null : pagination}
     </>

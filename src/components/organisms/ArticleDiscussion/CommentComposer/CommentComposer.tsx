@@ -69,7 +69,7 @@ export function CommentComposer({
           onChange={changeBody}
         />
         {shownError ? (
-          <span id={errorId} className={styles.formError}>
+          <span id={errorId} className={styles.formError} role="alert">
             {shownError}
           </span>
         ) : null}

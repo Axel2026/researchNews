@@ -18,8 +18,9 @@
 
 .option:hover,
 .optionCurrent:hover {
-  color: var(--color-accent);
+  color: var(--color-accent-hover);
   background: var(--color-hero);
+  box-shadow: inset 0 -2px 0 var(--color-accent-hover);
 }
 
 .code {
@@ -29,6 +30,17 @@
   letter-spacing: 0.06em;
 }
 
-.optionCurrent .code {
-  color: var(--color-accent);
+.optionCurrent .code,
+.optionCurrent:hover .code {
+  color: var(--color-accent-hover);
+}
+
+@media (forced-colors: active) {
+  .option:hover,
+  .optionCurrent:hover,
+  .optionCurrent:hover .code {
+    background: Highlight;
+    color: HighlightText;
+    box-shadow: none;
+  }
 }

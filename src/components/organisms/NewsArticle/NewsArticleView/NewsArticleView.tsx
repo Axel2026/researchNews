@@ -77,7 +77,7 @@ export function NewsArticleView({
         <figure className={styles.hero}>
           <ArticleImage
             src={article.imageUrl}
-            alt={article.title}
+            alt=""
             sizes="(min-width: 46rem) 46rem, 100vw"
             priority
           />

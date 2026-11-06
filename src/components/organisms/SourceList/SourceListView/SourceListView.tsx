@@ -28,7 +28,9 @@ export function SourceListView({ sources, copy }: SourceListViewProps) {
           ))}
         </ul>
       ) : (
-        <p className={styles.empty}>{copy.empty}</p>
+        <p className={styles.empty} role="status">
+          {copy.empty}
+        </p>
       )}
     </>
   );
