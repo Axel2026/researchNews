@@ -92,6 +92,14 @@ export function categoryPath(slug: string) {
   return `/category/${slug}`;
 }
 
+export function categoryPagePath(slug: string, page: number) {
+  if (page <= 1) {
+    return categoryPath(slug);
+  }
+
+  return `/category/${slug}/page/${page}`;
+}
+
 export function socialImages(url: string | undefined, alt: string) {
   if (url && !/\.svg($|\?)/i.test(url)) {
     return [{ url, alt }];

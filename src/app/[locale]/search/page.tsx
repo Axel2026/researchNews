@@ -21,6 +21,14 @@ function queryString(value: string | string[] | undefined): string {
   return typeof value === 'string' ? value : '';
 }
 
+function pageNumber(value: string | string[] | undefined): number {
+  if (typeof value !== 'string' || !/^[1-9][0-9]*$/.test(value)) {
+    return 1;
+  }
+
+  return Number(value);
+}
+
 export async function generateMetadata({
   params,
 }: PageProps<'/[locale]/search'>): Promise<Metadata> {
@@ -79,6 +87,7 @@ export default async function SearchPage({
           from: queryString(query.from),
           to: queryString(query.to),
         }}
+        initialPage={pageNumber(query.page)}
       />
     </PageShell>
   );

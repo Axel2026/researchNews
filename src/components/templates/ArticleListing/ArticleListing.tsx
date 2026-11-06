@@ -14,6 +14,7 @@ export function ArticleListing({
   locale = 'en',
   toolbar,
   status,
+  pagination,
 }: {
   kicker: string;
   title: string;
@@ -24,6 +25,7 @@ export function ArticleListing({
   locale?: AppLocale;
   toolbar?: ReactNode;
   status?: ReactNode;
+  pagination?: ReactNode;
 }) {
   const showFeed = articles.length > 0 || empty == null;
 
@@ -43,6 +45,7 @@ export function ArticleListing({
         ) : (
           <p className={styles.empty}>{empty}</p>
         ))}
+      {status ? null : pagination}
     </>
   );
 }

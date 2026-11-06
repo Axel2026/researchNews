@@ -18,6 +18,7 @@ const meta = {
       from: '',
       to: '',
     },
+    initialPage: 1,
   },
   decorators: [
     (Story) => (

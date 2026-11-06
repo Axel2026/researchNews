@@ -30,6 +30,7 @@
     "bodyHeading": "Artykuł",
     "source": "Źródłowa praca",
     "published": "Opublikowano {date}",
+    "authors": "Autorzy",
     "viewOriginal": "Zobacz oryginalną pracę",
     "download": "Pobierz",
     "opensNewTab": "otwiera się w nowej karcie"
@@ -82,6 +83,12 @@
   "Category": {
     "kicker": "Kategoria",
     "open": "Przejdź do kategorii {field}"
+  },
+  "Pagination": {
+    "label": "Paginacja",
+    "previous": "Poprzednia",
+    "next": "Następna",
+    "page": "Strona {page}"
   },
   "Search": {
     "kicker": "Znajdź",

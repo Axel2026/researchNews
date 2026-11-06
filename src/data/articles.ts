@@ -17,10 +17,10 @@ export type ArticleListItem = {
   paperPublishedAt: string | null;
   featured: boolean;
   recentViews: number;
+  authors: string[];
 };
 
 export type ArticleDetail = ArticleListItem & {
-  authors: string[];
   realTitle: string;
   mediumPopularization: string;
   fullPopularization: string;
@@ -36,9 +36,14 @@ export type ArticleCategory = {
   field: string;
 };
 
-export type ArticleCategoryDetail = ArticleCategory & {
+export type ArticlePage = {
   articles: ArticleListItem[];
+  page: number;
+  pageSize: number;
+  total: number;
 };
+
+export type ArticleCategoryDetail = ArticleCategory & ArticlePage;
 
 function articlesUrl(path: string, locale: AppLocale): URL {
   const url = new URL(path, apiUrl());
@@ -75,14 +80,16 @@ export type ArticleSearchParams = {
   author: string;
   from: string;
   to: string;
+  page: number;
 };
 
 export async function searchArticles(
   locale: AppLocale,
   params: ArticleSearchParams,
-): Promise<ArticleListItem[]> {
+): Promise<ArticlePage> {
   const url = articlesUrl('/articles', locale);
   url.searchParams.set('sort', params.sort);
+  url.searchParams.set('page', String(params.page));
 
   const optional = {
     q: params.query,
@@ -105,7 +112,7 @@ export async function searchArticles(
     throw new Error(`Failed to search articles: ${response.status}`);
   }
 
-  return response.json() as Promise<ArticleListItem[]>;
+  return response.json() as Promise<ArticlePage>;
 }
 
 export async function getArticleBySlug(
@@ -181,11 +188,11 @@ export async function listCategories(
 export async function getCategoryBySlug(
   slug: string,
   locale: AppLocale,
+  page: number,
 ): Promise<ArticleCategoryDetail | null> {
-  const response = await fetch(
-    articlesUrl(`/categories/${encodeURIComponent(slug)}`, locale),
-    fetchOptions,
-  );
+  const url = articlesUrl(`/categories/${encodeURIComponent(slug)}`, locale);
+  url.searchParams.set('page', String(page));
+  const response = await fetch(url, fetchOptions);
 
   if (response.status === 404) {
     return null;

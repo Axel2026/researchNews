@@ -9,6 +9,10 @@ import {
   ArticleFilters,
   type ArticleFilterValues,
 } from '@/components/molecules/ArticleFilters/ArticleFilters';
+import {
+  Pagination,
+  paginationCount,
+} from '@/components/molecules/Pagination/Pagination';
 import { ArticleListing } from '@/components/templates/ArticleListing/ArticleListing';
 import {
   searchArticles,
@@ -57,6 +61,10 @@ function searchHref(params: ArticleSearchParams) {
     query.to = params.to;
   }
 
+  if (params.page > 1) {
+    query.page = String(params.page);
+  }
+
   if (Object.keys(query).length === 0) {
     return '/search' as const;
   }
@@ -93,23 +101,32 @@ export function SearchScreen({
   categories,
   initialQuery,
   initialFilters,
+  initialPage,
 }: {
   locale: AppLocale;
   categories: ArticleCategory[];
   initialQuery: string;
   initialFilters: ArticleFilterValues;
+  initialPage: number;
 }) {
   const t = useTranslations('Search');
   const tFilters = useTranslations('Filters');
   const tStatus = useTranslations('Status');
+  const tPagination = useTranslations('Pagination');
   const router = useRouter();
   const [value, setValue] = useState(initialQuery);
   const [filters, setFilters] = useState(initialFilters);
   const [dateError, setDateError] = useState<string | undefined>();
   const [articles, setArticles] = useState<ArticleListItem[]>([]);
+  const [pageInfo, setPageInfo] = useState({
+    page: initialPage,
+    pageSize: 0,
+    total: 0,
+  });
   const [loading, setLoading] = useState(true);
   const [failed, setFailed] = useState(false);
   const requestId = useRef(0);
+  const pageRef = useRef(initialPage);
   const fetchedKey = useRef<string | null>(null);
   const queryRef = useRef(initialQuery);
   const filtersRef = useRef(initialFilters);
@@ -133,6 +150,7 @@ export function SearchScreen({
       author: filtersRef.current.author.trim(),
       from: filtersRef.current.from,
       to: filtersRef.current.to,
+      page: pageRef.current,
     };
   }
 
@@ -147,7 +165,7 @@ export function SearchScreen({
     setDateError(undefined);
 
     const key = searchKey(params);
-    if (fetchedKey.current === key) {
+    if (fetchedKey.current === key && pageInfo.page === params.page) {
       return;
     }
 
@@ -163,7 +181,12 @@ export function SearchScreen({
           return;
         }
 
-        setArticles(results);
+        setArticles(results.articles);
+        setPageInfo({
+          page: results.page,
+          pageSize: results.pageSize,
+          total: results.total,
+        });
       })
       .catch(() => {
         if (id !== requestId.current) {
@@ -181,6 +204,7 @@ export function SearchScreen({
   }
 
   function scheduleSearch() {
+    pageRef.current = 1;
     window.clearTimeout(debounceTimer.current);
     debounceTimer.current = setTimeout(() => {
       runSearch();
@@ -217,6 +241,7 @@ export function SearchScreen({
           className={styles.field}
           onSubmit={(event) => {
             event.preventDefault();
+            pageRef.current = 1;
             searchNow();
           }}
         >
@@ -257,11 +282,13 @@ export function SearchScreen({
                 return;
               }
 
+              pageRef.current = 1;
               searchNow();
             }}
             onClear={() => {
               filtersRef.current = emptyFilters;
               setFilters(emptyFilters);
+              pageRef.current = 1;
               searchNow();
             }}
           />
@@ -273,6 +300,20 @@ export function SearchScreen({
         ) : failed ? (
           <p className={styles.error}>{tStatus('error')}</p>
         ) : undefined
+      }
+      pagination={
+        <Pagination
+          label={tPagination('label')}
+          previousLabel={tPagination('previous')}
+          nextLabel={tPagination('next')}
+          pageLabel={(pageNumber) => tPagination('page', { page: pageNumber })}
+          page={pageInfo.page}
+          pageCount={paginationCount(pageInfo.total, pageInfo.pageSize)}
+          onPage={(pageNumber) => {
+            pageRef.current = pageNumber;
+            searchNow();
+          }}
+        />
       }
     />
   );
