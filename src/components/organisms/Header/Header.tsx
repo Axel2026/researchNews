@@ -3,6 +3,7 @@ import { useTranslations } from 'next-intl';
 import { SearchIcon } from '@/components/atoms/SearchIcon/SearchIcon';
 import { CategoryDropdown } from '@/components/molecules/CategoryDropdown/CategoryDropdown';
 import { LanguageSwitcher } from '@/components/molecules/LanguageSwitcher/LanguageSwitcher';
+import { TextSizeToggle } from '@/components/molecules/TextSizeToggle/TextSizeToggle';
 import { AccountMenu } from '@/components/organisms/AccountMenu/AccountMenu';
 import { Link, usePathname } from '@/i18n/navigation';
 import styles from './Header.module.css';
@@ -40,6 +41,7 @@ export function Header({
           </Link>
         ) : null}
         {showLanguageSwitcher ? <LanguageSwitcher /> : null}
+        <TextSizeToggle />
       </>
     ) : null);
 

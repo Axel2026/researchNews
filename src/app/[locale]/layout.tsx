@@ -13,6 +13,7 @@ import {
   SITE_THEME_COLOR,
   siteIcons,
 } from '@/lib/seo';
+import { textSizeBootScript } from '@/lib/text-size';
 import '@/design-system/tokens.css';
 import '../globals.css';
 import type { LocaleLayoutProps } from './layout.types';
@@ -96,6 +97,9 @@ export default async function LocaleLayout({
       lang={locale}
       className={`${newsreader.variable} ${sourceSans.variable}`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: textSizeBootScript() }} />
+      </head>
       <body className={sourceSans.className}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <a className="skipLink" href="#main">
