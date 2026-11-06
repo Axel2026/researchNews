@@ -34,7 +34,15 @@
     "comments": "{count, plural, one {# comentario} other {# comentarios}}",
     "viewOriginal": "Ver el artículo original",
     "download": "Descargar",
-    "opensNewTab": "se abre en una pestaña nueva"
+    "opensNewTab": "se abre en una pestaña nueva",
+    "listen": "Escuchar",
+    "pause": "Pausa",
+    "resume": "Reanudar",
+    "listenUnavailable": "La lectura en voz alta no está disponible en este navegador.",
+    "listenNoVoice": "Este sistema no tiene voz para este idioma.",
+    "listenNoVoiceHint": "Añade el idioma en Configuración de Windows: Hora e idioma y luego Idioma y región, e instala la voz de texto a voz.",
+    "listenNoVoiceHintLink": "Instrucciones de Microsoft",
+    "listenNoVoiceHintLabel": "Cómo instalar una voz"
   },
   "Sources": {
     "title": "Fuentes",

@@ -41,7 +41,11 @@
   font-size: var(--text-md);
 }
 
-.bookmark {
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
   margin-top: var(--space-2);
 }
 
@@ -110,6 +114,11 @@
   font-size: var(--text-2xl);
   font-weight: var(--weight-bold);
   letter-spacing: var(--tracking-display);
+}
+
+.speaking {
+  background: color-mix(in srgb, var(--color-peach) 65%, transparent);
+  border-radius: var(--radius-sm);
 }
 
 .aside {

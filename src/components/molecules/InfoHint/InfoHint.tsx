@@ -15,10 +15,12 @@ export function InfoHint({
   children,
   hint,
   label,
+  description,
 }: {
   children: ReactNode;
-  hint: string;
+  hint: ReactNode;
   label: string;
+  description?: string;
 }) {
   const tooltipId = useId();
   const rootRef = useRef<HTMLSpanElement>(null);
@@ -122,6 +124,9 @@ export function InfoHint({
     hideNow();
   }
 
+  const described =
+    description ?? (typeof hint === 'string' ? hint : undefined);
+
   return (
     <span
       ref={rootRef}
@@ -137,7 +142,7 @@ export function InfoHint({
           type="button"
           className={styles.trigger}
           aria-label={label}
-          aria-describedby={tooltipId}
+          aria-describedby={described ? tooltipId : undefined}
           aria-expanded={open}
           onPointerDown={onInfoPointerDown}
           onClick={onInfoClick}
@@ -169,11 +174,16 @@ export function InfoHint({
             />
           </svg>
         </button>
-        <span id={tooltipId} className={styles.srOnly} role="tooltip">
-          {hint}
-        </span>
+        {described ? (
+          <span id={tooltipId} className={styles.srOnly} role="tooltip">
+            {described}
+          </span>
+        ) : null}
         {open ? (
-          <span className={styles.tooltip} aria-hidden="true">
+          <span
+            className={styles.tooltip}
+            aria-hidden={typeof hint === 'string' ? true : undefined}
+          >
             {hint}
           </span>
         ) : null}

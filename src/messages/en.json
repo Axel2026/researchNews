@@ -34,7 +34,15 @@
     "comments": "{count, plural, one {# comment} other {# comments}}",
     "viewOriginal": "View original paper",
     "download": "Download",
-    "opensNewTab": "opens in a new tab"
+    "opensNewTab": "opens in a new tab",
+    "listen": "Listen",
+    "pause": "Pause",
+    "resume": "Resume",
+    "listenUnavailable": "Read-aloud is unavailable in this browser.",
+    "listenNoVoice": "This system has no voice for this language.",
+    "listenNoVoiceHint": "Add the language in Windows Settings under Time & language, then Language & region, and install its text-to-speech voice.",
+    "listenNoVoiceHintLink": "Microsoft instructions",
+    "listenNoVoiceHintLabel": "How to install a voice"
   },
   "Sources": {
     "title": "Sources",

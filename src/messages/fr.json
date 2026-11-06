@@ -34,7 +34,15 @@
     "comments": "{count, plural, one {# commentaire} other {# commentaires}}",
     "viewOriginal": "Voir l’article original",
     "download": "Télécharger",
-    "opensNewTab": "s’ouvre dans un nouvel onglet"
+    "opensNewTab": "s’ouvre dans un nouvel onglet",
+    "listen": "Écouter",
+    "pause": "Pause",
+    "resume": "Reprendre",
+    "listenUnavailable": "La lecture à voix haute n’est pas disponible dans ce navigateur.",
+    "listenNoVoice": "Ce système n’a pas de voix pour cette langue.",
+    "listenNoVoiceHint": "Ajoutez la langue dans les paramètres Windows : Heure et langue, puis Langue et région, et installez la voix de synthèse vocale.",
+    "listenNoVoiceHintLink": "Instructions Microsoft",
+    "listenNoVoiceHintLabel": "Comment installer une voix"
   },
   "Sources": {
     "title": "Sources",

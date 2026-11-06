@@ -54,6 +54,17 @@
   white-space: normal;
 }
 
+.tooltip a {
+  color: var(--color-accent);
+  font-weight: var(--weight-semibold);
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+.tooltip a:hover {
+  color: var(--color-accent-hover);
+}
+
 .tooltip::before {
   content: '';
   position: absolute;

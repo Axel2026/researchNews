@@ -34,7 +34,15 @@
     "comments": "{count, plural, one {# komentarz} few {# komentarze} many {# komentarzy} other {# komentarza}}",
     "viewOriginal": "Zobacz oryginalną pracę",
     "download": "Pobierz",
-    "opensNewTab": "otwiera się w nowej karcie"
+    "opensNewTab": "otwiera się w nowej karcie",
+    "listen": "Odsłuchaj",
+    "pause": "Wstrzymaj",
+    "resume": "Wznów",
+    "listenUnavailable": "Odczyt na głos jest niedostępny w tej przeglądarce.",
+    "listenNoVoice": "W tym systemie nie ma głosu dla tego języka.",
+    "listenNoVoiceHint": "Dodaj język w Ustawieniach Windows: Czas i język, potem Język i region, i zainstaluj jego głos zamiany tekstu na mowę.",
+    "listenNoVoiceHintLink": "Instrukcja Microsoftu",
+    "listenNoVoiceHintLabel": "Jak zainstalować głos"
   },
   "Sources": {
     "title": "Źródła",

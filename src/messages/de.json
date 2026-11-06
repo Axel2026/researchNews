@@ -34,7 +34,15 @@
     "comments": "{count, plural, one {# Kommentar} other {# Kommentare}}",
     "viewOriginal": "Originalarbeit ansehen",
     "download": "Herunterladen",
-    "opensNewTab": "öffnet in einem neuen Tab"
+    "opensNewTab": "öffnet in einem neuen Tab",
+    "listen": "Vorlesen",
+    "pause": "Pause",
+    "resume": "Fortsetzen",
+    "listenUnavailable": "Vorlesen ist in diesem Browser nicht verfügbar.",
+    "listenNoVoice": "Dieses System hat keine Stimme für diese Sprache.",
+    "listenNoVoiceHint": "Fügen Sie die Sprache in den Windows-Einstellungen unter Zeit und Sprache, dann Sprache und Region hinzu und installieren Sie die Text-zu-Sprache-Stimme.",
+    "listenNoVoiceHintLink": "Anleitung von Microsoft",
+    "listenNoVoiceHintLabel": "So installieren Sie eine Stimme"
   },
   "Sources": {
     "title": "Quellen",
