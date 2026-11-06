@@ -68,16 +68,35 @@ export async function listArticles(
   return response.json() as Promise<ArticleListItem[]>;
 }
 
+export type ArticleSearchParams = {
+  query: string;
+  field: string;
+  sort: 'newest' | 'popular';
+  author: string;
+  from: string;
+  to: string;
+};
+
 export async function searchArticles(
   locale: AppLocale,
-  query: string,
+  params: ArticleSearchParams,
 ): Promise<ArticleListItem[]> {
   const url = articlesUrl('/articles', locale);
-  url.searchParams.set('sort', 'newest');
-  const trimmed = query.trim();
+  url.searchParams.set('sort', params.sort);
 
-  if (trimmed) {
-    url.searchParams.set('q', trimmed);
+  const optional = {
+    q: params.query,
+    field: params.field,
+    author: params.author,
+    from: params.from,
+    to: params.to,
+  } as const;
+
+  for (const [key, value] of Object.entries(optional)) {
+    const trimmed = value.trim();
+    if (trimmed) {
+      url.searchParams.set(key, trimmed);
+    }
   }
 
   const response = await fetch(url, { cache: 'no-store' });

@@ -1,0 +1,188 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.control {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-3);
+  border: var(--border-width) solid var(--color-control-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font: inherit;
+  font-size: var(--text-base);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-snug);
+}
+
+.row .control {
+  flex: 1 1 16rem;
+}
+
+.control:hover {
+  border-color: var(--color-ink);
+}
+
+.control:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.control[aria-invalid='true'] {
+  border-color: var(--color-accent);
+  box-shadow: inset 0 0 0 1px var(--color-accent);
+}
+
+.control:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  text-align: left;
+  cursor: pointer;
+}
+
+.value {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chevron {
+  display: block;
+  flex-shrink: 0;
+  color: var(--color-muted);
+}
+
+.trigger[aria-expanded='true'] .chevron {
+  transform: rotate(180deg);
+}
+
+.list {
+  position: fixed;
+  inset: unset;
+  box-sizing: border-box;
+  z-index: var(--z-dropdown);
+  margin: var(--space-1) 0 0;
+  max-height: min(18rem, 70vh);
+  overflow: hidden auto;
+  overscroll-behavior: contain;
+  padding: var(--space-2) 0;
+  border: var(--border-width) solid var(--color-chip-border);
+  background: var(--color-surface);
+  list-style: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-rule) var(--color-hero);
+}
+
+.list::-webkit-scrollbar {
+  width: 0.55rem;
+}
+
+.list::-webkit-scrollbar-track {
+  background: var(--color-hero);
+}
+
+.list::-webkit-scrollbar-thumb {
+  background: var(--color-rule);
+  border: 2px solid var(--color-hero);
+  border-radius: var(--radius-pill);
+}
+
+.list::-webkit-scrollbar-thumb:hover {
+  background: var(--color-control-border);
+}
+
+.option {
+  display: block;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-4);
+  border: 0;
+  background: transparent;
+  color: var(--color-ink);
+  font: inherit;
+  font-size: var(--text-md);
+  line-height: var(--leading-snug);
+  text-align: left;
+  white-space: normal;
+  overflow-wrap: break-word;
+  cursor: pointer;
+}
+
+.option:hover,
+.active {
+  color: var(--color-accent);
+  background: var(--color-hero);
+}
+
+.selected {
+  font-weight: var(--weight-semibold);
+}
+
+.error {
+  margin: 0;
+  color: var(--color-accent);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-normal);
+}
+
+.date {
+  color-scheme: light;
+  accent-color: var(--color-accent);
+}
+
+.date::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.75;
+}
+
+.date::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+@media (forced-colors: active) {
+  .control {
+    border: 1px solid ButtonText;
+  }
+
+  .control[aria-invalid='true'] {
+    border: 2px solid Mark;
+  }
+
+  .list {
+    border: 1px solid CanvasText;
+    scrollbar-color: CanvasText Canvas;
+  }
+
+  .option:hover,
+  .active {
+    background: Highlight;
+    color: HighlightText;
+  }
+}

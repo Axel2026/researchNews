@@ -92,6 +92,20 @@
     "submit": "Suchen",
     "empty": "Keine Artikel passen zu dieser Suche."
   },
+  "Filters": {
+    "legend": "Filter",
+    "field": "Fachgebiet",
+    "allFields": "Alle Fachgebiete",
+    "sort": "Sortierung",
+    "newest": "Neueste",
+    "popular": "Meistgelesen",
+    "author": "Autor",
+    "authorPlaceholder": "Name",
+    "from": "Veröffentlicht von",
+    "to": "Veröffentlicht bis",
+    "clear": "Filter zurücksetzen",
+    "badRange": "Das Startdatum liegt nach dem Enddatum."
+  },
   "Status": {
     "loading": "Wird geladen…",
     "error": "Der Inhalt konnte nicht geladen werden."

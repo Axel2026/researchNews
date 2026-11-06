@@ -70,7 +70,15 @@ export default async function SearchPage({
     <PageShell header={<Header current="search" categories={categories} />}>
       <SearchScreen
         locale={locale as AppLocale}
+        categories={categories}
         initialQuery={queryString(query.q)}
+        initialFilters={{
+          field: queryString(query.field),
+          sort: queryString(query.sort) === 'popular' ? 'popular' : 'newest',
+          author: queryString(query.author),
+          from: queryString(query.from),
+          to: queryString(query.to),
+        }}
       />
     </PageShell>
   );

@@ -1,34 +1,7 @@
 .field {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
-  max-width: 40rem;
   margin-top: var(--space-6);
-}
-
-.label {
-  font-size: var(--text-sm);
-  font-weight: var(--weight-semibold);
-}
-
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-3);
-}
-
-.input {
-  flex: 1 1 16rem;
-  min-height: 2.75rem;
-  padding: var(--space-2) var(--space-3);
-  border: var(--border-width) solid var(--color-control-border);
-  border-radius: var(--radius-sm);
-  background: var(--color-surface);
-  color: var(--color-ink);
-  font: inherit;
-  font-size: var(--text-base);
-  font-weight: var(--weight-regular);
 }
 
 .error {

@@ -92,6 +92,20 @@
     "submit": "Wyszukaj",
     "empty": "Nie ma artykułów pasujących do tego wyszukiwania."
   },
+  "Filters": {
+    "legend": "Filtry",
+    "field": "Dziedzina",
+    "allFields": "Wszystkie dziedziny",
+    "sort": "Sortowanie",
+    "newest": "Od najnowszych",
+    "popular": "Najczęściej czytane",
+    "author": "Autor",
+    "authorPlaceholder": "Nazwisko",
+    "from": "Publikacja od",
+    "to": "Publikacja do",
+    "clear": "Wyczyść filtry",
+    "badRange": "Data początkowa jest późniejsza niż końcowa."
+  },
   "Status": {
     "loading": "Ładowanie…",
     "error": "Nie udało się wczytać treści."

@@ -9,7 +9,15 @@ const meta = {
   component: SearchScreen,
   args: {
     locale: 'en',
+    categories: sampleCategories,
     initialQuery: '',
+    initialFilters: {
+      field: '',
+      sort: 'newest',
+      author: '',
+      from: '',
+      to: '',
+    },
   },
   decorators: [
     (Story) => (

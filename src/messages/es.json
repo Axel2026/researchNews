@@ -92,6 +92,20 @@
     "submit": "Buscar",
     "empty": "Ningún artículo coincide con esa búsqueda."
   },
+  "Filters": {
+    "legend": "Filtros",
+    "field": "Disciplina",
+    "allFields": "Todas las disciplinas",
+    "sort": "Orden",
+    "newest": "Más recientes",
+    "popular": "Más leídos",
+    "author": "Autor",
+    "authorPlaceholder": "Apellido",
+    "from": "Publicado desde",
+    "to": "Publicado hasta",
+    "clear": "Borrar filtros",
+    "badRange": "La fecha inicial es posterior a la final."
+  },
   "Status": {
     "loading": "Cargando…",
     "error": "No se pudo cargar el contenido."
