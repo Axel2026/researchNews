@@ -37,6 +37,13 @@ export const Sources: Story = {
   },
 };
 
+export const Search: Story = {
+  args: {
+    current: 'search',
+    categories: sampleCategories,
+  },
+};
+
 export const Article: Story = {};
 
 export const Auth: Story = {
@@ -48,6 +55,7 @@ export const Auth: Story = {
 export const Minimal: Story = {
   args: {
     showAccountMenu: false,
+    showSearch: false,
     showLanguageSwitcher: false,
   },
 };

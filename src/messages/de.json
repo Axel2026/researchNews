@@ -11,7 +11,8 @@
     "fields": "Fachgebiete",
     "language": "Sprache",
     "close": "Schließen",
-    "skip": "Zum Inhalt springen"
+    "skip": "Zum Inhalt springen",
+    "search": "Suche"
   },
   "Home": {
     "masthead": "Forschungspapiere, verständlich.",
@@ -81,6 +82,15 @@
   "Category": {
     "kicker": "Kategorie",
     "open": "Zur Kategorie {field}"
+  },
+  "Search": {
+    "kicker": "Finden",
+    "title": "Suche",
+    "dek": "Suchen Sie Artikel nach Titel, Fachgebiet oder einer kurzen Formulierung aus dem Text.",
+    "placeholder": "Artikel suchen",
+    "label": "Suchbegriff",
+    "submit": "Suchen",
+    "empty": "Keine Artikel passen zu dieser Suche."
   },
   "Status": {
     "loading": "Wird geladen…",

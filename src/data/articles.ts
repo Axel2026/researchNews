@@ -68,6 +68,27 @@ export async function listArticles(
   return response.json() as Promise<ArticleListItem[]>;
 }
 
+export async function searchArticles(
+  locale: AppLocale,
+  query: string,
+): Promise<ArticleListItem[]> {
+  const url = articlesUrl('/articles', locale);
+  url.searchParams.set('sort', 'newest');
+  const trimmed = query.trim();
+
+  if (trimmed) {
+    url.searchParams.set('q', trimmed);
+  }
+
+  const response = await fetch(url, { cache: 'no-store' });
+
+  if (!response.ok) {
+    throw new Error(`Failed to search articles: ${response.status}`);
+  }
+
+  return response.json() as Promise<ArticleListItem[]>;
+}
+
 export async function getArticleBySlug(
   slug: string,
   locale: AppLocale,

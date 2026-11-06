@@ -19,6 +19,7 @@ export function ErrorScreen({
       header={
         <Header
           showAccountMenu={false}
+          showSearch={false}
           showLanguageSwitcher={showLanguageSwitcher}
         />
       }

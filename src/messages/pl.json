@@ -11,7 +11,8 @@
     "fields": "Dziedziny",
     "language": "Język",
     "close": "Zamknij",
-    "skip": "Przejdź do treści"
+    "skip": "Przejdź do treści",
+    "search": "Szukaj"
   },
   "Home": {
     "masthead": "Prace badawcze, po ludzku.",
@@ -81,6 +82,15 @@
   "Category": {
     "kicker": "Kategoria",
     "open": "Przejdź do kategorii {field}"
+  },
+  "Search": {
+    "kicker": "Znajdź",
+    "title": "Wyszukiwarka",
+    "dek": "Szukaj artykułów po tytule, dziedzinie albo krótkiej frazie ze streszczenia.",
+    "placeholder": "Szukaj artykułów",
+    "label": "Fraza wyszukiwania",
+    "submit": "Wyszukaj",
+    "empty": "Nie ma artykułów pasujących do tego wyszukiwania."
   },
   "Status": {
     "loading": "Ładowanie…",

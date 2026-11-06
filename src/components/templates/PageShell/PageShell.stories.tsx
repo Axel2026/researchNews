@@ -40,7 +40,7 @@ export const Auth: Story = {
 export const Error: Story = {
   args: {
     variant: 'error',
-    header: <Header showAccountMenu={false} />,
+    header: <Header showAccountMenu={false} showSearch={false} />,
     children: <p>Error content</p>,
   },
 };

@@ -11,7 +11,8 @@
     "fields": "Fields",
     "language": "Language",
     "close": "Close",
-    "skip": "Skip to content"
+    "skip": "Skip to content",
+    "search": "Search"
   },
   "Home": {
     "masthead": "Research papers, plain language.",
@@ -81,6 +82,15 @@
   "Category": {
     "kicker": "Category",
     "open": "Go to category {field}"
+  },
+  "Search": {
+    "kicker": "Find",
+    "title": "Search",
+    "dek": "Look up articles by title, field or a short phrase from the story.",
+    "placeholder": "Search articles",
+    "label": "Search query",
+    "submit": "Search",
+    "empty": "No articles match that search."
   },
   "Status": {
     "loading": "Loading…",

@@ -11,7 +11,8 @@
     "fields": "Disciplinas",
     "language": "Idioma",
     "close": "Cerrar",
-    "skip": "Saltar al contenido"
+    "skip": "Saltar al contenido",
+    "search": "Buscar"
   },
   "Home": {
     "masthead": "Trabajos de investigación, en claro.",
@@ -81,6 +82,15 @@
   "Category": {
     "kicker": "Categoría",
     "open": "Ir a la categoría {field}"
+  },
+  "Search": {
+    "kicker": "Encontrar",
+    "title": "Búsqueda",
+    "dek": "Busca artículos por título, disciplina o una frase breve del texto.",
+    "placeholder": "Buscar artículos",
+    "label": "Consulta de búsqueda",
+    "submit": "Buscar",
+    "empty": "Ningún artículo coincide con esa búsqueda."
   },
   "Status": {
     "loading": "Cargando…",

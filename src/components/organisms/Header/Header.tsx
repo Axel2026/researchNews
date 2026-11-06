@@ -2,14 +2,15 @@
 
 import type { ReactNode } from 'react';
 import { useTranslations } from 'next-intl';
+import { SearchIcon } from '@/components/atoms/SearchIcon/SearchIcon';
 import { CategoryDropdown } from '@/components/molecules/CategoryDropdown/CategoryDropdown';
 import { LanguageSwitcher } from '@/components/molecules/LanguageSwitcher/LanguageSwitcher';
 import { AccountMenu } from '@/components/organisms/AccountMenu/AccountMenu';
 import type { ArticleCategory } from '@/data/articles';
-import { Link } from '@/i18n/navigation';
+import { Link, usePathname } from '@/i18n/navigation';
 import styles from './Header.module.css';
 
-export type HeaderCurrent = 'stories' | 'category' | 'sources';
+export type HeaderCurrent = 'stories' | 'category' | 'sources' | 'search';
 
 export function Header({
   current,
@@ -18,6 +19,7 @@ export function Header({
   children,
   actions,
   showAccountMenu = true,
+  showSearch = true,
   showLanguageSwitcher = true,
 }: {
   current?: HeaderCurrent;
@@ -26,14 +28,27 @@ export function Header({
   children?: ReactNode;
   actions?: ReactNode;
   showAccountMenu?: boolean;
+  showSearch?: boolean;
   showLanguageSwitcher?: boolean;
 }) {
   const t = useTranslations('Nav');
+  const pathname = usePathname();
+  const onSearch = current === 'search' || pathname === '/search';
   const resolvedActions =
     actions ??
-    (showAccountMenu || showLanguageSwitcher ? (
+    (showAccountMenu || showSearch || showLanguageSwitcher ? (
       <>
         {showAccountMenu ? <AccountMenu /> : null}
+        {showSearch ? (
+          <Link
+            className={styles.search}
+            href="/search"
+            aria-label={t('search')}
+            aria-current={onSearch ? 'page' : undefined}
+          >
+            <SearchIcon />
+          </Link>
+        ) : null}
         {showLanguageSwitcher ? <LanguageSwitcher /> : null}
       </>
     ) : null);

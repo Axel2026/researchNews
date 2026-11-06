@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { CategoryFeed } from '@/components/organisms/CategoryFeed/CategoryFeed';
 import type { ArticleListItem } from '@/data/articles';
 import type { AppLocale } from '@/i18n/routing';
@@ -11,6 +12,8 @@ export function ArticleListing({
   empty,
   articles,
   locale = 'en',
+  toolbar,
+  status,
 }: {
   kicker: string;
   title: string;
@@ -19,6 +22,8 @@ export function ArticleListing({
   empty?: string;
   articles: ArticleListItem[];
   locale?: AppLocale;
+  toolbar?: ReactNode;
+  status?: ReactNode;
 }) {
   const showFeed = articles.length > 0 || empty == null;
 
@@ -29,13 +34,15 @@ export function ArticleListing({
         {title}
       </h1>
       {dek ? <p className={styles.dek}>{dek}</p> : null}
-      {showFeed ? (
-        <section className={styles.feed} aria-labelledby={headingId}>
-          <CategoryFeed articles={articles} locale={locale} />
-        </section>
-      ) : (
-        <p className={styles.empty}>{empty}</p>
-      )}
+      {toolbar}
+      {status ??
+        (showFeed ? (
+          <section className={styles.feed} aria-labelledby={headingId}>
+            <CategoryFeed articles={articles} locale={locale} />
+          </section>
+        ) : (
+          <p className={styles.empty}>{empty}</p>
+        ))}
     </>
   );
 }

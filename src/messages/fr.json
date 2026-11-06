@@ -11,7 +11,8 @@
     "fields": "Disciplines",
     "language": "Langue",
     "close": "Fermer",
-    "skip": "Aller au contenu"
+    "skip": "Aller au contenu",
+    "search": "Recherche"
   },
   "Home": {
     "masthead": "Travaux de recherche, en clair.",
@@ -81,6 +82,15 @@
   "Category": {
     "kicker": "Catégorie",
     "open": "Aller à la catégorie {field}"
+  },
+  "Search": {
+    "kicker": "Trouver",
+    "title": "Recherche",
+    "dek": "Cherchez des articles par titre, discipline ou une courte phrase du texte.",
+    "placeholder": "Rechercher des articles",
+    "label": "Requête de recherche",
+    "submit": "Rechercher",
+    "empty": "Aucun article ne correspond à cette recherche."
   },
   "Status": {
     "loading": "Chargement…",
