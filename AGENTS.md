@@ -50,7 +50,7 @@ export function ConfirmModal({ open, title, onClose }: ConfirmModalProps) {
 ## Styles and copy
 
 - Colocate styles in `*.module.css`. Use tokens from `design-system` (`var(--color-…)`, `var(--font-…)`).
-- No `style={{ … }}` except a value that CSS cannot express and that is computed at runtime.
+- No `style={{ … }}` except a value that CSS cannot express and that is computed at runtime. Storybook may use `style={{ … }}` for canvas layout: `*.stories.tsx`, `*.stories.ts`, `.storybook/`, and `src/components/storybook`.
 - User-facing strings go through next-intl (`useTranslations` / `getTranslations`) and `src/messages/*.json`. Add the key to every locale file.
 
 ## Rendering

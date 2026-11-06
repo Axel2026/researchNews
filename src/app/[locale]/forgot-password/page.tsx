@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { hasLocale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { ForgotPasswordForm } from '@/components/organisms/AuthForms/ForgotPasswordForm';
+import { ForgotPasswordForm } from '@/components/organisms/AuthForms/ForgotPasswordForm/ForgotPasswordForm';
 import { AuthScreen } from '@/components/templates/AuthScreen/AuthScreen';
 import { routing } from '@/i18n/routing';
 import { authPageMetadata } from '@/lib/seo';
@@ -18,7 +18,11 @@ export async function generateMetadata({
   }
 
   const t = await getTranslations({ locale, namespace: 'Auth' });
-  return authPageMetadata(locale, '/forgot-password', t('forgotTitle'));
+  return authPageMetadata({
+    locale,
+    href: '/forgot-password',
+    title: t('forgotTitle'),
+  });
 }
 
 export default async function ForgotPasswordPage({

@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import { useRouter } from '@/i18n/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { publicSupabaseEnv } from '@/lib/supabase/env';
-import { AccountMenuView } from './AccountMenuView';
-import type { AccountMenuStatus } from './AccountMenuView.types';
+import { AccountMenuView } from './AccountMenuView/AccountMenuView';
+import type { AccountMenuStatus } from './AccountMenuView/AccountMenuView.types';
 
 export function AccountMenu() {
   const router = useRouter();

@@ -1,7 +1,10 @@
 import { getArticleParagraphs } from '@/data/articles';
-import type { ArticleDetail } from '@/data/articles.types';
 import type { AppLocale } from '@/i18n/routing.types';
 import type { SpeechSegment } from './speech.types';
+import type {
+  SpeechLangParams,
+  BuildSpeechSegmentsParams,
+} from './segments.types';
 
 const speechLanguages: Record<AppLocale, string> = {
   en: 'en-US',
@@ -11,14 +14,14 @@ const speechLanguages: Record<AppLocale, string> = {
   es: 'es-ES',
 };
 
-export function speechLang(locale: AppLocale): string {
+export function speechLang({ locale }: SpeechLangParams): string {
   return speechLanguages[locale];
 }
 
-export function buildSpeechSegments(
-  article: ArticleDetail,
-  bodyHeading: string,
-): SpeechSegment[] {
+export function buildSpeechSegments({
+  article,
+  bodyHeading,
+}: BuildSpeechSegmentsParams): SpeechSegment[] {
   const segments: SpeechSegment[] = [];
 
   const push = (id: string, text: string) => {
@@ -31,7 +34,7 @@ export function buildSpeechSegments(
   push('title', article.title);
   push('dek', article.shortPopularization);
 
-  getArticleParagraphs(article, 'mediumPopularization').forEach(
+  getArticleParagraphs({ article, field: 'mediumPopularization' }).forEach(
     (paragraph, index) => {
       push(`summary-${index}`, paragraph);
     },
@@ -39,7 +42,7 @@ export function buildSpeechSegments(
 
   push('body-heading', bodyHeading);
 
-  getArticleParagraphs(article, 'fullPopularization').forEach(
+  getArticleParagraphs({ article, field: 'fullPopularization' }).forEach(
     (paragraph, index) => {
       push(`body-${index}`, paragraph);
     },

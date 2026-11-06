@@ -1,5 +1,4 @@
 import { unstable_cache } from 'next/cache';
-import type { AppLocale } from '@/i18n/routing.types';
 import { apiUrl } from '@/lib/api';
 import type {
   ArticleListItem,
@@ -7,13 +6,21 @@ import type {
   ArticleCategory,
   ArticlePage,
   ArticleCategoryDetail,
-  ArticleSearchParams,
+  ArticlesUrlParams,
+  ListArticlesParams,
+  SearchArticlesParams,
+  GetArticleBySlugParams,
+  IsFieldOfStudyParams,
+  ListCategoriesParams,
+  GetCategoryBySlugParams,
+  GetArticleParagraphsParams,
+  RecordArticleViewParams,
 } from './articles.types';
 
 export const ARTICLES_REVALIDATE_SECONDS = 10800;
 export const ARTICLES_CACHE_TAG = 'articles';
 
-function articlesUrl(path: string, locale: AppLocale): URL {
+function articlesUrl({ path, locale }: ArticlesUrlParams): URL {
   const url = new URL(path, apiUrl());
   url.searchParams.set('locale', locale);
   return url;
@@ -29,10 +36,13 @@ const fetchOptions: RequestInit =
         },
       };
 
-export async function listArticles(
-  locale: AppLocale,
-): Promise<ArticleListItem[]> {
-  const response = await fetch(articlesUrl('/articles', locale), fetchOptions);
+export async function listArticles({
+  locale,
+}: ListArticlesParams): Promise<ArticleListItem[]> {
+  const response = await fetch(
+    articlesUrl({ path: '/articles', locale }),
+    fetchOptions,
+  );
 
   if (!response.ok) {
     throw new Error(`Failed to load articles: ${response.status}`);
@@ -41,11 +51,11 @@ export async function listArticles(
   return response.json() as Promise<ArticleListItem[]>;
 }
 
-export async function searchArticles(
-  locale: AppLocale,
-  params: ArticleSearchParams,
-): Promise<ArticlePage> {
-  const url = articlesUrl('/articles', locale);
+export async function searchArticles({
+  locale,
+  params,
+}: SearchArticlesParams): Promise<ArticlePage> {
+  const url = articlesUrl({ path: '/articles', locale });
   url.searchParams.set('sort', params.sort);
   url.searchParams.set('page', String(params.page));
 
@@ -73,12 +83,12 @@ export async function searchArticles(
   return response.json() as Promise<ArticlePage>;
 }
 
-export async function getArticleBySlug(
-  slug: string,
-  locale: AppLocale,
-): Promise<ArticleDetail | null> {
+export async function getArticleBySlug({
+  slug,
+  locale,
+}: GetArticleBySlugParams): Promise<ArticleDetail | null> {
   const response = await fetch(
-    articlesUrl(`/articles/${encodeURIComponent(slug)}`, locale),
+    articlesUrl({ path: `/articles/${encodeURIComponent(slug)}`, locale }),
     fetchOptions,
   );
 
@@ -114,7 +124,7 @@ const EXCLUDED_FIELDS = new Set([
   'pnas',
 ]);
 
-function isFieldOfStudy(field: string): boolean {
+function isFieldOfStudy({ field }: IsFieldOfStudyParams): boolean {
   const trimmed = field.trim();
   if (trimmed.length < 3) {
     return false;
@@ -127,11 +137,11 @@ function isFieldOfStudy(field: string): boolean {
   return !EXCLUDED_FIELDS.has(trimmed.toLowerCase());
 }
 
-export async function listCategories(
-  locale: AppLocale,
-): Promise<ArticleCategory[]> {
+export async function listCategories({
+  locale,
+}: ListCategoriesParams): Promise<ArticleCategory[]> {
   const response = await fetch(
-    articlesUrl('/categories', locale),
+    articlesUrl({ path: '/categories', locale }),
     fetchOptions,
   );
 
@@ -140,15 +150,20 @@ export async function listCategories(
   }
 
   const categories = (await response.json()) as ArticleCategory[];
-  return categories.filter((category) => isFieldOfStudy(category.field));
+  return categories.filter((category) =>
+    isFieldOfStudy({ field: category.field }),
+  );
 }
 
-export async function getCategoryBySlug(
-  slug: string,
-  locale: AppLocale,
-  page: number,
-): Promise<ArticleCategoryDetail | null> {
-  const url = articlesUrl(`/categories/${encodeURIComponent(slug)}`, locale);
+export async function getCategoryBySlug({
+  slug,
+  locale,
+  page,
+}: GetCategoryBySlugParams): Promise<ArticleCategoryDetail | null> {
+  const url = articlesUrl({
+    path: `/categories/${encodeURIComponent(slug)}`,
+    locale,
+  });
   url.searchParams.set('page', String(page));
   const response = await fetch(url, fetchOptions);
 
@@ -172,17 +187,19 @@ export const getEditionDateIso = unstable_cache(
   },
 );
 
-export function getArticleParagraphs(
-  article: ArticleDetail,
-  field: 'mediumPopularization' | 'fullPopularization',
-): string[] {
+export function getArticleParagraphs({
+  article,
+  field,
+}: GetArticleParagraphsParams): string[] {
   return article[field]
     .split(/\n\s*\n/)
     .map((paragraph) => paragraph.trim())
     .filter(Boolean);
 }
 
-export async function recordArticleView(slug: string): Promise<void> {
+export async function recordArticleView({
+  slug,
+}: RecordArticleViewParams): Promise<void> {
   const response = await fetch(
     new URL(`/articles/${encodeURIComponent(slug)}/view`, apiUrl()),
     { method: 'POST', cache: 'no-store', keepalive: true },

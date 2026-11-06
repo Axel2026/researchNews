@@ -1,7 +1,6 @@
-import type { AppLocale } from '@/i18n/routing.types';
 import { apiUrl } from '@/lib/api';
 import { ARTICLES_CACHE_TAG, ARTICLES_REVALIDATE_SECONDS } from './articles';
-import type { SourceListItem } from './sources.types';
+import type { SourceListItem, ListSourcesParams } from './sources.types';
 
 const fetchOptions: RequestInit =
   process.env.NODE_ENV === 'development'
@@ -13,9 +12,9 @@ const fetchOptions: RequestInit =
         },
       };
 
-export async function listSources(
-  locale: AppLocale,
-): Promise<SourceListItem[]> {
+export async function listSources({
+  locale,
+}: ListSourcesParams): Promise<SourceListItem[]> {
   const url = new URL('/sources', apiUrl());
   url.searchParams.set('locale', locale);
   const response = await fetch(url, fetchOptions);

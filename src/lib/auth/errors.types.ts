@@ -5,3 +5,7 @@ export type AuthErrorKey =
   | 'weakPassword'
   | 'rateLimit'
   | 'genericError';
+
+export type AuthErrorKeyParams = {
+  code: string | undefined;
+};

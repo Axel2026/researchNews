@@ -3,7 +3,7 @@ import { hasLocale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
-import { CredentialsForm } from '@/components/organisms/AuthForms/CredentialsForm';
+import { CredentialsForm } from '@/components/organisms/AuthForms/CredentialsForm/CredentialsForm';
 import { AuthScreen } from '@/components/templates/AuthScreen/AuthScreen';
 import { routing } from '@/i18n/routing';
 import { authPageMetadata } from '@/lib/seo';
@@ -19,7 +19,11 @@ export async function generateMetadata({
   }
 
   const t = await getTranslations({ locale, namespace: 'Auth' });
-  return authPageMetadata(locale, '/register', t('registerTitle'));
+  return authPageMetadata({
+    locale,
+    href: '/register',
+    title: t('registerTitle'),
+  });
 }
 
 export default async function RegisterPage({ params }: RegisterPageProps) {

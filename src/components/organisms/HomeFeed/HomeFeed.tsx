@@ -1,5 +1,5 @@
 import { getTranslations } from 'next-intl/server';
-import { HomeFeedView } from './HomeFeedView';
+import { HomeFeedView } from './HomeFeedView/HomeFeedView';
 import type { HomeFeedProps } from './HomeFeed.types';
 
 export async function HomeFeed({

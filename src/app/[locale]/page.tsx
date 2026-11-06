@@ -5,6 +5,7 @@ import { Header } from '@/components/organisms/Header/Header';
 import { HomeFeed } from '@/components/organisms/HomeFeed/HomeFeed';
 import { PageShell } from '@/components/templates/PageShell/PageShell';
 import {
+  ARTICLES_REVALIDATE_SECONDS,
   getEditionDateIso,
   listArticles,
   listCategories,
@@ -12,16 +13,9 @@ import {
 import { routing } from '@/i18n/routing';
 import styles from './page.module.css';
 import type { HomeProps } from './page.types';
+import { formatEditionDate } from './page.utils';
 
-export const revalidate = 10800;
-
-function formatEditionDate(isoDate: string, locale: string) {
-  return Temporal.PlainDate.from(isoDate).toLocaleString(locale, {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  });
-}
+export const revalidate = ARTICLES_REVALIDATE_SECONDS;
 
 export default async function Home({ params }: HomeProps) {
   const { locale } = await params;
@@ -32,11 +26,11 @@ export default async function Home({ params }: HomeProps) {
 
   const t = await getTranslations({ locale });
   const [articles, editionDateIso, categories] = await Promise.all([
-    listArticles(locale),
+    listArticles({ locale }),
     getEditionDateIso(),
-    listCategories(locale),
+    listCategories({ locale }),
   ]);
-  const editionDate = formatEditionDate(editionDateIso, locale);
+  const editionDate = formatEditionDate({ isoDate: editionDateIso, locale });
 
   return (
     <PageShell header={<Header current="stories" categories={categories} />}>

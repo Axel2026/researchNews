@@ -1,4 +1,12 @@
-export function safeNextPath(value: string | null, fallback = '/'): string {
+import type {
+  SafeNextPathParams,
+  AuthCallbackUrlParams,
+  LoginHrefParams,
+} from './redirect.types';
+export function safeNextPath({
+  value,
+  fallback = '/',
+}: SafeNextPathParams): string {
   if (
     !value ||
     !value.startsWith('/') ||
@@ -13,15 +21,21 @@ export function safeNextPath(value: string | null, fallback = '/'): string {
   return value;
 }
 
-export function authCallbackUrl(nextPath: string, loginPath: string) {
+export function authCallbackUrl({
+  nextPath,
+  loginPath,
+}: AuthCallbackUrlParams) {
   const url = new URL('/auth/callback', window.location.origin);
-  url.searchParams.set('next', safeNextPath(nextPath));
-  url.searchParams.set('login', safeNextPath(loginPath, '/login'));
+  url.searchParams.set('next', safeNextPath({ value: nextPath }));
+  url.searchParams.set(
+    'login',
+    safeNextPath({ value: loginPath, fallback: '/login' }),
+  );
   return url.toString();
 }
 
-export function loginHref(nextPath: string) {
-  const next = safeNextPath(nextPath);
+export function loginHref({ nextPath }: LoginHrefParams) {
+  const next = safeNextPath({ value: nextPath });
 
   if (next === '/') {
     return '/login';

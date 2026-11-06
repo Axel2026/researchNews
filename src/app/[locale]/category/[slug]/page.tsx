@@ -1,23 +1,24 @@
 import { hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
-import { listCategories } from '@/data/articles';
+import { ARTICLES_REVALIDATE_SECONDS, listCategories } from '@/data/articles';
 import { routing } from '@/i18n/routing';
-import { CategoryListing, categoryMetadata } from '../CategoryListing';
+import { CategoryListing } from '../CategoryListing';
+import { categoryMetadata } from '../CategoryListing.utils';
 import type { CategoryPageProps } from './page.types';
 
-export const revalidate = 10800;
+export const revalidate = ARTICLES_REVALIDATE_SECONDS;
 
 export async function generateMetadata({
   params,
 }: PageProps<'/[locale]/category/[slug]'>) {
   const { locale, slug } = await params;
-  return categoryMetadata(locale, slug, 1);
+  return categoryMetadata({ locale, slug, page: 1 });
 }
 
 export async function generateStaticParams() {
   const localeSlugs = await Promise.all(
     routing.locales.map(async (locale) => {
-      const categories = await listCategories(locale);
+      const categories = await listCategories({ locale });
       return categories.map((category) => ({ locale, slug: category.slug }));
     }),
   );

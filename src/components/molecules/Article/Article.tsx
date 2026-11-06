@@ -30,7 +30,7 @@ export function Article({
       <div className={styles.meta}>
         {article.paperPublishedAt ? (
           <time className={styles.date} dateTime={article.paperPublishedAt}>
-            {formatPaperPublishedAt(article.paperPublishedAt, locale)}
+            {formatPaperPublishedAt({ iso: article.paperPublishedAt, locale })}
           </time>
         ) : null}
         {article.paperPublishedAt && article.authors.length > 0 ? (

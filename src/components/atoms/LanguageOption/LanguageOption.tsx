@@ -1,5 +1,3 @@
-'use client';
-
 import { Link } from '@/i18n/navigation';
 import { localeLabels, localeNames } from '@/i18n/routing';
 import styles from './LanguageOption.module.css';

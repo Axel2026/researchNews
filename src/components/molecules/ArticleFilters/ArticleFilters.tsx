@@ -3,9 +3,9 @@
 import { useId } from 'react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/atoms/Button/Button';
-import { DateInput } from '@/components/atoms/Field/DateInput';
-import { Input } from '@/components/atoms/Field/Input';
-import { Select } from '@/components/atoms/Field/Select';
+import { DateInput } from '@/components/atoms/Field/DateInput/DateInput';
+import { Input } from '@/components/atoms/Field/Input/Input';
+import { Select } from '@/components/atoms/Field/Select/Select';
 import styles from './ArticleFilters.module.css';
 import type { ArticleFiltersProps } from './ArticleFilters.types';
 

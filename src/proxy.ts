@@ -6,7 +6,7 @@ import { applySession } from './lib/supabase/session';
 const handleI18n = createMiddleware(routing);
 
 export default async function proxy(request: NextRequest) {
-  const writeSession = await applySession(request);
+  const writeSession = await applySession({ request });
   return writeSession(handleI18n(request));
 }
 

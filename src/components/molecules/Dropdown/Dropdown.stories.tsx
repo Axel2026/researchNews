@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import { Chevron } from '@/components/atoms/Chevron/Chevron';
 import styles from '../CategoryDropdown/CategoryDropdown.module.css';
 import { Dropdown } from './Dropdown';
 
@@ -26,23 +27,7 @@ const meta = {
     label: (
       <>
         Open
-        <svg
-          className={styles.chevron}
-          viewBox="0 0 12 12"
-          width="12"
-          height="12"
-          aria-hidden="true"
-          focusable="false"
-        >
-          <path
-            d="M2.2 4.2 6 8l3.8-3.8"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+        <Chevron className={styles.chevron} strokeWidth={1.5} />
       </>
     ),
     children: dropdownItems(6),

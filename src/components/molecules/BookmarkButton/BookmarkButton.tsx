@@ -7,8 +7,8 @@ import { usePathname } from '@/i18n/navigation';
 import type { AppLocale } from '@/i18n/routing.types';
 import { createClient } from '@/lib/supabase/client';
 import { publicSupabaseEnv } from '@/lib/supabase/env';
-import { BookmarkButtonView } from './BookmarkButtonView';
-import type { BookmarkButtonStatus } from './BookmarkButtonView.types';
+import { BookmarkButtonView } from './BookmarkButtonView/BookmarkButtonView';
+import type { BookmarkButtonStatus } from './BookmarkButtonView/BookmarkButtonView.types';
 import type { BookmarkButtonProps } from './BookmarkButton.types';
 
 export function BookmarkButton({ slug }: BookmarkButtonProps) {
@@ -41,7 +41,7 @@ export function BookmarkButton({ slug }: BookmarkButtonProps) {
       }
 
       try {
-        const bookmarks = await listBookmarks(locale, token);
+        const bookmarks = await listBookmarks({ locale, accessToken: token });
         if (active) {
           setStatus(bookmarks.slugs.includes(slug) ? 'saved' : 'unsaved');
         }
@@ -94,7 +94,11 @@ export function BookmarkButton({ slug }: BookmarkButtonProps) {
       }
 
       const next = status !== 'saved';
-      const result = await setBookmark(slug, next, token);
+      const result = await setBookmark({
+        slug,
+        bookmarked: next,
+        accessToken: token,
+      });
       setStatus(result.bookmarked ? 'saved' : 'unsaved');
     } catch {
       /* keep the previous bookmark state */

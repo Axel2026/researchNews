@@ -1,3 +1,5 @@
+import type { AppLocale } from '@/i18n/routing.types';
+
 export type ArticleListItem = {
   id: string;
   slug: string;
@@ -47,4 +49,46 @@ export type ArticleSearchParams = {
   from: string;
   to: string;
   page: number;
+};
+
+export type ArticlesUrlParams = {
+  path: string;
+  locale: AppLocale;
+};
+
+export type ListArticlesParams = {
+  locale: AppLocale;
+};
+
+export type SearchArticlesParams = {
+  locale: AppLocale;
+  params: ArticleSearchParams;
+};
+
+export type GetArticleBySlugParams = {
+  slug: string;
+  locale: AppLocale;
+};
+
+export type IsFieldOfStudyParams = {
+  field: string;
+};
+
+export type ListCategoriesParams = {
+  locale: AppLocale;
+};
+
+export type GetCategoryBySlugParams = {
+  slug: string;
+  locale: AppLocale;
+  page: number;
+};
+
+export type GetArticleParagraphsParams = {
+  article: ArticleDetail;
+  field: 'mediumPopularization' | 'fullPopularization';
+};
+
+export type RecordArticleViewParams = {
+  slug: string;
 };

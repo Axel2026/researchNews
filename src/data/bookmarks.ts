@@ -1,18 +1,23 @@
 import { apiUrl } from '@/lib/api';
-import type { AppLocale } from '@/i18n/routing.types';
-import type { BookmarkList, BookmarkUpdate } from './bookmarks.types';
+import type {
+  BookmarkList,
+  BookmarkUpdate,
+  BookmarksUrlParams,
+  ListBookmarksParams,
+  SetBookmarkParams,
+} from './bookmarks.types';
 
-function bookmarksUrl(locale: AppLocale): URL {
+function bookmarksUrl({ locale }: BookmarksUrlParams): URL {
   const url = new URL('/me/bookmarks', apiUrl());
   url.searchParams.set('locale', locale);
   return url;
 }
 
-export async function listBookmarks(
-  locale: AppLocale,
-  accessToken: string,
-): Promise<BookmarkList> {
-  const response = await fetch(bookmarksUrl(locale), {
+export async function listBookmarks({
+  locale,
+  accessToken,
+}: ListBookmarksParams): Promise<BookmarkList> {
+  const response = await fetch(bookmarksUrl({ locale }), {
     cache: 'no-store',
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -30,11 +35,11 @@ export async function listBookmarks(
   return response.json() as Promise<BookmarkList>;
 }
 
-export async function setBookmark(
-  slug: string,
-  bookmarked: boolean,
-  accessToken: string,
-): Promise<BookmarkUpdate> {
+export async function setBookmark({
+  slug,
+  bookmarked,
+  accessToken,
+}: SetBookmarkParams): Promise<BookmarkUpdate> {
   const response = await fetch(new URL('/me/bookmarks', apiUrl()), {
     method: 'PUT',
     cache: 'no-store',

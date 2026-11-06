@@ -45,10 +45,5 @@
     "typescript": "6.0.3",
     "vite": "^7"
   },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,mjs,cjs,json,md,css,yml,yaml}": "prettier --check --ignore-unknown",
-    "*.{js,jsx,ts,tsx,mjs,cjs}": "eslint --max-warnings=0",
-    "*.css": "stylelint"
-  },
   "packageManager": "pnpm@12.16.1"
 }

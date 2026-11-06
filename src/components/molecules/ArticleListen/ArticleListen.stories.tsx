@@ -1,59 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { ArticleListenView } from './ArticleListenView';
-
-const copy = {
-  listen: 'Listen',
-  pause: 'Pause',
-  resume: 'Resume',
-  unavailable: 'Read-aloud is unavailable in this browser.',
-  noVoice: 'This system has no voice for this language.',
-  noVoiceHint:
-    'Add the language in Windows Settings under Time & language, then Language & region, and install its text-to-speech voice.',
-  noVoiceHintLink: 'Microsoft instructions',
-  noVoiceHintLabel: 'How to install a voice',
-  opensNewTab: 'opens in a new tab',
-};
+import { ArticleSpeechProvider } from '@/components/organisms/NewsArticle/ArticleSpeechProvider/ArticleSpeechProvider';
+import { ArticleListen } from './ArticleListen';
 
 const meta = {
-  title: 'Molecules/ArticleListen/View',
-  component: ArticleListenView,
-  args: {
-    copy,
-    onPlay: () => {},
-    onPause: () => {},
-    onResume: () => {},
-  },
-} satisfies Meta<typeof ArticleListenView>;
+  title: 'Molecules/ArticleListen',
+  component: ArticleListen,
+  decorators: [
+    (Story) => (
+      <ArticleSpeechProvider articleId="story" segments={[]} lang="en">
+        <Story />
+      </ArticleSpeechProvider>
+    ),
+  ],
+} satisfies Meta<typeof ArticleListen>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Idle: Story = {
-  args: {
-    status: 'idle',
-  },
-};
-
-export const Playing: Story = {
-  args: {
-    status: 'playing',
-  },
-};
-
-export const Paused: Story = {
-  args: {
-    status: 'paused',
-  },
-};
-
-export const Unavailable: Story = {
-  args: {
-    status: 'unavailable',
-  },
-};
-
-export const NoVoice: Story = {
-  args: {
-    status: 'noVoice',
-  },
-};
+export const Default: Story = {};

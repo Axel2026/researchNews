@@ -11,18 +11,21 @@ export const revalidate = ARTICLES_REVALIDATE_SECONDS;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [articles, categories] = await Promise.all([
-    listArticles(routing.defaultLocale),
-    listCategories(routing.defaultLocale),
+    listArticles({ locale: routing.defaultLocale }),
+    listCategories({ locale: routing.defaultLocale }),
   ]);
 
   return [
-    ...localizedSitemapEntries('/'),
-    ...localizedSitemapEntries('/sources'),
+    ...localizedSitemapEntries({ href: '/' }),
+    ...localizedSitemapEntries({ href: '/sources' }),
     ...articles.flatMap((article) =>
-      localizedSitemapEntries(articlePath(article.slug), article.publishedAt),
+      localizedSitemapEntries({
+        href: articlePath({ slug: article.slug }),
+        lastModified: article.publishedAt,
+      }),
     ),
     ...categories.flatMap((category) =>
-      localizedSitemapEntries(categoryPath(category.slug)),
+      localizedSitemapEntries({ href: categoryPath({ slug: category.slug }) }),
     ),
   ];
 }

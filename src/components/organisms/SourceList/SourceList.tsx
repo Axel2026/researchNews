@@ -1,5 +1,5 @@
 import { getTranslations } from 'next-intl/server';
-import { SourceListView } from './SourceListView';
+import { SourceListView } from './SourceListView/SourceListView';
 import type { SourceListProps } from './SourceList.types';
 
 export async function SourceList({ sources, locale }: SourceListProps) {

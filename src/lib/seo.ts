@@ -2,7 +2,20 @@ import type { Metadata, MetadataRoute } from 'next';
 import { getPathname } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
 import type { AppLocale } from '@/i18n/routing.types';
-import type { PathHref, ArticleJsonLdValue } from './seo.types';
+import type {
+  ArticleJsonLdValue,
+  AbsoluteUrlParams,
+  AuthPageMetadataParams,
+  HreflangLanguagesParams,
+  PageAlternatesParams,
+  ArticlePathParams,
+  CategoryPathParams,
+  CategoryPagePathParams,
+  SocialImagesParams,
+  SitemapLanguagesParams,
+  LocalizedSitemapEntriesParams,
+  DoiUrlParams,
+} from './seo.types';
 
 export const SITE_THEME_COLOR = '#f6f1e8';
 
@@ -24,7 +37,7 @@ export function getSiteUrl(): URL {
   return new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000');
 }
 
-export function absoluteUrl(locale: AppLocale, href: PathHref): string {
+export function absoluteUrl({ locale, href }: AbsoluteUrlParams): string {
   return new URL(getPathname({ locale, href }), getSiteUrl()).toString();
 }
 
@@ -33,24 +46,21 @@ export const noIndexRobots = {
   follow: false,
 } as const satisfies Metadata['robots'];
 
-export function authPageMetadata(
-  locale: AppLocale,
-  href:
-    | '/login'
-    | '/register'
-    | '/forgot-password'
-    | '/reset-password'
-    | '/bookmarks',
-  title: string,
-): Metadata {
+export function authPageMetadata({
+  locale,
+  href,
+  title,
+}: AuthPageMetadataParams): Metadata {
   return {
     title,
     robots: noIndexRobots,
-    alternates: pageAlternates(locale, href),
+    alternates: pageAlternates({ locale, href }),
   };
 }
 
-export function hreflangLanguages(href: PathHref): Record<string, string> {
+export function hreflangLanguages({
+  href,
+}: HreflangLanguagesParams): Record<string, string> {
   const languages: Record<string, string> = {};
 
   for (const locale of routing.locales) {
@@ -65,13 +75,13 @@ export function hreflangLanguages(href: PathHref): Record<string, string> {
   return languages;
 }
 
-export function pageAlternates(
-  locale: AppLocale,
-  href: PathHref,
-): NonNullable<Metadata['alternates']> {
+export function pageAlternates({
+  locale,
+  href,
+}: PageAlternatesParams): NonNullable<Metadata['alternates']> {
   return {
     canonical: getPathname({ locale, href }),
-    languages: hreflangLanguages(href),
+    languages: hreflangLanguages({ href }),
   };
 }
 
@@ -83,23 +93,23 @@ export const siteIcons = {
   apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
 } as const satisfies Metadata['icons'];
 
-export function articlePath(slug: string) {
+export function articlePath({ slug }: ArticlePathParams) {
   return `/article/${slug}`;
 }
 
-export function categoryPath(slug: string) {
+export function categoryPath({ slug }: CategoryPathParams) {
   return `/category/${slug}`;
 }
 
-export function categoryPagePath(slug: string, page: number) {
+export function categoryPagePath({ slug, page }: CategoryPagePathParams) {
   if (page <= 1) {
-    return categoryPath(slug);
+    return categoryPath({ slug });
   }
 
   return `/category/${slug}/page/${page}`;
 }
 
-export function socialImages(url: string | undefined, alt: string) {
+export function socialImages({ url, alt }: SocialImagesParams) {
   if (url && !/\.svg($|\?)/i.test(url)) {
     return [{ url, alt }];
   }
@@ -107,32 +117,34 @@ export function socialImages(url: string | undefined, alt: string) {
   return [{ ...defaultSocialImage, alt }];
 }
 
-export function sitemapLanguages(href: PathHref): Record<string, string> {
+export function sitemapLanguages({
+  href,
+}: SitemapLanguagesParams): Record<string, string> {
   const languages: Record<string, string> = {};
 
   for (const locale of routing.locales) {
-    languages[locale] = absoluteUrl(locale, href);
+    languages[locale] = absoluteUrl({ locale, href });
   }
 
-  languages['x-default'] = absoluteUrl(routing.defaultLocale, href);
+  languages['x-default'] = absoluteUrl({ locale: routing.defaultLocale, href });
 
   return languages;
 }
 
-export function localizedSitemapEntries(
-  href: PathHref,
-  lastModified?: string | Date,
-): MetadataRoute.Sitemap {
-  const languages = sitemapLanguages(href);
+export function localizedSitemapEntries({
+  href,
+  lastModified,
+}: LocalizedSitemapEntriesParams): MetadataRoute.Sitemap {
+  const languages = sitemapLanguages({ href });
 
   return routing.locales.map((locale) => ({
-    url: absoluteUrl(locale, href),
+    url: absoluteUrl({ locale, href }),
     lastModified,
     alternates: { languages },
   }));
 }
 
-function doiUrl(doi: string): string {
+function doiUrl({ doi }: DoiUrlParams): string {
   if (/^https?:\/\//i.test(doi)) {
     return doi;
   }
@@ -145,10 +157,10 @@ export function articleJsonLd({
   locale,
   siteName,
 }: ArticleJsonLdValue): Record<string, unknown> {
-  const href = articlePath(article.slug);
-  const url = absoluteUrl(locale, href);
+  const href = articlePath({ slug: article.slug });
+  const url = absoluteUrl({ locale, href });
   const origin = getSiteUrl();
-  const image = socialImages(article.imageUrl, article.title)[0];
+  const image = socialImages({ url: article.imageUrl, alt: article.title })[0];
 
   const about: Record<string, unknown> = {
     '@type': 'ScholarlyArticle',
@@ -157,7 +169,7 @@ export function articleJsonLd({
   };
 
   if (article.doi) {
-    about.identifier = doiUrl(article.doi);
+    about.identifier = doiUrl({ doi: article.doi });
   }
 
   if (article.sourceUrl) {

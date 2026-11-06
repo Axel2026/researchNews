@@ -1,9 +1,9 @@
 import { createServerClient } from '@supabase/ssr';
-import { type NextRequest, type NextResponse } from 'next/server';
+import { type NextResponse } from 'next/server';
 import { publicSupabaseEnv } from './env';
-import type { PendingCookie } from './session.types';
+import type { PendingCookie, ApplySessionParams } from './session.types';
 
-export async function applySession(request: NextRequest) {
+export async function applySession({ request }: ApplySessionParams) {
   const env = publicSupabaseEnv();
 
   if (!env) {

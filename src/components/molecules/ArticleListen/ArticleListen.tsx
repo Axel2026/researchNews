@@ -1,8 +1,8 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useArticleSpeech } from '@/components/organisms/NewsArticle/ArticleSpeechProvider';
-import { ArticleListenView } from './ArticleListenView';
+import { useArticleSpeech } from '@/components/organisms/NewsArticle/ArticleSpeechProvider/ArticleSpeechProvider.hooks';
+import { ArticleListenView } from './ArticleListenView/ArticleListenView';
 
 export function ArticleListen() {
   const t = useTranslations();

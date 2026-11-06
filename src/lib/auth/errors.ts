@@ -1,4 +1,4 @@
-import type { AuthErrorKey } from './errors.types';
+import type { AuthErrorKey, AuthErrorKeyParams } from './errors.types';
 
 const authErrorKeys = {
   invalid_credentials: 'invalidCredentials',
@@ -10,7 +10,7 @@ const authErrorKeys = {
   over_email_send_rate_limit: 'rateLimit',
 } as const;
 
-export function authErrorKey(code: string | undefined): AuthErrorKey {
+export function authErrorKey({ code }: AuthErrorKeyParams): AuthErrorKey {
   if (code && code in authErrorKeys) {
     return authErrorKeys[code as keyof typeof authErrorKeys];
   }

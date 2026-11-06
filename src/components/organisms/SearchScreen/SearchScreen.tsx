@@ -9,14 +9,12 @@ import {
 } from 'react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/atoms/Button/Button';
-import { Input } from '@/components/atoms/Field/Input';
+import { Input } from '@/components/atoms/Field/Input/Input';
 import { Loader } from '@/components/atoms/Loader/Loader';
 import { ArticleFilters } from '@/components/molecules/ArticleFilters/ArticleFilters';
 import type { ArticleFilterValues } from '@/components/molecules/ArticleFilters/ArticleFilters.types';
-import {
-  Pagination,
-  paginationCount,
-} from '@/components/molecules/Pagination/Pagination';
+import { Pagination } from '@/components/molecules/Pagination/Pagination';
+import { paginationCount } from '@/components/molecules/Pagination/Pagination.utils';
 import { ArticleListing } from '@/components/templates/ArticleListing/ArticleListing';
 import { searchArticles } from '@/data/articles';
 import type {
@@ -26,6 +24,7 @@ import type {
 import { useRouter } from '@/i18n/navigation';
 import styles from './SearchScreen.module.css';
 import type { SearchScreenProps } from './SearchScreen.types';
+import { isInvalidRange, searchHref, searchKey } from './SearchScreen.utils';
 
 const SEARCH_DEBOUNCE_MS = 400;
 
@@ -36,68 +35,6 @@ const emptyFilters: ArticleFilterValues = {
   from: '',
   to: '',
 };
-
-function searchHref(params: ArticleSearchParams) {
-  const query: Record<string, string> = {};
-
-  if (params.query) {
-    query.q = params.query;
-  }
-
-  if (params.field) {
-    query.field = params.field;
-  }
-
-  if (params.sort === 'popular') {
-    query.sort = 'popular';
-  }
-
-  if (params.author) {
-    query.author = params.author;
-  }
-
-  if (params.from) {
-    query.from = params.from;
-  }
-
-  if (params.to) {
-    query.to = params.to;
-  }
-
-  if (params.page > 1) {
-    query.page = String(params.page);
-  }
-
-  if (Object.keys(query).length === 0) {
-    return '/search' as const;
-  }
-
-  return {
-    pathname: '/search' as const,
-    query,
-  };
-}
-
-function searchKey(params: ArticleSearchParams) {
-  return JSON.stringify(params);
-}
-
-function isInvalidRange(from: string, to: string) {
-  if (!from || !to) {
-    return false;
-  }
-
-  try {
-    return (
-      Temporal.PlainDate.compare(
-        Temporal.PlainDate.from(from),
-        Temporal.PlainDate.from(to),
-      ) > 0
-    );
-  } catch {
-    return true;
-  }
-}
 
 export function SearchScreen({
   locale,
@@ -154,14 +91,14 @@ export function SearchScreen({
   function runSearch() {
     const params = snapshot();
 
-    if (isInvalidRange(params.from, params.to)) {
+    if (isInvalidRange({ from: params.from, to: params.to })) {
       setDateError(tFilters('badRange'));
       return;
     }
 
     setDateError(undefined);
 
-    const key = searchKey(params);
+    const key = searchKey({ params });
     if (fetchedKey.current === key && pageInfo.page === params.page) {
       return;
     }
@@ -170,9 +107,9 @@ export function SearchScreen({
     const id = ++requestId.current;
     setLoading(true);
     setFailed(false);
-    router.replace(searchHref(params));
+    router.replace(searchHref({ params }));
 
-    void searchArticles(locale, params)
+    void searchArticles({ locale, params })
       .then((results) => {
         if (id !== requestId.current) {
           return;
@@ -278,7 +215,10 @@ export function SearchScreen({
   ) : failed ? (
     <p className={styles.error}>{tStatus('error')}</p>
   ) : undefined;
-  const pageCount = paginationCount(pageInfo.total, pageInfo.pageSize);
+  const pageCount = paginationCount({
+    total: pageInfo.total,
+    pageSize: pageInfo.pageSize,
+  });
   const toolbar = (
     <form className={styles.field} onSubmit={submitSearch}>
       <Input

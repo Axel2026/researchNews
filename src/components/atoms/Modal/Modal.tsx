@@ -9,10 +9,7 @@ import {
 import { createPortal } from 'react-dom';
 import styles from './Modal.module.css';
 import type { ModalProps } from './Modal.types';
-
-function subscribeNever() {
-  return () => {};
-}
+import { subscribeNever } from './Modal.utils';
 
 export function Modal({
   id,

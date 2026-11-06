@@ -52,7 +52,7 @@ export async function generateMetadata({
       index: true,
       follow: true,
     },
-    alternates: pageAlternates(locale, href),
+    alternates: pageAlternates({ locale, href }),
     openGraph: {
       type: 'website',
       locale: ogLocaleByAppLocale[locale],

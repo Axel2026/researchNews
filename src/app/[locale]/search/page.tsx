@@ -16,20 +16,9 @@ import {
   pageAlternates,
 } from '@/lib/seo';
 import type { SearchPageProps } from './page.types';
+import { queryString, pageNumber } from './page.utils';
 
 export const dynamic = 'force-dynamic';
-
-function queryString(value: string | string[] | undefined): string {
-  return typeof value === 'string' ? value : '';
-}
-
-function pageNumber(value: string | string[] | undefined): number {
-  if (typeof value !== 'string' || !/^[1-9][0-9]*$/.test(value)) {
-    return 1;
-  }
-
-  return Number(value);
-}
 
 export async function generateMetadata({
   params,
@@ -49,7 +38,7 @@ export async function generateMetadata({
     title,
     description,
     robots: noIndexRobots,
-    alternates: pageAlternates(locale, href),
+    alternates: pageAlternates({ locale, href }),
     openGraph: {
       type: 'website',
       locale: ogLocaleByAppLocale[locale],
@@ -72,18 +61,18 @@ export default async function SearchPage({
   }
 
   const [categories, query] = await Promise.all([
-    listCategories(locale),
+    listCategories({ locale }),
     searchParams,
   ]);
   const initialFilters = {
-    field: queryString(query.field),
+    field: queryString({ value: query.field }),
     sort:
-      queryString(query.sort) === 'popular'
+      queryString({ value: query.sort }) === 'popular'
         ? ('popular' as const)
         : ('newest' as const),
-    author: queryString(query.author),
-    from: queryString(query.from),
-    to: queryString(query.to),
+    author: queryString({ value: query.author }),
+    from: queryString({ value: query.from }),
+    to: queryString({ value: query.to }),
   };
 
   return (
@@ -91,9 +80,9 @@ export default async function SearchPage({
       <SearchScreen
         locale={locale as AppLocale}
         categories={categories}
-        initialQuery={queryString(query.q)}
+        initialQuery={queryString({ value: query.q })}
         initialFilters={initialFilters}
-        initialPage={pageNumber(query.page)}
+        initialPage={pageNumber({ value: query.page })}
       />
     </PageShell>
   );

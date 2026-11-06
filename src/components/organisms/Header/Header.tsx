@@ -68,12 +68,12 @@ export function Header({
     <header className={styles.header}>
       <div className={styles.bar}>
         <div className={styles.start}>
-          <Link className={styles.brand} href="/" aria-label="ResearchNews">
+          <Link className={styles.brand} href="/" aria-label={t('brand')}>
             {/* eslint-disable-next-line @next/next/no-img-element -- next/image does not optimize SVG */}
             <img
               className={styles.logo}
               src="/images/logo.svg"
-              alt="ResearchNews"
+              alt={t('brand')}
               width={2048}
               height={578}
             />

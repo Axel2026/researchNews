@@ -1,4 +1,11 @@
-export function formatPaperPublishedAt(iso: string, locale: string): string {
+import type {
+  FormatPaperPublishedAtParams,
+  FormatCommentPostedAtParams,
+} from './dates.types';
+export function formatPaperPublishedAt({
+  iso,
+  locale,
+}: FormatPaperPublishedAtParams): string {
   const zoned = Temporal.Instant.from(iso).toZonedDateTimeISO('UTC');
   const date = zoned.toPlainDate();
 
@@ -19,7 +26,10 @@ export function formatPaperPublishedAt(iso: string, locale: string): string {
   });
 }
 
-export function formatCommentPostedAt(iso: string, locale: string): string {
+export function formatCommentPostedAt({
+  iso,
+  locale,
+}: FormatCommentPostedAtParams): string {
   return Temporal.Instant.from(iso)
     .toZonedDateTimeISO(Temporal.Now.timeZoneId())
     .toLocaleString(locale, {

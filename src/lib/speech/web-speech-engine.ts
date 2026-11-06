@@ -1,5 +1,14 @@
-import type { ArticleSpeechEngine, SpeechSegment } from './speech.types';
-import type { SpeechChunk, SpeechSession } from './web-speech-engine.types';
+import type { ArticleSpeechEngine } from './speech.types';
+import type {
+  SpeechChunk,
+  SpeechSession,
+  VoiceRankParams,
+  PickVoiceParams,
+  SplitSentencesParams,
+  SplitLongPieceParams,
+  ChunksForSegmentParams,
+  CreateWebSpeechEngineParams,
+} from './web-speech-engine.types';
 
 const VOICE_WAIT_MS = 1000;
 const SPEAK_DELAY_MS = 50;
@@ -14,7 +23,7 @@ function defaultSynth(): SpeechSynthesis | null {
   return window.speechSynthesis;
 }
 
-function voiceRank(voice: SpeechSynthesisVoice, lang: string): number | null {
+function voiceRank({ voice, lang }: VoiceRankParams): number | null {
   const voiceLang = voice.lang.toLowerCase().replaceAll('_', '-');
   const wanted = lang.toLowerCase();
 
@@ -32,15 +41,15 @@ function voiceRank(voice: SpeechSynthesisVoice, lang: string): number | null {
   return null;
 }
 
-function pickVoice(
-  voices: SpeechSynthesisVoice[],
-  lang: string,
-): SpeechSynthesisVoice | undefined {
+function pickVoice({
+  voices,
+  lang,
+}: PickVoiceParams): SpeechSynthesisVoice | undefined {
   let selected: SpeechSynthesisVoice | undefined;
   let bestRank = -1;
 
   for (const voice of voices) {
-    const rank = voiceRank(voice, lang);
+    const rank = voiceRank({ voice, lang });
 
     if (rank !== null && rank > bestRank) {
       selected = voice;
@@ -51,7 +60,7 @@ function pickVoice(
   return selected;
 }
 
-function splitSentences(text: string): string[] {
+function splitSentences({ text }: SplitSentencesParams): string[] {
   const parts = text.split(/([.!?…]+)(?:\s+|$)/u);
   const sentences: string[] = [];
 
@@ -68,7 +77,7 @@ function splitSentences(text: string): string[] {
   return sentences;
 }
 
-function splitLongPiece(text: string): string[] {
+function splitLongPiece({ text }: SplitLongPieceParams): string[] {
   const words = text.split(/\s+/).filter(Boolean);
   const chunks: string[] = [];
   let current = '';
@@ -91,14 +100,16 @@ function splitLongPiece(text: string): string[] {
   return chunks;
 }
 
-function chunksForSegment(segment: SpeechSegment): SpeechChunk[] {
-  const sentences = splitSentences(segment.text);
+function chunksForSegment({ segment }: ChunksForSegmentParams): SpeechChunk[] {
+  const sentences = splitSentences({ text: segment.text });
   const pieces = sentences.length > 0 ? sentences : [segment.text];
   const chunks: SpeechChunk[] = [];
 
   for (const piece of pieces) {
     const parts =
-      piece.length <= MAX_CHUNK_LENGTH ? [piece] : splitLongPiece(piece);
+      piece.length <= MAX_CHUNK_LENGTH
+        ? [piece]
+        : splitLongPiece({ text: piece });
 
     for (const text of parts) {
       chunks.push({
@@ -112,9 +123,9 @@ function chunksForSegment(segment: SpeechSegment): SpeechChunk[] {
   return chunks;
 }
 
-export function createWebSpeechEngine(
-  synth: SpeechSynthesis | null = defaultSynth(),
-): ArticleSpeechEngine {
+export function createWebSpeechEngine({
+  synth = defaultSynth(),
+}: CreateWebSpeechEngineParams = {}): ArticleSpeechEngine {
   let session: SpeechSession | null = null;
   let nudgeTimer: number | null = null;
 
@@ -244,7 +255,10 @@ export function createWebSpeechEngine(
       return;
     }
 
-    const voice = pickVoice(synth.getVoices(), current.options.lang);
+    const voice = pickVoice({
+      voices: synth.getVoices(),
+      lang: current.options.lang,
+    });
     current.cancelVoiceWait = null;
 
     if (!voice) {
@@ -275,7 +289,7 @@ export function createWebSpeechEngine(
       }
 
       const queue = options.segments.flatMap((segment) =>
-        chunksForSegment(segment),
+        chunksForSegment({ segment }),
       );
       const next: SpeechSession = {
         options,
@@ -295,7 +309,7 @@ export function createWebSpeechEngine(
         return;
       }
 
-      if (pickVoice(synth.getVoices(), options.lang)) {
+      if (pickVoice({ voices: synth.getVoices(), lang: options.lang })) {
         begin(next);
         return;
       }
@@ -368,4 +382,4 @@ export function createWebSpeechEngine(
   };
 }
 
-export const webSpeechEngine = createWebSpeechEngine();
+export const webSpeechEngine = createWebSpeechEngine({});

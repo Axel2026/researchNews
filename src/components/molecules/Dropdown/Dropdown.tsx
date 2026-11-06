@@ -15,56 +15,30 @@ import {
 import { Modal } from '@/components/atoms/Modal/Modal';
 import styles from './Dropdown.module.css';
 import type { DropdownProps } from './Dropdown.types';
+import {
+  isMobile,
+  mobileQuery,
+  notMobile,
+  panelStyle,
+  subscribeMobile,
+  subscribeNoop,
+} from './Dropdown.utils';
 
-const mobileQuery = '(max-width: 40rem)';
-
-function subscribeMobile(onChange: () => void) {
-  const media = window.matchMedia(mobileQuery);
-  media.addEventListener('change', onChange);
-  return () => media.removeEventListener('change', onChange);
-}
-
-function subscribeNoop() {
-  return () => {};
-}
-
-function isMobile() {
-  return window.matchMedia(mobileQuery).matches;
-}
-
-function notMobile() {
-  return false;
-}
-
-function panelStyle(
-  button: HTMLElement,
-  align: 'start' | 'end',
-): CSSProperties {
-  const box = button.getBoundingClientRect();
-
-  return {
-    top: box.bottom,
-    ...(align === 'start'
-      ? { left: box.left }
-      : { right: window.innerWidth - box.right }),
-  };
-}
-
-export function Dropdown(props: DropdownProps) {
-  const {
-    label,
-    triggerClassName,
-    panelClassName,
-    rootClassName,
-    align = 'end',
-    ariaLabel,
-    icon = false,
-    size = 'default',
-    children,
-  } = props;
-  const mobileAsModal = Boolean(props.mobileAsModal);
-  const title = props.title;
-  const closeLabel = props.closeLabel;
+export function Dropdown({
+  label,
+  triggerClassName,
+  panelClassName,
+  rootClassName,
+  align = 'end',
+  ariaLabel,
+  icon = false,
+  size = 'default',
+  children,
+  mobileAsModal: mobileAsModalProp,
+  title,
+  closeLabel,
+}: DropdownProps) {
+  const mobileAsModal = Boolean(mobileAsModalProp);
   const reactId = useId();
   const buttonId = `${reactId}-button`;
   const listId = `${reactId}-list`;
@@ -76,7 +50,7 @@ export function Dropdown(props: DropdownProps) {
   const [open, setOpen] = useState(false);
   const [listStyle, setListStyle] = useState<CSSProperties>();
   const mobile = useSyncExternalStore(
-    mobileAsModal ? subscribeMobile : subscribeNoop,
+    mobileAsModal ? (onChange) => subscribeMobile({ onChange }) : subscribeNoop,
     mobileAsModal ? isMobile : notMobile,
     notMobile,
   );
@@ -118,7 +92,7 @@ export function Dropdown(props: DropdownProps) {
         return;
       }
 
-      setListStyle(panelStyle(buttonRef.current, align));
+      setListStyle(panelStyle({ button: buttonRef.current, align }));
     }
 
     if (open && button) {

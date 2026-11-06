@@ -3,8 +3,8 @@ import { JsonLd } from '@/components/atoms/JsonLd/JsonLd';
 import { articleJsonLd } from '@/lib/seo';
 import { ArticleDiscussion } from '@/components/organisms/ArticleDiscussion/ArticleDiscussion';
 import { BookmarkButton } from '@/components/molecules/BookmarkButton/BookmarkButton';
-import { ArticleViewBeacon } from './ArticleViewBeacon';
-import { NewsArticleView } from './NewsArticleView';
+import { ArticleViewBeacon } from './ArticleViewBeacon/ArticleViewBeacon';
+import { NewsArticleView } from './NewsArticleView/NewsArticleView';
 import type { NewsArticleProps } from './NewsArticle.types';
 
 export async function NewsArticle({ article, locale }: NewsArticleProps) {

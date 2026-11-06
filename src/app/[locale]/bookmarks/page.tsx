@@ -37,7 +37,7 @@ export async function generateMetadata({
     title,
     description,
     robots: { index: false, follow: false },
-    alternates: pageAlternates(locale, '/bookmarks'),
+    alternates: pageAlternates({ locale, href: '/bookmarks' }),
     openGraph: {
       type: 'website',
       locale: ogLocaleByAppLocale[locale],
@@ -57,7 +57,7 @@ export default async function BookmarksPage({ params }: BookmarksPageProps) {
   }
 
   const token = await getAccessToken();
-  const login = loginHref('/bookmarks');
+  const login = loginHref({ nextPath: '/bookmarks' });
 
   if (!token) {
     redirect({ href: login, locale });
@@ -66,14 +66,14 @@ export default async function BookmarksPage({ params }: BookmarksPageProps) {
 
   let articles;
   try {
-    articles = (await listBookmarks(locale, token)).articles;
+    articles = (await listBookmarks({ locale, accessToken: token })).articles;
   } catch {
     redirect({ href: login, locale });
     return null;
   }
 
   const [categories, t] = await Promise.all([
-    listCategories(locale),
+    listCategories({ locale }),
     getTranslations({ locale }),
   ]);
 

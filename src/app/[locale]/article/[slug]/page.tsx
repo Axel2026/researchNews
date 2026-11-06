@@ -5,7 +5,11 @@ import { notFound } from 'next/navigation';
 import { Header } from '@/components/organisms/Header/Header';
 import { NewsArticle } from '@/components/organisms/NewsArticle/NewsArticle';
 import { PageShell } from '@/components/templates/PageShell/PageShell';
-import { getArticleBySlug, listArticles } from '@/data/articles';
+import {
+  ARTICLES_REVALIDATE_SECONDS,
+  getArticleBySlug,
+  listArticles,
+} from '@/data/articles';
 import { getPathname } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
 import {
@@ -16,7 +20,7 @@ import {
 } from '@/lib/seo';
 import type { ArticlePageProps } from './page.types';
 
-export const revalidate = 10800;
+export const revalidate = ARTICLES_REVALIDATE_SECONDS;
 
 export async function generateMetadata({
   params,
@@ -27,22 +31,22 @@ export async function generateMetadata({
     return {};
   }
 
-  const article = await getArticleBySlug(slug, locale);
+  const article = await getArticleBySlug({ slug, locale });
 
   if (!article) {
     return {};
   }
 
   const t = await getTranslations({ locale, namespace: 'Metadata' });
-  const href = articlePath(slug);
+  const href = articlePath({ slug });
   const description = article.shortPopularization;
-  const images = socialImages(article.imageUrl, article.title);
+  const images = socialImages({ url: article.imageUrl, alt: article.title });
 
   return {
     title: article.title,
     description,
     authors: article.authors.map((name) => ({ name })),
-    alternates: pageAlternates(locale, href),
+    alternates: pageAlternates({ locale, href }),
     openGraph: {
       type: 'article',
       locale: ogLocaleByAppLocale[locale],
@@ -65,7 +69,7 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const articles = await listArticles(routing.defaultLocale);
+  const articles = await listArticles({ locale: routing.defaultLocale });
 
   return routing.locales.flatMap((locale) =>
     articles.map((article) => ({ locale, slug: article.slug })),
@@ -79,7 +83,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     notFound();
   }
 
-  const article = await getArticleBySlug(slug, locale);
+  const article = await getArticleBySlug({ slug, locale });
 
   if (!article) {
     notFound();

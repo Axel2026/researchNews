@@ -15,11 +15,11 @@ import { ConfirmModal } from '@/components/molecules/ConfirmModal/ConfirmModal';
 import { formatCommentPostedAt } from '@/lib/dates';
 import { createClient } from '@/lib/supabase/client';
 import { publicSupabaseEnv } from '@/lib/supabase/env';
-import { ArticleDiscussionView } from './ArticleDiscussionView';
+import { ArticleDiscussionView } from './ArticleDiscussionView/ArticleDiscussionView';
 import type {
   DiscussionAuthStatus,
   DiscussionLoadStatus,
-} from './ArticleDiscussionView.types';
+} from './ArticleDiscussionView/ArticleDiscussionView.types';
 import type { ArticleDiscussionProps } from './ArticleDiscussion.types';
 
 export function ArticleDiscussion({ slug }: ArticleDiscussionProps) {
@@ -44,7 +44,7 @@ export function ArticleDiscussion({ slug }: ArticleDiscussionProps) {
   useEffect(() => {
     let active = true;
 
-    void listComments(slug).then(
+    void listComments({ slug }).then(
       (result) => {
         if (!active) {
           return;
@@ -130,7 +130,7 @@ export function ArticleDiscussion({ slug }: ArticleDiscussionProps) {
   };
 
   async function refresh() {
-    const result = await listComments(slug);
+    const result = await listComments({ slug });
     setComments(result.comments);
     setTruncated(result.truncated);
     setStatus('ready');
@@ -206,10 +206,10 @@ export function ArticleDiscussion({ slug }: ArticleDiscussionProps) {
       }
 
       if (editingId) {
-        await updateComment(editingId, body, token);
+        await updateComment({ id: editingId, body, accessToken: token });
         setEditingId(null);
       } else {
-        await createComment(slug, body, token, parentId);
+        await createComment({ slug, body, accessToken: token, parentId });
         setReplyToId(null);
         if (!parentId) {
           setComposerKey((key) => key + 1);
@@ -239,7 +239,7 @@ export function ArticleDiscussion({ slug }: ArticleDiscussionProps) {
         return;
       }
 
-      await deleteComment(id, token);
+      await deleteComment({ id, accessToken: token });
       setPendingDeleteId(null);
       setEditingId(null);
       setReplyToId(null);
@@ -252,7 +252,7 @@ export function ArticleDiscussion({ slug }: ArticleDiscussionProps) {
   }
 
   function formatDate(iso: string) {
-    return formatCommentPostedAt(iso, locale);
+    return formatCommentPostedAt({ iso, locale });
   }
 
   function handleSubmit(body: string, parentId?: string) {
