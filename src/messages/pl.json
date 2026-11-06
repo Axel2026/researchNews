@@ -31,6 +31,7 @@
     "source": "Źródłowa praca",
     "published": "Opublikowano {date}",
     "authors": "Autorzy",
+    "comments": "{count, plural, one {# komentarz} few {# komentarze} many {# komentarzy} other {# komentarza}}",
     "viewOriginal": "Zobacz oryginalną pracę",
     "download": "Pobierz",
     "opensNewTab": "otwiera się w nowej karcie"

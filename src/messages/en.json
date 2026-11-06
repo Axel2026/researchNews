@@ -31,6 +31,7 @@
     "source": "Source paper",
     "published": "Published {date}",
     "authors": "Authors",
+    "comments": "{count, plural, one {# comment} other {# comments}}",
     "viewOriginal": "View original paper",
     "download": "Download",
     "opensNewTab": "opens in a new tab"

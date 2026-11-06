@@ -1,5 +1,7 @@
 import { ArticleImage } from '@/components/atoms/ArticleImage/ArticleImage';
 import { CategoryChip } from '@/components/atoms/CategoryChip/CategoryChip';
+import { ArticleAuthors } from '@/components/molecules/ArticleAuthors/ArticleAuthors';
+import { ArticleComments } from '@/components/molecules/ArticleComments/ArticleComments';
 import type { ArticleListItem } from '@/data/articles';
 import { mediaMinLg } from '@/design-system/tokens';
 import { Link } from '@/i18n/navigation';
@@ -31,11 +33,21 @@ export function Article({
         <Link href={`/article/${article.slug}`}>{article.title}</Link>
       </Title>
       <p className={styles.dek}>{article.shortPopularization}</p>
-      {article.paperPublishedAt ? (
-        <time className={styles.date} dateTime={article.paperPublishedAt}>
-          {formatPaperPublishedAt(article.paperPublishedAt, locale)}
-        </time>
-      ) : null}
+      <div className={styles.meta}>
+        {article.paperPublishedAt ? (
+          <time className={styles.date} dateTime={article.paperPublishedAt}>
+            {formatPaperPublishedAt(article.paperPublishedAt, locale)}
+          </time>
+        ) : null}
+        {article.paperPublishedAt && article.authors.length > 0 ? (
+          <span className={styles.separator} aria-hidden="true" />
+        ) : null}
+        <ArticleAuthors authors={article.authors} />
+        {article.paperPublishedAt || article.authors.length > 0 ? (
+          <span className={styles.separator} aria-hidden="true" />
+        ) : null}
+        <ArticleComments slug={article.slug} count={article.commentCount} />
+      </div>
     </article>
   );
 }

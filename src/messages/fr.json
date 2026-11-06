@@ -31,6 +31,7 @@
     "source": "Article source",
     "published": "Publié le {date}",
     "authors": "Auteurs",
+    "comments": "{count, plural, one {# commentaire} other {# commentaires}}",
     "viewOriginal": "Voir l’article original",
     "download": "Télécharger",
     "opensNewTab": "s’ouvre dans un nouvel onglet"

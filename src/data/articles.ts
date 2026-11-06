@@ -18,6 +18,7 @@ export type ArticleListItem = {
   featured: boolean;
   recentViews: number;
   authors: string[];
+  commentCount: number;
 };
 
 export type ArticleDetail = ArticleListItem & {
