@@ -11,6 +11,7 @@ import {
   type CommentThread,
 } from '@/data/comments';
 import { usePathname } from '@/i18n/navigation';
+import { ConfirmModal } from '@/components/molecules/ConfirmModal/ConfirmModal';
 import { formatCommentPostedAt } from '@/lib/dates';
 import { createClient } from '@/lib/supabase/client';
 import { publicSupabaseEnv } from '@/lib/supabase/env';
@@ -37,6 +38,7 @@ export function ArticleDiscussion({ slug }: { slug: string }) {
   const [busy, setBusy] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
   const [composerKey, setComposerKey] = useState(0);
+  const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -122,6 +124,8 @@ export function ArticleDiscussion({ slug }: { slug: string }) {
     composerLabel: t('Discussion.composerLabel'),
     replyLabel: t('Discussion.replyLabel'),
     editLabel: t('Discussion.editLabel'),
+    editHint: t('Discussion.editHint'),
+    editHintLabel: t('Discussion.editHintLabel'),
   };
 
   async function refresh() {
@@ -153,6 +157,10 @@ export function ArticleDiscussion({ slug }: { slug: string }) {
       return t('Discussion.invalidBody');
     }
 
+    if (error instanceof CommentsApiError && error.code === 'edit_expired') {
+      return t('Discussion.editExpired');
+    }
+
     if (error instanceof CommentsApiError && error.status === 401) {
       setAuthStatus('anonymous');
       setCurrentUserId(null);
@@ -161,91 +169,128 @@ export function ArticleDiscussion({ slug }: { slug: string }) {
     return t('Discussion.genericError');
   }
 
-  return (
-    <ArticleDiscussionView
-      status={status}
-      authStatus={authStatus}
-      comments={comments}
-      truncated={truncated}
-      currentUserId={currentUserId}
-      nextPath={pathname}
-      replyToId={replyToId}
-      editingId={editingId}
-      busy={busy}
-      formError={formError}
-      composerKey={composerKey}
-      copy={copy}
-      formatDate={(iso) => formatCommentPostedAt(iso, locale)}
-      onReply={(id) => {
-        setReplyToId(id);
+  function startReply(id: string | null) {
+    setReplyToId(id);
+    setEditingId(null);
+    setFormError(null);
+  }
+
+  function startEdit(id: string | null) {
+    setEditingId(id);
+    setReplyToId(null);
+    setFormError(null);
+  }
+
+  function requestDelete(id: string) {
+    if (busy) {
+      return;
+    }
+
+    setPendingDeleteId(id);
+    setFormError(null);
+  }
+
+  async function submitComment(body: string, parentId?: string) {
+    if (busy) {
+      return;
+    }
+
+    setBusy(true);
+    setFormError(null);
+
+    try {
+      const token = await accessToken();
+      if (!token) {
+        return;
+      }
+
+      if (editingId) {
+        await updateComment(editingId, body, token);
         setEditingId(null);
-        setFormError(null);
-      }}
-      onEdit={(id) => {
-        setEditingId(id);
+      } else {
+        await createComment(slug, body, token, parentId);
         setReplyToId(null);
-        setFormError(null);
-      }}
-      onDelete={(id) => {
-        if (busy) {
-          return;
+        if (!parentId) {
+          setComposerKey((key) => key + 1);
         }
+      }
 
-        void (async () => {
-          setBusy(true);
+      await refresh();
+    } catch (error) {
+      setFormError(errorMessage(error));
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function confirmDelete() {
+    if (busy || !pendingDeleteId) {
+      return;
+    }
+
+    const id = pendingDeleteId;
+    setBusy(true);
+    setFormError(null);
+
+    try {
+      const token = await accessToken();
+      if (!token) {
+        return;
+      }
+
+      await deleteComment(id, token);
+      setPendingDeleteId(null);
+      setEditingId(null);
+      setReplyToId(null);
+      await refresh();
+    } catch (error) {
+      setFormError(errorMessage(error));
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <>
+      <ArticleDiscussionView
+        status={status}
+        authStatus={authStatus}
+        comments={comments}
+        truncated={truncated}
+        currentUserId={currentUserId}
+        nextPath={pathname}
+        replyToId={replyToId}
+        editingId={editingId}
+        busy={busy}
+        formError={formError}
+        composerKey={composerKey}
+        copy={copy}
+        formatDate={(iso) => formatCommentPostedAt(iso, locale)}
+        onReply={startReply}
+        onEdit={startEdit}
+        onDelete={requestDelete}
+        onSubmit={(body, parentId) => {
+          void submitComment(body, parentId);
+        }}
+      />
+      <ConfirmModal
+        open={pendingDeleteId !== null}
+        title={t('Discussion.deleteConfirmTitle')}
+        closeLabel={t('Nav.close')}
+        cancelLabel={t('Discussion.cancel')}
+        confirmLabel={t('Discussion.delete')}
+        busy={busy}
+        error={pendingDeleteId ? formError : null}
+        onClose={() => {
+          setPendingDeleteId(null);
           setFormError(null);
-
-          try {
-            const token = await accessToken();
-            if (!token) {
-              return;
-            }
-
-            await deleteComment(id, token);
-            setEditingId(null);
-            setReplyToId(null);
-            await refresh();
-          } catch (error) {
-            setFormError(errorMessage(error));
-          } finally {
-            setBusy(false);
-          }
-        })();
-      }}
-      onSubmit={(body, parentId) => {
-        if (busy) {
-          return;
-        }
-
-        void (async () => {
-          setBusy(true);
-          setFormError(null);
-
-          try {
-            const token = await accessToken();
-            if (!token) {
-              return;
-            }
-
-            if (editingId) {
-              await updateComment(editingId, body, token);
-              setEditingId(null);
-            } else {
-              await createComment(slug, body, token, parentId);
-              setReplyToId(null);
-              if (!parentId) {
-                setComposerKey((key) => key + 1);
-              }
-            }
-
-            await refresh();
-          } catch (error) {
-            setFormError(errorMessage(error));
-          } finally {
-            setBusy(false);
-          }
-        })();
-      }}
-    />
+        }}
+        onConfirm={() => {
+          void confirmDelete();
+        }}
+      >
+        {t('Discussion.deleteConfirm')}
+      </ConfirmModal>
+    </>
   );
 }

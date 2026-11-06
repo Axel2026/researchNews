@@ -59,6 +59,8 @@
     "save": "Enregistrer",
     "cancel": "Annuler",
     "delete": "Supprimer",
+    "deleteConfirmTitle": "Supprimer ce commentaire ?",
+    "deleteConfirm": "Le commentaire disparaîtra de la discussion.",
     "deleted": "Ce commentaire a été retiré.",
     "edited": "modifié",
     "truncated": "Affichage des 100 commentaires les plus récents.",
@@ -66,10 +68,13 @@
     "tooLong": "Les commentaires peuvent contenir au plus 2000 caractères.",
     "rateLimited": "Trop de commentaires. Réessayez dans quelques minutes.",
     "invalidBody": "Ce commentaire n’a pas pu être enregistré.",
+    "editExpired": "Les commentaires ne peuvent être modifiés que pendant la première heure.",
     "genericError": "Cela n’a pas fonctionné. Réessayez.",
     "composerLabel": "Votre commentaire",
     "replyLabel": "Votre réponse",
-    "editLabel": "Modifier le commentaire"
+    "editLabel": "Modifier le commentaire",
+    "editHint": "Un commentaire ne peut être modifié que pendant la première heure après sa publication.",
+    "editHintLabel": "À propos de la modification"
   },
   "Category": {
     "kicker": "Catégorie",

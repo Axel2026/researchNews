@@ -6,6 +6,8 @@ import en from '@/messages/en.json';
 import { sampleArticleDetail } from '@/components/storyData';
 import { NewsArticleView } from './NewsArticleView';
 
+const recentCreatedAt = new Date(Date.now() - 10 * 60 * 1000).toISOString();
+
 const discussionCopy = {
   title: en.Discussion.title,
   empty: en.Discussion.empty,
@@ -29,6 +31,8 @@ const discussionCopy = {
   composerLabel: en.Discussion.composerLabel,
   replyLabel: en.Discussion.replyLabel,
   editLabel: en.Discussion.editLabel,
+  editHint: en.Discussion.editHint,
+  editHintLabel: en.Discussion.editHintLabel,
 };
 
 const meta = {
@@ -107,8 +111,8 @@ export const WithDiscussion: Story = {
           {
             id: 'c1',
             body: 'Does this method still hold for later samples?',
-            createdAt: '2026-03-12T09:15:00.000Z',
-            updatedAt: '2026-03-12T09:15:00.000Z',
+            createdAt: recentCreatedAt,
+            updatedAt: recentCreatedAt,
             deleted: false,
             author: { id: 'u1', displayName: 'anna' },
             replies: [],

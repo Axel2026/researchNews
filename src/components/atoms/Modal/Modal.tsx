@@ -4,11 +4,16 @@ import {
   useEffect,
   useId,
   useRef,
+  useSyncExternalStore,
   type MouseEvent,
   type ReactNode,
 } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './Modal.module.css';
+
+function subscribeNever() {
+  return () => {};
+}
 
 export function Modal({
   id,
@@ -16,6 +21,7 @@ export function Modal({
   onClose,
   title,
   closeLabel,
+  describedBy,
   children,
 }: {
   id?: string;
@@ -23,10 +29,16 @@ export function Modal({
   onClose: () => void;
   title: string;
   closeLabel: string;
+  describedBy?: string;
   children: ReactNode;
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const titleId = useId();
+  const mounted = useSyncExternalStore(
+    subscribeNever,
+    () => true,
+    () => false,
+  );
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -46,7 +58,7 @@ export function Modal({
         dialog.close();
       }
     };
-  }, [open]);
+  }, [mounted, open]);
 
   function onBackdropClick(event: MouseEvent<HTMLDialogElement>) {
     if (event.target === event.currentTarget) {
@@ -54,7 +66,7 @@ export function Modal({
     }
   }
 
-  if (typeof document === 'undefined') {
+  if (!mounted) {
     return null;
   }
 
@@ -64,6 +76,7 @@ export function Modal({
       id={id}
       className={styles.dialog}
       aria-labelledby={titleId}
+      aria-describedby={describedBy}
       aria-modal="true"
       onClose={onClose}
       onClick={onBackdropClick}

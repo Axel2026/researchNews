@@ -59,6 +59,8 @@
     "save": "Save",
     "cancel": "Cancel",
     "delete": "Delete",
+    "deleteConfirmTitle": "Delete this comment?",
+    "deleteConfirm": "The comment will be removed from the discussion.",
     "deleted": "This comment was removed.",
     "edited": "edited",
     "truncated": "Showing the latest 100 comments.",
@@ -66,10 +68,13 @@
     "tooLong": "Comments can be at most 2000 characters.",
     "rateLimited": "Too many comments. Try again in a few minutes.",
     "invalidBody": "That comment could not be saved.",
+    "editExpired": "Comments can only be edited within the first hour.",
     "genericError": "That did not work. Try again.",
     "composerLabel": "Your comment",
     "replyLabel": "Your reply",
-    "editLabel": "Edit comment"
+    "editLabel": "Edit comment",
+    "editHint": "You can edit a comment only within the first hour after posting.",
+    "editHintLabel": "About editing"
   },
   "Category": {
     "kicker": "Category",

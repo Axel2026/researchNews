@@ -2,8 +2,9 @@
 
 import { useId, useState, type FormEvent } from 'react';
 import { Button } from '@/components/atoms/Button/Button';
+import { InfoHint } from '@/components/molecules/InfoHint/InfoHint';
 import type { CommentReply, CommentThread } from '@/data/comments';
-import { COMMENT_MAX_LENGTH } from '@/data/comments';
+import { COMMENT_MAX_LENGTH, isWithinCommentEditWindow } from '@/data/comments';
 import { loginHref } from '@/lib/auth/redirect';
 import styles from './ArticleDiscussion.module.css';
 
@@ -33,6 +34,8 @@ export type ArticleDiscussionCopy = {
   composerLabel: string;
   replyLabel: string;
   editLabel: string;
+  editHint: string;
+  editHintLabel: string;
 };
 
 export function ArticleDiscussionView({
@@ -194,7 +197,8 @@ function CommentEntry({
     authStatus === 'authenticated' &&
     !comment.deleted &&
     !editing;
-  const canModerate = own && !comment.deleted && !editing;
+  const canDelete = own && !comment.deleted && !editing;
+  const canEdit = canDelete && isWithinCommentEditWindow(comment.createdAt);
 
   return (
     <>
@@ -225,7 +229,7 @@ function CommentEntry({
         </p>
       )}
 
-      {canReply || canModerate ? (
+      {canReply || canEdit || canDelete ? (
         <div className={styles.actions}>
           {canReply ? (
             <button
@@ -239,8 +243,8 @@ function CommentEntry({
               {replyToId === comment.id ? copy.cancel : copy.reply}
             </button>
           ) : null}
-          {canModerate ? (
-            <>
+          {canEdit ? (
+            <InfoHint hint={copy.editHint} label={copy.editHintLabel}>
               <button
                 type="button"
                 className={styles.action}
@@ -249,15 +253,17 @@ function CommentEntry({
               >
                 {copy.edit}
               </button>
-              <button
-                type="button"
-                className={styles.action}
-                disabled={busy}
-                onClick={() => onDelete?.(comment.id)}
-              >
-                {copy.delete}
-              </button>
-            </>
+            </InfoHint>
+          ) : null}
+          {canDelete ? (
+            <button
+              type="button"
+              className={styles.action}
+              disabled={busy}
+              onClick={() => onDelete?.(comment.id)}
+            >
+              {copy.delete}
+            </button>
           ) : null}
         </div>
       ) : null}

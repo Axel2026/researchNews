@@ -59,6 +59,8 @@
     "save": "Speichern",
     "cancel": "Abbrechen",
     "delete": "Löschen",
+    "deleteConfirmTitle": "Diesen Kommentar löschen?",
+    "deleteConfirm": "Der Kommentar wird aus der Diskussion entfernt.",
     "deleted": "Dieser Kommentar wurde entfernt.",
     "edited": "bearbeitet",
     "truncated": "Die neuesten 100 Kommentare werden angezeigt.",
@@ -66,10 +68,13 @@
     "tooLong": "Kommentare dürfen höchstens 2000 Zeichen lang sein.",
     "rateLimited": "Zu viele Kommentare. Versuchen Sie es in ein paar Minuten erneut.",
     "invalidBody": "Der Kommentar konnte nicht gespeichert werden.",
+    "editExpired": "Kommentare können nur in der ersten Stunde bearbeitet werden.",
     "genericError": "Das hat nicht geklappt. Versuchen Sie es erneut.",
     "composerLabel": "Ihr Kommentar",
     "replyLabel": "Ihre Antwort",
-    "editLabel": "Kommentar bearbeiten"
+    "editLabel": "Kommentar bearbeiten",
+    "editHint": "Ein Kommentar kann nur in der ersten Stunde nach dem Veröffentlichen bearbeitet werden.",
+    "editHintLabel": "Hinweis zur Bearbeitung"
   },
   "Category": {
     "kicker": "Kategorie",

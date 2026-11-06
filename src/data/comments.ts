@@ -1,6 +1,15 @@
 import { apiUrl } from '@/lib/api';
 
 export const COMMENT_MAX_LENGTH = 2000;
+export const COMMENT_EDIT_WINDOW_MS = 60 * 60 * 1000;
+
+export function isWithinCommentEditWindow(
+  createdAt: string,
+  now = Date.now(),
+): boolean {
+  const created = Date.parse(createdAt);
+  return Number.isFinite(created) && now - created < COMMENT_EDIT_WINDOW_MS;
+}
 
 export type CommentAuthor = {
   id: string;

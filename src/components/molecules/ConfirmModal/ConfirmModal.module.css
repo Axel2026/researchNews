@@ -1,0 +1,20 @@
+.body {
+  color: var(--color-muted);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+}
+
+.error {
+  margin-top: var(--space-3);
+  color: var(--color-accent);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}

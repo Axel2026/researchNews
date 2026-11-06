@@ -26,14 +26,18 @@ const copy = {
   composerLabel: en.Discussion.composerLabel,
   replyLabel: en.Discussion.replyLabel,
   editLabel: en.Discussion.editLabel,
+  editHint: en.Discussion.editHint,
+  editHintLabel: en.Discussion.editHintLabel,
 };
+
+const recentCreatedAt = new Date(Date.now() - 10 * 60 * 1000).toISOString();
 
 const comments: CommentThread[] = [
   {
     id: 'c1',
     body: 'Does this method still hold for later samples?',
-    createdAt: '2026-03-12T09:15:00.000Z',
-    updatedAt: '2026-03-12T09:15:00.000Z',
+    createdAt: recentCreatedAt,
+    updatedAt: recentCreatedAt,
     deleted: false,
     author: { id: 'u1', displayName: 'anna' },
     replies: [
