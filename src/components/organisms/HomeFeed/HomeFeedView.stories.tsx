@@ -13,6 +13,8 @@ const meta = {
     copy: {
       kicker: en.Home.kicker,
       readStory: en.Home.readStory,
+      popularTitle: en.Home.popularTitle,
+      popularDek: en.Home.popularDek,
       latestTitle: en.Home.latestTitle,
       latestDek: en.Home.latestDek,
       more: en.Home.more,
@@ -35,6 +37,18 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+export const WithPopularHits: Story = {
+  args: {
+    articles: sampleArticles.map((article) =>
+      article.slug === 'barn-light'
+        ? { ...article, recentViews: 18 }
+        : article.slug === 'delta-salinity'
+          ? { ...article, recentViews: 7 }
+          : article,
+    ),
+  },
+};
 
 export const FeaturedOnly: Story = {
   args: {

@@ -16,6 +16,7 @@ export type ArticleListItem = {
   publishedAt: string;
   paperPublishedAt: string | null;
   featured: boolean;
+  recentViews: number;
 };
 
 export type ArticleDetail = ArticleListItem & {
@@ -174,4 +175,19 @@ export function getArticleParagraphs(
     .split(/\n\s*\n/)
     .map((paragraph) => paragraph.trim())
     .filter(Boolean);
+}
+
+export async function recordArticleView(slug: string): Promise<void> {
+  const response = await fetch(
+    new URL(`/articles/${encodeURIComponent(slug)}/view`, apiUrl()),
+    { method: 'POST', cache: 'no-store', keepalive: true },
+  );
+
+  if (response.status === 404) {
+    return;
+  }
+
+  if (!response.ok) {
+    throw new Error(`Failed to record article view: ${response.status}`);
+  }
 }

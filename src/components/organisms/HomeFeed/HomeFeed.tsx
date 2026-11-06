@@ -22,6 +22,8 @@ export async function HomeFeed({
       copy={{
         kicker: t('Home.kicker'),
         readStory: t('Home.readStory'),
+        popularTitle: t('Home.popularTitle'),
+        popularDek: t('Home.popularDek'),
         latestTitle: t('Home.latestTitle'),
         latestDek: t('Home.latestDek'),
         more: t('Home.more'),

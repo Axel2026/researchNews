@@ -19,6 +19,7 @@ export const sampleArticle: ArticleListItem = {
   publishedAt: '2026-03-12T08:00:00.000Z',
   paperPublishedAt: '2026-03-12T00:00:00.000Z',
   featured: true,
+  recentViews: 0,
 };
 
 export const sampleArticleDetail: ArticleDetail = {
@@ -51,6 +52,7 @@ export const sampleArticles: ArticleListItem[] = [
     publishedAt: '2026-03-11T08:00:00.000Z',
     paperPublishedAt: '2026-03-11T00:00:00.000Z',
     featured: false,
+    recentViews: 0,
   },
   {
     id: '3',
@@ -64,6 +66,7 @@ export const sampleArticles: ArticleListItem[] = [
     publishedAt: '2026-03-10T08:00:00.000Z',
     paperPublishedAt: '2026-03-10T00:00:00.000Z',
     featured: false,
+    recentViews: 0,
   },
   {
     id: '4',
@@ -77,6 +80,7 @@ export const sampleArticles: ArticleListItem[] = [
     publishedAt: '2026-03-09T08:00:00.000Z',
     paperPublishedAt: '2026-03-09T00:00:00.000Z',
     featured: false,
+    recentViews: 0,
   },
   {
     id: '5',
@@ -90,6 +94,7 @@ export const sampleArticles: ArticleListItem[] = [
     publishedAt: '2026-03-08T08:00:00.000Z',
     paperPublishedAt: '2026-03-08T00:00:00.000Z',
     featured: false,
+    recentViews: 0,
   },
   {
     id: '6',
@@ -103,6 +108,7 @@ export const sampleArticles: ArticleListItem[] = [
     publishedAt: '2026-03-07T08:00:00.000Z',
     paperPublishedAt: '2026-03-07T00:00:00.000Z',
     featured: false,
+    recentViews: 0,
   },
 ];
 

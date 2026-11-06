@@ -5,6 +5,7 @@ import type { AppLocale } from '@/i18n/routing';
 import { articleJsonLd } from '@/lib/seo';
 import { ArticleDiscussion } from '@/components/organisms/ArticleDiscussion/ArticleDiscussion';
 import { BookmarkButton } from '@/components/molecules/BookmarkButton/BookmarkButton';
+import { ArticleViewBeacon } from './ArticleViewBeacon';
 import { NewsArticleView } from './NewsArticleView';
 
 export async function NewsArticle({
@@ -18,6 +19,7 @@ export async function NewsArticle({
 
   return (
     <>
+      <ArticleViewBeacon slug={article.slug} />
       <JsonLd
         data={articleJsonLd({
           article,

@@ -19,9 +19,21 @@ function newestFirst(articles: ArticleListItem[]): ArticleListItem[] {
   );
 }
 
+function popularFirst(articles: ArticleListItem[]): ArticleListItem[] {
+  return [...articles].sort((left, right) => {
+    if (left.recentViews !== right.recentViews) {
+      return right.recentViews - left.recentViews;
+    }
+
+    return publicationTimestamp(right) - publicationTimestamp(left);
+  });
+}
+
 export type HomeFeedCopy = {
   kicker: string;
   readStory: string;
+  popularTitle: string;
+  popularDek: string;
   latestTitle: string;
   latestDek: string;
   more: string;
@@ -40,6 +52,7 @@ export function HomeFeedView({
   copy: HomeFeedCopy;
 }) {
   const [featured, ...rest] = articles;
+  const popular = popularFirst(rest).slice(0, HOME_ROW_SIZE);
   const latest = newestFirst(rest).slice(0, HOME_ROW_SIZE);
 
   return (
@@ -70,6 +83,18 @@ export function HomeFeedView({
             </Link>
           </div>
         </article>
+      ) : null}
+
+      {popular.length > 0 ? (
+        <section className={styles.latest} aria-labelledby="popular-heading">
+          <div className={styles.latestHeader}>
+            <div className={styles.latestHeaderCopy}>
+              <h2 id="popular-heading">{copy.popularTitle}</h2>
+              <p>{copy.popularDek}</p>
+            </div>
+          </div>
+          <ArticleCardGrid articles={popular} locale={locale} layout="row" />
+        </section>
       ) : null}
 
       {latest.length > 0 ? (
