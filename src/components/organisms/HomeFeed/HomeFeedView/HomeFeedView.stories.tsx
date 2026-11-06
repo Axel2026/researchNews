@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { sampleArticles, sampleCategories } from '@/components/storyData';
+import { sampleArticles } from '@/components/storyData';
 import { PageShell } from '@/components/templates/PageShell/PageShell';
 import en from '@/messages/en.json';
 import { HomeFeedView } from './HomeFeedView';
@@ -9,7 +9,6 @@ const meta = {
   component: HomeFeedView,
   args: {
     articles: sampleArticles,
-    categories: sampleCategories,
     copy: {
       kicker: en.Home.kicker,
       readStory: en.Home.readStory,
@@ -53,13 +52,11 @@ export const WithPopularHits: Story = {
 export const FeaturedOnly: Story = {
   args: {
     articles: sampleArticles.slice(0, 1),
-    categories: sampleCategories.slice(0, 1),
   },
 };
 
 export const Empty: Story = {
   args: {
     articles: [],
-    categories: [],
   },
 };

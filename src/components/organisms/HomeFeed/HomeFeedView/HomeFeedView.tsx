@@ -4,14 +4,52 @@ import { CategoryChip } from '@/components/atoms/CategoryChip/CategoryChip';
 import { ArticleCardGrid } from '@/components/molecules/ArticleCardGrid/ArticleCardGrid';
 import { mediaMinLg } from '@/design-system/tokens';
 import { Link } from '@/i18n/navigation';
-import type { HomeFeedViewProps } from './HomeFeedView.types';
+import type {
+  HomeFeedSectionProps,
+  HomeFeedViewProps,
+} from './HomeFeedView.types';
 import { newestFirst, popularFirst } from './HomeFeedView.utils';
 
 const HOME_ROW_SIZE = 4;
 
+function HomeFeedSection({
+  headingId,
+  title,
+  description,
+  articles,
+  locale,
+  moreLabel,
+  moreHref,
+  moreAriaLabel,
+}: HomeFeedSectionProps) {
+  if (articles.length === 0) {
+    return null;
+  }
+
+  return (
+    <section className={styles.latest} aria-labelledby={headingId}>
+      <div className={styles.latestHeader}>
+        <div className={styles.latestHeaderCopy}>
+          <h2 id={headingId}>{title}</h2>
+          {description ? <p>{description}</p> : null}
+        </div>
+        {moreHref ? (
+          <Link
+            className={styles.moreLink}
+            href={moreHref}
+            aria-label={moreAriaLabel ?? moreLabel}
+          >
+            {moreLabel} <span aria-hidden="true">→</span>
+          </Link>
+        ) : null}
+      </div>
+      <ArticleCardGrid articles={articles} locale={locale} layout="row" />
+    </section>
+  );
+}
+
 export function HomeFeedView({
   articles,
-  categories,
   locale = 'en',
   copy,
 }: HomeFeedViewProps) {
@@ -49,73 +87,22 @@ export function HomeFeedView({
         </article>
       ) : null}
 
-      {popular.length > 0 ? (
-        <section className={styles.latest} aria-labelledby="popular-heading">
-          <div className={styles.latestHeader}>
-            <div className={styles.latestHeaderCopy}>
-              <h2 id="popular-heading">{copy.popularTitle}</h2>
-              <p>{copy.popularDek}</p>
-            </div>
-          </div>
-          <ArticleCardGrid articles={popular} locale={locale} layout="row" />
-        </section>
-      ) : null}
-
-      {latest.length > 0 ? (
-        <section className={styles.latest} aria-labelledby="latest-heading">
-          <div className={styles.latestHeader}>
-            <div className={styles.latestHeaderCopy}>
-              <h2 id="latest-heading">{copy.latestTitle}</h2>
-              <p>{copy.latestDek}</p>
-            </div>
-          </div>
-          <ArticleCardGrid articles={latest} locale={locale} layout="row" />
-        </section>
-      ) : null}
-
-      {categories.map((category) => {
-        const row = newestFirst({
-          articles: articles.filter(
-            (article) =>
-              article.fieldSlug === category.slug ||
-              article.field === category.field,
-          ),
-        }).slice(0, HOME_ROW_SIZE);
-
-        if (row.length === 0) {
-          return null;
-        }
-
-        const headingId = `category-${category.slug}-heading`;
-        const moreIn = copy.moreIn(category.field);
-
-        return (
-          <section
-            key={category.slug}
-            className={styles.latest}
-            aria-labelledby={headingId}
-          >
-            <div className={styles.latestHeader}>
-              <div className={styles.latestHeaderCopy}>
-                <h2 id={headingId}>{category.field}</h2>
-              </div>
-              <Link
-                className={styles.moreLink}
-                href={`/category/${category.slug}`}
-                aria-label={moreIn}
-              >
-                {copy.more} <span aria-hidden="true">→</span>
-              </Link>
-            </div>
-            <ArticleCardGrid
-              articles={row}
-              locale={locale}
-              layout="row"
-              showCategoryChip={false}
-            />
-          </section>
-        );
-      })}
+      <HomeFeedSection
+        headingId="popular-heading"
+        title={copy.popularTitle}
+        description={copy.popularDek}
+        articles={popular}
+        locale={locale}
+        moreLabel={copy.more}
+      />
+      <HomeFeedSection
+        headingId="latest-heading"
+        title={copy.latestTitle}
+        description={copy.latestDek}
+        articles={latest}
+        locale={locale}
+        moreLabel={copy.more}
+      />
     </>
   );
 }

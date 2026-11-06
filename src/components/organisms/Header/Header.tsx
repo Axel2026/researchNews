@@ -52,6 +52,10 @@ export function Header({
         <Link className={styles.navLink} href="/" aria-current={storiesCurrent}>
           {t('stories')}
         </Link>
+        <CategoryDropdown
+          categories={categories}
+          currentSlug={currentCategorySlug}
+        />
         <Link
           className={styles.navLink}
           href="/sources"
@@ -59,10 +63,6 @@ export function Header({
         >
           {t('sources')}
         </Link>
-        <CategoryDropdown
-          categories={categories}
-          currentSlug={currentCategorySlug}
-        />
       </nav>
     ) : null);
 

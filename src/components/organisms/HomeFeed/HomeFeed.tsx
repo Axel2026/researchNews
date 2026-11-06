@@ -2,11 +2,7 @@ import { getTranslations } from 'next-intl/server';
 import { HomeFeedView } from './HomeFeedView/HomeFeedView';
 import type { HomeFeedProps } from './HomeFeed.types';
 
-export async function HomeFeed({
-  articles,
-  categories,
-  locale,
-}: HomeFeedProps) {
+export async function HomeFeed({ articles, locale }: HomeFeedProps) {
   const t = await getTranslations({ locale });
 
   function moreIn(field: string) {
@@ -24,12 +20,5 @@ export async function HomeFeed({
     moreIn,
   };
 
-  return (
-    <HomeFeedView
-      articles={articles}
-      categories={categories}
-      locale={locale}
-      copy={copy}
-    />
-  );
+  return <HomeFeedView articles={articles} locale={locale} copy={copy} />;
 }

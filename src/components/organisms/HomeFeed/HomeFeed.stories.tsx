@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { sampleArticles, sampleCategories } from '@/components/storyData';
+import { sampleArticles } from '@/components/storyData';
 import { PageShell } from '@/components/templates/PageShell/PageShell';
 import { HomeFeed } from './HomeFeed';
 
@@ -8,7 +8,6 @@ const meta = {
   component: HomeFeed,
   args: {
     articles: sampleArticles,
-    categories: sampleCategories,
     locale: 'en',
   },
   decorators: [
