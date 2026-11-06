@@ -1,6 +1,7 @@
 import styles from './Loader.module.css';
+import type { LoaderProps } from './Loader.types';
 
-export function Loader({ label }: { label: string }) {
+export function Loader({ label }: LoaderProps) {
   return (
     <div className={styles.root} role="status">
       <svg

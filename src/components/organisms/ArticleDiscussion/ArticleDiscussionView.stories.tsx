@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import type { CommentThread } from '@/data/comments';
+import type { CommentThread } from '@/data/comments.types';
 import en from '@/messages/en.json';
 import { ArticleDiscussionView } from './ArticleDiscussionView';
 

@@ -1,6 +1,7 @@
-import { getArticleParagraphs, type ArticleDetail } from '@/data/articles';
-import type { AppLocale } from '@/i18n/routing';
-import type { SpeechSegment } from './types';
+import { getArticleParagraphs } from '@/data/articles';
+import type { ArticleDetail } from '@/data/articles.types';
+import type { AppLocale } from '@/i18n/routing.types';
+import type { SpeechSegment } from './speech.types';
 
 const speechLanguages: Record<AppLocale, string> = {
   en: 'en-US',

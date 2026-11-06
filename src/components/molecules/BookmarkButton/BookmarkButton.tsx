@@ -4,15 +4,14 @@ import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import { listBookmarks, setBookmark } from '@/data/bookmarks';
 import { usePathname } from '@/i18n/navigation';
-import type { AppLocale } from '@/i18n/routing';
+import type { AppLocale } from '@/i18n/routing.types';
 import { createClient } from '@/lib/supabase/client';
 import { publicSupabaseEnv } from '@/lib/supabase/env';
-import {
-  BookmarkButtonView,
-  type BookmarkButtonStatus,
-} from './BookmarkButtonView';
+import { BookmarkButtonView } from './BookmarkButtonView';
+import type { BookmarkButtonStatus } from './BookmarkButtonView.types';
+import type { BookmarkButtonProps } from './BookmarkButton.types';
 
-export function BookmarkButton({ slug }: { slug: string }) {
+export function BookmarkButton({ slug }: BookmarkButtonProps) {
   const t = useTranslations();
   const locale = useLocale() as AppLocale;
   const pathname = usePathname();
@@ -70,45 +69,51 @@ export function BookmarkButton({ slug }: { slug: string }) {
     };
   }, [configured, locale, slug]);
 
+  const copy = {
+    add: t('Bookmarks.add'),
+    remove: t('Bookmarks.remove'),
+    signIn: t('Bookmarks.signIn'),
+    loading: t('Auth.loading'),
+  };
+
+  async function toggleBookmark() {
+    if (busy || (status !== 'saved' && status !== 'unsaved')) {
+      return;
+    }
+
+    setBusy(true);
+
+    try {
+      const supabase = createClient();
+      const { data } = await supabase.auth.getSession();
+      const token = data.session?.access_token;
+
+      if (!token) {
+        setStatus('anonymous');
+        return;
+      }
+
+      const next = status !== 'saved';
+      const result = await setBookmark(slug, next, token);
+      setStatus(result.bookmarked ? 'saved' : 'unsaved');
+    } catch {
+      /* keep the previous bookmark state */
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  function handleToggle() {
+    void toggleBookmark();
+  }
+
   return (
     <BookmarkButtonView
       status={status}
       nextPath={pathname}
       busy={busy}
-      copy={{
-        add: t('Bookmarks.add'),
-        remove: t('Bookmarks.remove'),
-        signIn: t('Bookmarks.signIn'),
-        loading: t('Auth.loading'),
-      }}
-      onToggle={() => {
-        if (busy || (status !== 'saved' && status !== 'unsaved')) {
-          return;
-        }
-
-        void (async () => {
-          setBusy(true);
-
-          try {
-            const supabase = createClient();
-            const { data } = await supabase.auth.getSession();
-            const token = data.session?.access_token;
-
-            if (!token) {
-              setStatus('anonymous');
-              return;
-            }
-
-            const next = status !== 'saved';
-            const result = await setBookmark(slug, next, token);
-            setStatus(result.bookmarked ? 'saved' : 'unsaved');
-          } catch {
-            /* keep the previous bookmark state */
-          } finally {
-            setBusy(false);
-          }
-        })();
-      }}
+      copy={copy}
+      onToggle={handleToggle}
     />
   );
 }

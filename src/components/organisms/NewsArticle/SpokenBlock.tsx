@@ -1,7 +1,6 @@
 'use client';
-
-import type { ReactNode } from 'react';
 import { useArticleSpeech } from './ArticleSpeechProvider';
+import type { SpokenBlockProps } from './SpokenBlock.types';
 
 export function SpokenBlock({
   as: Tag,
@@ -9,13 +8,7 @@ export function SpokenBlock({
   className,
   activeClassName,
   children,
-}: {
-  as: 'h1' | 'h2' | 'p';
-  segmentId: string;
-  className?: string;
-  activeClassName: string;
-  children: ReactNode;
-}) {
+}: SpokenBlockProps) {
   const { activeSegmentId } = useArticleSpeech();
   const classNames = [
     className,
@@ -23,9 +16,10 @@ export function SpokenBlock({
   ]
     .filter(Boolean)
     .join(' ');
+  const blockClassName = classNames || undefined;
 
   return (
-    <Tag className={classNames || undefined} data-speech-id={segmentId}>
+    <Tag className={blockClassName} data-speech-id={segmentId}>
       {children}
     </Tag>
   );

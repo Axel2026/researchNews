@@ -1,16 +1,12 @@
 'use client';
-
-import type { ReactNode } from 'react';
 import { useTranslations } from 'next-intl';
 import { SearchIcon } from '@/components/atoms/SearchIcon/SearchIcon';
 import { CategoryDropdown } from '@/components/molecules/CategoryDropdown/CategoryDropdown';
 import { LanguageSwitcher } from '@/components/molecules/LanguageSwitcher/LanguageSwitcher';
 import { AccountMenu } from '@/components/organisms/AccountMenu/AccountMenu';
-import type { ArticleCategory } from '@/data/articles';
 import { Link, usePathname } from '@/i18n/navigation';
 import styles from './Header.module.css';
-
-export type HeaderCurrent = 'stories' | 'category' | 'sources' | 'search';
+import type { HeaderProps } from './Header.types';
 
 export function Header({
   current,
@@ -21,19 +17,13 @@ export function Header({
   showAccountMenu = true,
   showSearch = true,
   showLanguageSwitcher = true,
-}: {
-  current?: HeaderCurrent;
-  categories?: ArticleCategory[];
-  currentCategorySlug?: string;
-  children?: ReactNode;
-  actions?: ReactNode;
-  showAccountMenu?: boolean;
-  showSearch?: boolean;
-  showLanguageSwitcher?: boolean;
-}) {
+}: HeaderProps) {
   const t = useTranslations('Nav');
   const pathname = usePathname();
   const onSearch = current === 'search' || pathname === '/search';
+  const searchCurrent = onSearch ? 'page' : undefined;
+  const storiesCurrent = current === 'stories' ? 'page' : undefined;
+  const sourcesCurrent = current === 'sources' ? 'page' : undefined;
   const resolvedActions =
     actions ??
     (showAccountMenu || showSearch || showLanguageSwitcher ? (
@@ -44,7 +34,7 @@ export function Header({
             className={styles.search}
             href="/search"
             aria-label={t('search')}
-            aria-current={onSearch ? 'page' : undefined}
+            aria-current={searchCurrent}
           >
             <SearchIcon />
           </Link>
@@ -57,17 +47,13 @@ export function Header({
     children ??
     (categories ? (
       <nav className={styles.nav} aria-label={t('main')}>
-        <Link
-          className={styles.navLink}
-          href="/"
-          aria-current={current === 'stories' ? 'page' : undefined}
-        >
+        <Link className={styles.navLink} href="/" aria-current={storiesCurrent}>
           {t('stories')}
         </Link>
         <Link
           className={styles.navLink}
           href="/sources"
-          aria-current={current === 'sources' ? 'page' : undefined}
+          aria-current={sourcesCurrent}
         >
           {t('sources')}
         </Link>

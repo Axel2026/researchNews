@@ -1,9 +1,9 @@
 'use client';
-
-import { useId, type ReactNode } from 'react';
+import { useId } from 'react';
 import { Button } from '@/components/atoms/Button/Button';
 import { Modal } from '@/components/atoms/Modal/Modal';
 import styles from './ConfirmModal.module.css';
+import type { ConfirmModalProps } from './ConfirmModal.types';
 
 export function ConfirmModal({
   open,
@@ -16,19 +16,9 @@ export function ConfirmModal({
   onClose,
   onConfirm,
   children,
-}: {
-  open: boolean;
-  title: string;
-  closeLabel: string;
-  cancelLabel: string;
-  confirmLabel: string;
-  busy?: boolean;
-  error?: string | null;
-  onClose: () => void;
-  onConfirm: () => void;
-  children: ReactNode;
-}) {
+}: ConfirmModalProps) {
   const descriptionId = useId();
+  const confirmBusy = busy || undefined;
 
   return (
     <Modal
@@ -50,11 +40,7 @@ export function ConfirmModal({
         <Button variant="secondary" disabled={busy} onClick={onClose}>
           {cancelLabel}
         </Button>
-        <Button
-          disabled={busy}
-          aria-busy={busy || undefined}
-          onClick={onConfirm}
-        >
+        <Button disabled={busy} aria-busy={confirmBusy} onClick={onConfirm}>
           {confirmLabel}
         </Button>
       </div>

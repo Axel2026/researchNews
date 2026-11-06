@@ -2,9 +2,7 @@ import { BookmarkIcon } from '@/components/atoms/BookmarkIcon/BookmarkIcon';
 import { Button } from '@/components/atoms/Button/Button';
 import { loginHref } from '@/lib/auth/redirect';
 import styles from './BookmarkButton.module.css';
-
-export type BookmarkButtonStatus =
-  'pending' | 'anonymous' | 'saved' | 'unsaved';
+import type { BookmarkButtonViewProps } from './BookmarkButtonView.types';
 
 export function BookmarkButtonView({
   status,
@@ -12,18 +10,7 @@ export function BookmarkButtonView({
   busy = false,
   onToggle,
   copy,
-}: {
-  status: BookmarkButtonStatus;
-  nextPath: string;
-  busy?: boolean;
-  onToggle?: () => void;
-  copy: {
-    add: string;
-    remove: string;
-    signIn: string;
-    loading: string;
-  };
-}) {
+}: BookmarkButtonViewProps) {
   if (status === 'pending') {
     return (
       <p className={styles.pending} role="status">
@@ -46,14 +33,16 @@ export function BookmarkButtonView({
   }
 
   const saved = status === 'saved';
+  const variant = saved ? 'primary' : 'secondary';
+  const busyState = busy || undefined;
 
   return (
     <Button
       className={styles.button}
-      variant={saved ? 'primary' : 'secondary'}
+      variant={variant}
       disabled={busy}
       aria-pressed={saved}
-      aria-busy={busy || undefined}
+      aria-busy={busyState}
       onClick={onToggle}
     >
       <BookmarkIcon filled={saved} />

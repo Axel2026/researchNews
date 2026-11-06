@@ -3,14 +3,9 @@
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import styles from './ArticleComments.module.css';
+import type { ArticleCommentsProps } from './ArticleComments.types';
 
-export function ArticleComments({
-  slug,
-  count,
-}: {
-  slug: string;
-  count: number;
-}) {
+export function ArticleComments({ slug, count }: ArticleCommentsProps) {
   const t = useTranslations('News');
 
   return (

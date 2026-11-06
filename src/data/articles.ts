@@ -1,50 +1,17 @@
 import { unstable_cache } from 'next/cache';
-import type { AppLocale } from '@/i18n/routing';
+import type { AppLocale } from '@/i18n/routing.types';
 import { apiUrl } from '@/lib/api';
+import type {
+  ArticleListItem,
+  ArticleDetail,
+  ArticleCategory,
+  ArticlePage,
+  ArticleCategoryDetail,
+  ArticleSearchParams,
+} from './articles.types';
 
 export const ARTICLES_REVALIDATE_SECONDS = 10800;
 export const ARTICLES_CACHE_TAG = 'articles';
-
-export type ArticleListItem = {
-  id: string;
-  slug: string;
-  title: string;
-  field: string;
-  fieldSlug: string;
-  shortPopularization: string;
-  imageUrl: string;
-  publishedAt: string;
-  paperPublishedAt: string | null;
-  featured: boolean;
-  recentViews: number;
-  authors: string[];
-  commentCount: number;
-};
-
-export type ArticleDetail = ArticleListItem & {
-  realTitle: string;
-  mediumPopularization: string;
-  fullPopularization: string;
-  doi: string | null;
-  year: number | null;
-  journal: string | null;
-  sourceUrl: string | null;
-  downloadUrl: string | null;
-};
-
-export type ArticleCategory = {
-  slug: string;
-  field: string;
-};
-
-export type ArticlePage = {
-  articles: ArticleListItem[];
-  page: number;
-  pageSize: number;
-  total: number;
-};
-
-export type ArticleCategoryDetail = ArticleCategory & ArticlePage;
 
 function articlesUrl(path: string, locale: AppLocale): URL {
   const url = new URL(path, apiUrl());
@@ -73,16 +40,6 @@ export async function listArticles(
 
   return response.json() as Promise<ArticleListItem[]>;
 }
-
-export type ArticleSearchParams = {
-  query: string;
-  field: string;
-  sort: 'newest' | 'popular';
-  author: string;
-  from: string;
-  to: string;
-  page: number;
-};
 
 export async function searchArticles(
   locale: AppLocale,

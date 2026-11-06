@@ -2,6 +2,7 @@
 
 import { useForm } from '@tanstack/react-form';
 import { useLocale, useTranslations } from 'next-intl';
+import { type ChangeEvent, type FormEvent } from 'react';
 import { getPathname, Link } from '@/i18n/navigation';
 import { authErrorKey } from '@/lib/auth/errors';
 import { authCallbackUrl } from '@/lib/auth/redirect';
@@ -9,20 +10,14 @@ import { createClient } from '@/lib/supabase/client';
 import styles from './AuthForms.module.css';
 import { AuthTextField, focusFirstInvalidField } from './AuthTextField';
 import { fieldErrorMessage, forgotPasswordSchema } from './schema';
-
-export type ForgotPasswordFormStatus = 'form' | 'sent';
+import type { ForgotPasswordFormViewProps } from './ForgotPasswordFormView.types';
 
 export function ForgotPasswordFormView({
   status = 'form',
   formError = null,
   onFormError,
   onSent,
-}: {
-  status?: ForgotPasswordFormStatus;
-  formError?: string | null;
-  onFormError?: (message: string | null) => void;
-  onSent?: () => void;
-}) {
+}: ForgotPasswordFormViewProps) {
   const t = useTranslations('Auth');
   const locale = useLocale();
 
@@ -72,51 +67,63 @@ export function ForgotPasswordFormView({
     );
   }
 
+  function selectIsSubmitting(state: { isSubmitting: boolean }) {
+    return state.isSubmitting;
+  }
+
+  function submitForgotPassword(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    event.stopPropagation();
+    const formElement = event.currentTarget;
+    void form.handleSubmit().then(() => {
+      focusFirstInvalidField(formElement);
+    });
+  }
+
   return (
-    <form
-      className={styles.stack}
-      noValidate
-      onSubmit={(event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        const formElement = event.currentTarget;
-        void form.handleSubmit().then(() => {
-          focusFirstInvalidField(formElement);
-        });
-      }}
-    >
+    <form className={styles.stack} noValidate onSubmit={submitForgotPassword}>
       {formError ? (
         <p className={styles.error} role="alert">
           {formError}
         </p>
       ) : null}
       <form.Field name="email">
-        {(field) => (
-          <AuthTextField
-            label={t('email')}
-            error={fieldErrorMessage(field.state.meta.errors)}
-            type="email"
-            name={field.name}
-            autoComplete="email"
-            autoCapitalize="none"
-            spellCheck={false}
-            value={field.state.value}
-            onBlur={field.handleBlur}
-            onChange={(event) => field.handleChange(event.target.value)}
-          />
-        )}
+        {(field) => {
+          function changeEmail(event: ChangeEvent<HTMLInputElement>) {
+            field.handleChange(event.target.value);
+          }
+
+          return (
+            <AuthTextField
+              label={t('email')}
+              error={fieldErrorMessage(field.state.meta.errors)}
+              type="email"
+              name={field.name}
+              autoComplete="email"
+              autoCapitalize="none"
+              spellCheck={false}
+              value={field.state.value}
+              onBlur={field.handleBlur}
+              onChange={changeEmail}
+            />
+          );
+        }}
       </form.Field>
-      <form.Subscribe selector={(state) => state.isSubmitting}>
-        {(isSubmitting) => (
-          <button
-            className={styles.button}
-            type="submit"
-            disabled={isSubmitting}
-            aria-busy={isSubmitting || undefined}
-          >
-            {t('submitForgot')}
-          </button>
-        )}
+      <form.Subscribe selector={selectIsSubmitting}>
+        {(isSubmitting) => {
+          const submitBusy = isSubmitting || undefined;
+
+          return (
+            <button
+              className={styles.button}
+              type="submit"
+              disabled={isSubmitting}
+              aria-busy={submitBusy}
+            >
+              {t('submitForgot')}
+            </button>
+          );
+        }}
       </form.Subscribe>
       <p className={styles.links}>
         <Link className={styles.textLink} href="/login">

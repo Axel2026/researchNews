@@ -1,7 +1,6 @@
 'use client';
-
-import type { ComponentProps } from 'react';
 import { Input } from '@/components/atoms/Field/Input';
+import type { AuthTextFieldProps } from './AuthTextField.types';
 
 export function focusFirstInvalidField(form: HTMLFormElement) {
   window.setTimeout(() => {
@@ -9,8 +8,6 @@ export function focusFirstInvalidField(form: HTMLFormElement) {
   }, 0);
 }
 
-export function AuthTextField(
-  props: Omit<ComponentProps<typeof Input>, 'required'>,
-) {
+export function AuthTextField(props: AuthTextFieldProps) {
   return <Input required {...props} />;
 }

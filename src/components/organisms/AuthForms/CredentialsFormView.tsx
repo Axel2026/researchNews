@@ -2,6 +2,7 @@
 
 import { useForm } from '@tanstack/react-form';
 import { useLocale, useTranslations } from 'next-intl';
+import { type ChangeEvent, type FormEvent } from 'react';
 import { getPathname, Link, useRouter } from '@/i18n/navigation';
 import { authErrorKey } from '@/lib/auth/errors';
 import { authCallbackUrl } from '@/lib/auth/redirect';
@@ -9,10 +10,7 @@ import { createClient } from '@/lib/supabase/client';
 import styles from './AuthForms.module.css';
 import { AuthTextField, focusFirstInvalidField } from './AuthTextField';
 import { fieldErrorMessage, loginSchema, registerSchema } from './schema';
-
-export type CredentialsMode = 'login' | 'register';
-
-export type CredentialsFormStatus = 'form' | 'checkEmail' | 'redirecting';
+import type { CredentialsFormViewProps } from './CredentialsFormView.types';
 
 export function CredentialsFormView({
   mode,
@@ -25,18 +23,7 @@ export function CredentialsFormView({
   onSubmitSuccess,
   onCheckEmail,
   onFormError,
-}: {
-  mode: CredentialsMode;
-  status?: CredentialsFormStatus;
-  nextHref?: string;
-  callbackFailed?: boolean;
-  formError?: string | null;
-  googlePending?: boolean;
-  onGoogle?: () => void;
-  onSubmitSuccess?: () => void;
-  onCheckEmail?: () => void;
-  onFormError?: (message: string | null) => void;
-}) {
+}: CredentialsFormViewProps) {
   const t = useTranslations('Auth');
   const locale = useLocale();
   const router = useRouter();
@@ -129,36 +116,48 @@ export function CredentialsFormView({
     );
   }
 
+  function selectIsSubmitting(state: { isSubmitting: boolean }) {
+    return state.isSubmitting;
+  }
+
+  function submitCredentials(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    event.stopPropagation();
+    const formElement = event.currentTarget;
+    void form.handleSubmit().then(() => {
+      focusFirstInvalidField(formElement);
+    });
+  }
+
+  const passwordComplete =
+    mode === 'login' ? 'current-password' : 'new-password';
+
   return (
     <div className={styles.stack}>
-      <form.Subscribe selector={(state) => state.isSubmitting}>
-        {(isSubmitting) => (
-          <button
-            className={styles.google}
-            type="button"
-            disabled={isSubmitting || googlePending}
-            aria-busy={isSubmitting || googlePending || undefined}
-            onClick={() => {
-              onGoogle?.();
-            }}
-          >
-            {t('google')}
-          </button>
-        )}
+      <form.Subscribe selector={selectIsSubmitting}>
+        {(isSubmitting) => {
+          const googleDisabled = isSubmitting || googlePending;
+          const googleBusy = googleDisabled || undefined;
+
+          function startGoogle() {
+            onGoogle?.();
+          }
+
+          return (
+            <button
+              className={styles.google}
+              type="button"
+              disabled={googleDisabled}
+              aria-busy={googleBusy}
+              onClick={startGoogle}
+            >
+              {t('google')}
+            </button>
+          );
+        }}
       </form.Subscribe>
       <p className={styles.divider}>{t('or')}</p>
-      <form
-        className={styles.form}
-        noValidate
-        onSubmit={(event) => {
-          event.preventDefault();
-          event.stopPropagation();
-          const formElement = event.currentTarget;
-          void form.handleSubmit().then(() => {
-            focusFirstInvalidField(formElement);
-          });
-        }}
-      >
+      <form className={styles.form} noValidate onSubmit={submitCredentials}>
         {callbackFailed ? (
           <p className={styles.error} role="alert">
             {t('callbackError')}
@@ -170,64 +169,87 @@ export function CredentialsFormView({
           </p>
         ) : null}
         <form.Field name="email">
-          {(field) => (
-            <AuthTextField
-              label={t('email')}
-              error={fieldErrorMessage(field.state.meta.errors)}
-              type="email"
-              name={field.name}
-              autoComplete="email"
-              autoCapitalize="none"
-              spellCheck={false}
-              value={field.state.value}
-              onBlur={field.handleBlur}
-              onChange={(event) => field.handleChange(event.target.value)}
-            />
-          )}
+          {(field) => {
+            function changeEmail(event: ChangeEvent<HTMLInputElement>) {
+              field.handleChange(event.target.value);
+            }
+
+            return (
+              <AuthTextField
+                label={t('email')}
+                error={fieldErrorMessage(field.state.meta.errors)}
+                type="email"
+                name={field.name}
+                autoComplete="email"
+                autoCapitalize="none"
+                spellCheck={false}
+                value={field.state.value}
+                onBlur={field.handleBlur}
+                onChange={changeEmail}
+              />
+            );
+          }}
         </form.Field>
         <form.Field name="password">
-          {(field) => (
-            <AuthTextField
-              label={t('password')}
-              error={fieldErrorMessage(field.state.meta.errors)}
-              type="password"
-              name={field.name}
-              autoComplete={
-                mode === 'login' ? 'current-password' : 'new-password'
-              }
-              value={field.state.value}
-              onBlur={field.handleBlur}
-              onChange={(event) => field.handleChange(event.target.value)}
-            />
-          )}
-        </form.Field>
-        {mode === 'register' ? (
-          <form.Field name="confirmPassword">
-            {(field) => (
+          {(field) => {
+            function changePassword(event: ChangeEvent<HTMLInputElement>) {
+              field.handleChange(event.target.value);
+            }
+
+            return (
               <AuthTextField
-                label={t('confirmPassword')}
+                label={t('password')}
                 error={fieldErrorMessage(field.state.meta.errors)}
                 type="password"
                 name={field.name}
-                autoComplete="new-password"
+                autoComplete={passwordComplete}
                 value={field.state.value}
                 onBlur={field.handleBlur}
-                onChange={(event) => field.handleChange(event.target.value)}
+                onChange={changePassword}
               />
-            )}
+            );
+          }}
+        </form.Field>
+        {mode === 'register' ? (
+          <form.Field name="confirmPassword">
+            {(field) => {
+              function changeConfirmPassword(
+                event: ChangeEvent<HTMLInputElement>,
+              ) {
+                field.handleChange(event.target.value);
+              }
+
+              return (
+                <AuthTextField
+                  label={t('confirmPassword')}
+                  error={fieldErrorMessage(field.state.meta.errors)}
+                  type="password"
+                  name={field.name}
+                  autoComplete="new-password"
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={changeConfirmPassword}
+                />
+              );
+            }}
           </form.Field>
         ) : null}
-        <form.Subscribe selector={(state) => state.isSubmitting}>
-          {(isSubmitting) => (
-            <button
-              className={styles.button}
-              type="submit"
-              disabled={isSubmitting || googlePending}
-              aria-busy={isSubmitting || undefined}
-            >
-              {mode === 'login' ? t('submitLogin') : t('submitRegister')}
-            </button>
-          )}
+        <form.Subscribe selector={selectIsSubmitting}>
+          {(isSubmitting) => {
+            const submitDisabled = isSubmitting || googlePending;
+            const submitBusy = isSubmitting || undefined;
+
+            return (
+              <button
+                className={styles.button}
+                type="submit"
+                disabled={submitDisabled}
+                aria-busy={submitBusy}
+              >
+                {mode === 'login' ? t('submitLogin') : t('submitRegister')}
+              </button>
+            );
+          }}
         </form.Subscribe>
       </form>
       <p className={styles.links}>

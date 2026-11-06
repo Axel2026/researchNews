@@ -2,19 +2,17 @@
 
 import { useTranslations } from 'next-intl';
 import { Dropdown } from '@/components/molecules/Dropdown/Dropdown';
-import type { ArticleCategory } from '@/data/articles';
 import { Link } from '@/i18n/navigation';
 import styles from './CategoryDropdown.module.css';
+import type { CategoryDropdownProps } from './CategoryDropdown.types';
 
 export function CategoryDropdown({
   categories,
   currentSlug,
-}: {
-  categories: ArticleCategory[];
-  currentSlug?: string;
-}) {
+}: CategoryDropdownProps) {
   const t = useTranslations('Nav');
   const isCurrent = Boolean(currentSlug);
+  const triggerClassName = isCurrent ? styles.triggerCurrent : styles.trigger;
 
   if (categories.length === 0) {
     return null;
@@ -23,7 +21,7 @@ export function CategoryDropdown({
   return (
     <Dropdown
       align="start"
-      triggerClassName={isCurrent ? styles.triggerCurrent : styles.trigger}
+      triggerClassName={triggerClassName}
       label={
         <>
           {t('fields')}
@@ -49,13 +47,15 @@ export function CategoryDropdown({
     >
       {categories.map((category) => {
         const current = category.slug === currentSlug;
+        const optionClassName = current ? styles.optionCurrent : styles.option;
+        const currentPage = current ? 'page' : undefined;
 
         return (
           <li key={category.slug}>
             <Link
-              className={current ? styles.optionCurrent : styles.option}
+              className={optionClassName}
               href={`/category/${category.slug}`}
-              aria-current={current ? 'page' : undefined}
+              aria-current={currentPage}
             >
               {category.field}
             </Link>

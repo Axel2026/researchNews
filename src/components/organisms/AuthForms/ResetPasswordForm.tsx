@@ -3,10 +3,8 @@
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { publicSupabaseEnv } from '@/lib/supabase/env';
-import {
-  ResetPasswordFormView,
-  type ResetPasswordFormStatus,
-} from './ResetPasswordFormView';
+import { ResetPasswordFormView } from './ResetPasswordFormView';
+import type { ResetPasswordFormStatus } from './ResetPasswordFormView.types';
 
 export function ResetPasswordForm() {
   const configured = publicSupabaseEnv() !== null;
@@ -55,12 +53,16 @@ export function ResetPasswordForm() {
         ? 'updated'
         : 'form';
 
+  function markUpdated() {
+    setUpdated(true);
+  }
+
   return (
     <ResetPasswordFormView
       status={status}
       formError={formError}
       onFormError={setFormError}
-      onUpdated={() => setUpdated(true)}
+      onUpdated={markUpdated}
     />
   );
 }

@@ -11,6 +11,7 @@ import {
 } from '@/data/articles';
 import { routing } from '@/i18n/routing';
 import styles from './page.module.css';
+import type { HomeProps } from './page.types';
 
 export const revalidate = 10800;
 
@@ -22,7 +23,7 @@ function formatEditionDate(isoDate: string, locale: string) {
   });
 }
 
-export default async function Home({ params }: PageProps<'/[locale]'>) {
+export default async function Home({ params }: HomeProps) {
   const { locale } = await params;
 
   if (!hasLocale(routing.locales, locale)) {

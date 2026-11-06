@@ -1,25 +1,15 @@
-import type { ReactNode } from 'react';
 import { ArticleImage } from '@/components/atoms/ArticleImage/ArticleImage';
 import { Button } from '@/components/atoms/Button/Button';
 import { CategoryChip } from '@/components/atoms/CategoryChip/CategoryChip';
 import { ArticleListen } from '@/components/molecules/ArticleListen/ArticleListen';
-import { getArticleParagraphs, type ArticleDetail } from '@/data/articles';
-import type { AppLocale } from '@/i18n/routing';
+import { getArticleParagraphs } from '@/data/articles';
 import { formatPaperPublishedAt } from '@/lib/dates';
 import { categoryPath } from '@/lib/seo';
 import { buildSpeechSegments, speechLang } from '@/lib/speech/segments';
 import { ArticleSpeechProvider } from './ArticleSpeechProvider';
 import styles from './NewsArticle.module.css';
 import { SpokenBlock } from './SpokenBlock';
-
-export type NewsArticleCopy = {
-  bodyHeading: string;
-  source: string;
-  published: (date: string) => string;
-  viewOriginal: string;
-  download: string;
-  opensNewTab: string;
-};
+import type { NewsArticleViewProps } from './NewsArticleView.types';
 
 export function NewsArticleView({
   article,
@@ -27,13 +17,7 @@ export function NewsArticleView({
   copy,
   bookmarkAction,
   discussion,
-}: {
-  article: ArticleDetail;
-  locale?: AppLocale;
-  copy: NewsArticleCopy;
-  bookmarkAction?: ReactNode;
-  discussion?: ReactNode;
-}) {
+}: NewsArticleViewProps) {
   const summary = getArticleParagraphs(article, 'mediumPopularization');
   const body = getArticleParagraphs(article, 'fullPopularization');
   const paperDate = article.paperPublishedAt

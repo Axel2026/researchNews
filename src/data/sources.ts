@@ -1,13 +1,7 @@
-import type { AppLocale } from '@/i18n/routing';
+import type { AppLocale } from '@/i18n/routing.types';
 import { apiUrl } from '@/lib/api';
 import { ARTICLES_CACHE_TAG, ARTICLES_REVALIDATE_SECONDS } from './articles';
-
-export type SourceListItem = {
-  id: string;
-  name: string;
-  url: string;
-  summary: string;
-};
+import type { SourceListItem } from './sources.types';
 
 const fetchOptions: RequestInit =
   process.env.NODE_ENV === 'development'

@@ -1,16 +1,14 @@
 import { z } from 'zod';
+import type {
+  PasswordMessages,
+  LoginSchemaMessages,
+  RegisterSchemaMessages,
+  FieldErrorMessageErrors,
+} from './schema.types';
 
 const minPasswordLength = 8;
 
-type PasswordMessages = {
-  passwordShort: string;
-  passwordMismatch: string;
-};
-
-export function loginSchema(messages: {
-  emailInvalid: string;
-  passwordShort: string;
-}) {
+export function loginSchema(messages: LoginSchemaMessages) {
   return z.object({
     email: z.email({ error: messages.emailInvalid }),
     password: z
@@ -20,9 +18,7 @@ export function loginSchema(messages: {
   });
 }
 
-export function registerSchema(
-  messages: PasswordMessages & { emailInvalid: string },
-) {
+export function registerSchema(messages: RegisterSchemaMessages) {
   return z
     .object({
       email: z.email({ error: messages.emailInvalid }),
@@ -61,9 +57,7 @@ export function resetPasswordSchema(messages: PasswordMessages) {
     });
 }
 
-export function fieldErrorMessage(
-  errors: ReadonlyArray<{ message?: string } | undefined>,
-) {
+export function fieldErrorMessage(errors: FieldErrorMessageErrors) {
   for (const error of errors) {
     if (error?.message) {
       return error.message;

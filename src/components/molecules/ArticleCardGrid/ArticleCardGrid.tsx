@@ -1,7 +1,6 @@
 import { Article } from '@/components/molecules/Article/Article';
-import type { ArticleListItem } from '@/data/articles';
-import type { AppLocale } from '@/i18n/routing';
 import styles from './ArticleCardGrid.module.css';
+import type { ArticleCardGridProps } from './ArticleCardGrid.types';
 
 export function ArticleCardGrid({
   articles,
@@ -9,18 +8,11 @@ export function ArticleCardGrid({
   titleAs = 'h3',
   layout = 'wrap',
   showCategoryChip = true,
-}: {
-  articles: ArticleListItem[];
-  locale?: AppLocale;
-  titleAs?: 'h2' | 'h3';
-  layout?: 'wrap' | 'row';
-  showCategoryChip?: boolean;
-}) {
+}: ArticleCardGridProps) {
+  const listClassName = layout === 'row' ? styles.rowGrid : styles.wrapGrid;
+
   return (
-    <ul
-      className={layout === 'row' ? styles.rowGrid : styles.wrapGrid}
-      role="list"
-    >
+    <ul className={listClassName} role="list">
       {articles.map((article) => (
         <li key={article.id}>
           <Article

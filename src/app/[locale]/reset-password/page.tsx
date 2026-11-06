@@ -6,6 +6,7 @@ import { ResetPasswordForm } from '@/components/organisms/AuthForms/ResetPasswor
 import { AuthScreen } from '@/components/templates/AuthScreen/AuthScreen';
 import { routing } from '@/i18n/routing';
 import { authPageMetadata } from '@/lib/seo';
+import type { ResetPasswordPageProps } from './page.types';
 
 export async function generateMetadata({
   params,
@@ -22,7 +23,7 @@ export async function generateMetadata({
 
 export default async function ResetPasswordPage({
   params,
-}: PageProps<'/[locale]/reset-password'>) {
+}: ResetPasswordPageProps) {
   const { locale } = await params;
 
   if (!hasLocale(routing.locales, locale)) {

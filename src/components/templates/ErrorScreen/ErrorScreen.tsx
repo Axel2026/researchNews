@@ -2,18 +2,14 @@ import { Button } from '@/components/atoms/Button/Button';
 import { Header } from '@/components/organisms/Header/Header';
 import { PageShell } from '@/components/templates/PageShell/PageShell';
 import styles from './ErrorScreen.module.css';
+import type { ErrorScreenProps } from './ErrorScreen.types';
 
 export function ErrorScreen({
   code,
   title,
   homeLabel,
   showLanguageSwitcher = true,
-}: {
-  code: string;
-  title: string;
-  homeLabel: string;
-  showLanguageSwitcher?: boolean;
-}) {
+}: ErrorScreenProps) {
   return (
     <PageShell
       header={

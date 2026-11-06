@@ -2,8 +2,8 @@ import type {
   ArticleCategory,
   ArticleDetail,
   ArticleListItem,
-} from '@/data/articles';
-import type { SourceListItem } from '@/data/sources';
+} from '@/data/articles.types';
+import type { SourceListItem } from '@/data/sources.types';
 
 const imageUrl = '/images/news-placeholder.svg';
 

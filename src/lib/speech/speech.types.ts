@@ -12,10 +12,10 @@ export type ArticleSpeechStartOptions = {
   onError: (reason: 'failed' | 'no-voice') => void;
 };
 
-export interface ArticleSpeechEngine {
+export type ArticleSpeechEngine = {
   supported(): boolean;
   start(options: ArticleSpeechStartOptions): void;
   pause(): void;
   resume(): void;
   stop(): void;
-}
+};

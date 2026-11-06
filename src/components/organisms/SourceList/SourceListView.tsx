@@ -1,23 +1,8 @@
 import { Button } from '@/components/atoms/Button/Button';
-import type { SourceListItem } from '@/data/sources';
 import styles from './SourceList.module.css';
+import type { SourceListViewProps } from './SourceListView.types';
 
-export type SourceListCopy = {
-  kicker: string;
-  title: string;
-  dek: string;
-  visit: string;
-  empty: string;
-  opensNewTab: string;
-};
-
-export function SourceListView({
-  sources,
-  copy,
-}: {
-  sources: SourceListItem[];
-  copy: SourceListCopy;
-}) {
+export function SourceListView({ sources, copy }: SourceListViewProps) {
   return (
     <>
       <p className={styles.kicker}>{copy.kicker}</p>

@@ -6,6 +6,7 @@ import { ForgotPasswordForm } from '@/components/organisms/AuthForms/ForgotPassw
 import { AuthScreen } from '@/components/templates/AuthScreen/AuthScreen';
 import { routing } from '@/i18n/routing';
 import { authPageMetadata } from '@/lib/seo';
+import type { ForgotPasswordPageProps } from './page.types';
 
 export async function generateMetadata({
   params,
@@ -22,7 +23,7 @@ export async function generateMetadata({
 
 export default async function ForgotPasswordPage({
   params,
-}: PageProps<'/[locale]/forgot-password'>) {
+}: ForgotPasswordPageProps) {
   const { locale } = await params;
 
   if (!hasLocale(routing.locales, locale)) {

@@ -1,14 +1,7 @@
 import { ArticleCardGrid } from '@/components/molecules/ArticleCardGrid/ArticleCardGrid';
-import type { ArticleListItem } from '@/data/articles';
-import type { AppLocale } from '@/i18n/routing';
+import type { CategoryFeedProps } from './CategoryFeed.types';
 
-export function CategoryFeed({
-  articles,
-  locale = 'en',
-}: {
-  articles: ArticleListItem[];
-  locale?: AppLocale;
-}) {
+export function CategoryFeed({ articles, locale = 'en' }: CategoryFeedProps) {
   return (
     <ArticleCardGrid
       articles={articles}

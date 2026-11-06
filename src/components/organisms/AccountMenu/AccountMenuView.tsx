@@ -5,16 +5,9 @@ import { UserIcon } from '@/components/atoms/UserIcon/UserIcon';
 import { Dropdown } from '@/components/molecules/Dropdown/Dropdown';
 import { Link } from '@/i18n/navigation';
 import styles from './AccountMenu.module.css';
+import type { AccountMenuViewProps } from './AccountMenuView.types';
 
-export type AccountMenuStatus = 'pending' | 'anonymous' | 'authenticated';
-
-export function AccountMenuView({
-  status,
-  onSignOut,
-}: {
-  status: AccountMenuStatus;
-  onSignOut?: () => void;
-}) {
+export function AccountMenuView({ status, onSignOut }: AccountMenuViewProps) {
   const t = useTranslations('Auth');
   const tNav = useTranslations('Nav');
 

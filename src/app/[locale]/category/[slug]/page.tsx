@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { listCategories } from '@/data/articles';
 import { routing } from '@/i18n/routing';
 import { CategoryListing, categoryMetadata } from '../CategoryListing';
+import type { CategoryPageProps } from './page.types';
 
 export const revalidate = 10800;
 
@@ -24,9 +25,7 @@ export async function generateStaticParams() {
   return localeSlugs.flat();
 }
 
-export default async function CategoryPage({
-  params,
-}: PageProps<'/[locale]/category/[slug]'>) {
+export default async function CategoryPage({ params }: CategoryPageProps) {
   const { locale, slug } = await params;
 
   if (!hasLocale(routing.locales, locale)) {

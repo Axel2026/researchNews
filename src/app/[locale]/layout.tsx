@@ -15,6 +15,7 @@ import {
 } from '@/lib/seo';
 import '@/design-system/tokens.css';
 import '../globals.css';
+import type { LocaleLayoutProps } from './layout.types';
 
 export const viewport: Viewport = {
   themeColor: SITE_THEME_COLOR,
@@ -80,7 +81,7 @@ export async function generateMetadata({
 export default async function LocaleLayout({
   children,
   params,
-}: LayoutProps<'/[locale]'>) {
+}: LocaleLayoutProps) {
   const { locale } = await params;
 
   if (!hasLocale(routing.locales, locale)) {

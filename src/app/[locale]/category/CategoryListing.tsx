@@ -11,13 +11,14 @@ import { ArticleListing } from '@/components/templates/ArticleListing/ArticleLis
 import { PageShell } from '@/components/templates/PageShell/PageShell';
 import { getCategoryBySlug, listCategories } from '@/data/articles';
 import { getPathname } from '@/i18n/navigation';
-import { routing, type AppLocale } from '@/i18n/routing';
+import { routing } from '@/i18n/routing';
 import {
   categoryPagePath,
   defaultSocialImage,
   ogLocaleByAppLocale,
   pageAlternates,
 } from '@/lib/seo';
+import type { CategoryListingProps } from './CategoryListing.types';
 
 export async function categoryMetadata(
   locale: string,
@@ -64,11 +65,7 @@ export async function CategoryListing({
   locale,
   slug,
   page,
-}: {
-  locale: AppLocale;
-  slug: string;
-  page: number;
-}) {
+}: CategoryListingProps) {
   const [category, categories] = await Promise.all([
     getCategoryBySlug(slug, locale, page),
     listCategories(locale),
@@ -83,6 +80,16 @@ export async function CategoryListing({
     locale,
     namespace: 'Pagination',
   });
+
+  function pageLabel(pageNumber: number) {
+    return tPagination('page', { page: pageNumber });
+  }
+
+  function pageHref(pageNumber: number) {
+    return categoryPagePath(slug, pageNumber);
+  }
+
+  const pageCount = paginationCount(category.total, category.pageSize);
 
   return (
     <PageShell
@@ -105,12 +112,10 @@ export async function CategoryListing({
             label={tPagination('label')}
             previousLabel={tPagination('previous')}
             nextLabel={tPagination('next')}
-            pageLabel={(pageNumber) =>
-              tPagination('page', { page: pageNumber })
-            }
+            pageLabel={pageLabel}
             page={category.page}
-            pageCount={paginationCount(category.total, category.pageSize)}
-            hrefFor={(pageNumber) => categoryPagePath(slug, pageNumber)}
+            pageCount={pageCount}
+            hrefFor={pageHref}
           />
         }
       />

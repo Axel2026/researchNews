@@ -1,37 +1,13 @@
-import type { ComponentProps, ReactNode } from 'react';
 import { Link } from '@/i18n/navigation';
 import styles from './Button.module.css';
-
-type AppHref = ComponentProps<typeof Link>['href'];
-
-type ButtonVariant = 'primary' | 'secondary';
-
-type CommonProps = {
-  variant?: ButtonVariant;
-  children: ReactNode;
-  className?: string;
-};
-
-type ButtonAsLink = CommonProps & {
-  href: AppHref;
-  newWindowHint?: string;
-};
-
-type ButtonAsButton = CommonProps & {
-  href?: undefined;
-  type?: 'button' | 'submit' | 'reset';
-  disabled?: boolean;
-  onClick?: () => void;
-  'aria-pressed'?: boolean;
-  'aria-busy'?: boolean;
-};
+import type { ButtonProps } from './Button.types';
 
 export function Button({
   variant = 'primary',
   className,
   children,
   ...props
-}: ButtonAsLink | ButtonAsButton) {
+}: ButtonProps) {
   const classNames = [styles.button, styles[variant], className]
     .filter(Boolean)
     .join(' ');

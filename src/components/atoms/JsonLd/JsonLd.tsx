@@ -1,4 +1,6 @@
-export function JsonLd({ data }: { data: Record<string, unknown> }) {
+import type { JsonLdProps } from './JsonLd.types';
+
+export function JsonLd({ data }: JsonLdProps) {
   return (
     <script
       type="application/ld+json"

@@ -7,13 +7,11 @@ import { getPathname, useRouter } from '@/i18n/navigation';
 import { authErrorKey } from '@/lib/auth/errors';
 import { authCallbackUrl, safeNextPath } from '@/lib/auth/redirect';
 import { createClient } from '@/lib/supabase/client';
-import {
-  CredentialsFormView,
-  type CredentialsFormStatus,
-  type CredentialsMode,
-} from './CredentialsFormView';
+import { CredentialsFormView } from './CredentialsFormView';
+import type { CredentialsFormStatus } from './CredentialsFormView.types';
+import type { CredentialsFormProps } from './CredentialsForm.types';
 
-export function CredentialsForm({ mode }: { mode: CredentialsMode }) {
+export function CredentialsForm({ mode }: CredentialsFormProps) {
   const t = useTranslations('Auth');
   const locale = useLocale();
   const router = useRouter();
@@ -71,6 +69,14 @@ export function CredentialsForm({ mode }: { mode: CredentialsMode }) {
     }
   }
 
+  function handleGoogle() {
+    void signInWithGoogle();
+  }
+
+  function showCheckEmail() {
+    setStatus('checkEmail');
+  }
+
   return (
     <CredentialsFormView
       mode={mode}
@@ -79,10 +85,8 @@ export function CredentialsForm({ mode }: { mode: CredentialsMode }) {
       callbackFailed={callbackFailed}
       formError={formError}
       googlePending={googlePending}
-      onGoogle={() => {
-        void signInWithGoogle();
-      }}
-      onCheckEmail={() => setStatus('checkEmail')}
+      onGoogle={handleGoogle}
+      onCheckEmail={showCheckEmail}
       onFormError={setFormError}
     />
   );

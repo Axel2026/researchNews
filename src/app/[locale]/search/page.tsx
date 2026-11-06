@@ -7,13 +7,15 @@ import { SearchScreen } from '@/components/organisms/SearchScreen/SearchScreen';
 import { PageShell } from '@/components/templates/PageShell/PageShell';
 import { listCategories } from '@/data/articles';
 import { getPathname } from '@/i18n/navigation';
-import { routing, type AppLocale } from '@/i18n/routing';
+import { routing } from '@/i18n/routing';
+import type { AppLocale } from '@/i18n/routing.types';
 import {
   defaultSocialImage,
   noIndexRobots,
   ogLocaleByAppLocale,
   pageAlternates,
 } from '@/lib/seo';
+import type { SearchPageProps } from './page.types';
 
 export const dynamic = 'force-dynamic';
 
@@ -62,7 +64,7 @@ export async function generateMetadata({
 export default async function SearchPage({
   params,
   searchParams,
-}: PageProps<'/[locale]/search'>) {
+}: SearchPageProps) {
   const { locale } = await params;
 
   if (!hasLocale(routing.locales, locale)) {
@@ -73,6 +75,16 @@ export default async function SearchPage({
     listCategories(locale),
     searchParams,
   ]);
+  const initialFilters = {
+    field: queryString(query.field),
+    sort:
+      queryString(query.sort) === 'popular'
+        ? ('popular' as const)
+        : ('newest' as const),
+    author: queryString(query.author),
+    from: queryString(query.from),
+    to: queryString(query.to),
+  };
 
   return (
     <PageShell header={<Header current="search" categories={categories} />}>
@@ -80,13 +92,7 @@ export default async function SearchPage({
         locale={locale as AppLocale}
         categories={categories}
         initialQuery={queryString(query.q)}
-        initialFilters={{
-          field: queryString(query.field),
-          sort: queryString(query.sort) === 'popular' ? 'popular' : 'newest',
-          author: queryString(query.author),
-          from: queryString(query.from),
-          to: queryString(query.to),
-        }}
+        initialFilters={initialFilters}
         initialPage={pageNumber(query.page)}
       />
     </PageShell>

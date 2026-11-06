@@ -1,8 +1,7 @@
-import type { ComponentProps, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { Link } from '@/i18n/navigation';
 import styles from './Pagination.module.css';
-
-type AppHref = ComponentProps<typeof Link>['href'];
+import type { PaginationProps } from './Pagination.types';
 
 export function paginationCount(total: number, pageSize: number): number {
   if (pageSize <= 0) {
@@ -54,16 +53,7 @@ export function Pagination({
   pageCount,
   hrefFor,
   onPage,
-}: {
-  label: string;
-  previousLabel: string;
-  nextLabel: string;
-  pageLabel: (page: number) => string;
-  page: number;
-  pageCount: number;
-  hrefFor?: (page: number) => AppHref;
-  onPage?: (page: number) => void;
-}) {
+}: PaginationProps) {
   if (pageCount <= 1) {
     return null;
   }
@@ -97,12 +87,16 @@ export function Pagination({
       );
     }
 
+    function selectPage() {
+      onPage?.(target);
+    }
+
     return (
       <button
         aria-label={ariaLabel}
         className={className}
         type="button"
-        onClick={() => onPage?.(target)}
+        onClick={selectPage}
       >
         {children}
       </button>

@@ -83,24 +83,26 @@ export function TypographyGallery() {
       </section>
       <section>
         <h3 className={styles.sectionTitle}>Letter spacing</h3>
-        {letterSpacings.map((token) => (
-          <div className={styles.row} key={token.variable}>
-            <strong>{token.name}</strong>
-            <p
-              className={styles.fontSample}
-              style={{
-                letterSpacing: `var(${token.variable})`,
-                textTransform: token.name === 'Wide' ? 'uppercase' : undefined,
-              }}
-            >
-              Research
-            </p>
-            <div className={styles.rowMeta}>
-              <code>{token.variable}</code>
-              <code>{token.value}</code>
+        {letterSpacings.map((token) => {
+          const sampleStyle = {
+            letterSpacing: `var(${token.variable})`,
+            textTransform:
+              token.name === 'Wide' ? ('uppercase' as const) : undefined,
+          };
+
+          return (
+            <div className={styles.row} key={token.variable}>
+              <strong>{token.name}</strong>
+              <p className={styles.fontSample} style={sampleStyle}>
+                Research
+              </p>
+              <div className={styles.rowMeta}>
+                <code>{token.variable}</code>
+                <code>{token.value}</code>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </section>
     </div>
   );

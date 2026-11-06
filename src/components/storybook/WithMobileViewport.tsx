@@ -1,10 +1,10 @@
 'use client';
-
-import { useLayoutEffect, useRef, type ReactNode } from 'react';
+import { useLayoutEffect, useRef } from 'react';
+import type { WithMobileViewportProps } from './WithMobileViewport.types';
 
 const mobileQuery = '(max-width: 40rem)';
 
-export function WithMobileViewport({ children }: { children: ReactNode }) {
+export function WithMobileViewport({ children }: WithMobileViewportProps) {
   const originalRef = useRef(window.matchMedia.bind(window));
 
   // Storybook test double must apply before children read matchMedia.

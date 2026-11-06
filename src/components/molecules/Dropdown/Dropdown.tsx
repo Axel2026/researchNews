@@ -1,5 +1,4 @@
 'use client';
-
 import {
   useEffect,
   useId,
@@ -11,10 +10,11 @@ import {
   type FocusEvent,
   type KeyboardEvent,
   type MouseEvent,
-  type ReactNode,
+  type PointerEvent as ReactPointerEvent,
 } from 'react';
 import { Modal } from '@/components/atoms/Modal/Modal';
 import styles from './Dropdown.module.css';
+import type { DropdownProps } from './Dropdown.types';
 
 const mobileQuery = '(max-width: 40rem)';
 
@@ -49,21 +49,6 @@ function panelStyle(
       : { right: window.innerWidth - box.right }),
   };
 }
-
-export type DropdownProps = {
-  label: ReactNode;
-  children: ReactNode;
-  triggerClassName?: string;
-  panelClassName?: string;
-  rootClassName?: string;
-  align?: 'start' | 'end';
-  ariaLabel?: string;
-  icon?: boolean;
-  size?: 'default' | 'compact';
-  mobileAsModal?: boolean;
-  title?: string;
-  closeLabel?: string;
-};
 
 export function Dropdown(props: DropdownProps) {
   const {
@@ -278,6 +263,21 @@ export function Dropdown(props: DropdownProps) {
   ]
     .filter(Boolean)
     .join(' ');
+  const controlsId = useModal ? dialogId : listId;
+  const popupType = useModal ? 'dialog' : true;
+  const listPosition = open ? listStyle : undefined;
+
+  function toggleOpen() {
+    setOpen((value) => !value);
+  }
+
+  function closeAndReturnFocus() {
+    close(true);
+  }
+
+  function keepListOpen(event: ReactPointerEvent<HTMLUListElement>) {
+    event.stopPropagation();
+  }
 
   return (
     <div
@@ -291,10 +291,10 @@ export function Dropdown(props: DropdownProps) {
         className={triggerClass}
         type="button"
         aria-expanded={open}
-        aria-controls={useModal ? dialogId : listId}
-        aria-haspopup={useModal ? 'dialog' : true}
+        aria-controls={controlsId}
+        aria-haspopup={popupType}
         aria-label={ariaLabel}
-        onClick={() => setOpen((value) => !value)}
+        onClick={toggleOpen}
         onKeyDown={onButtonKeyDown}
       >
         {label}
@@ -303,7 +303,7 @@ export function Dropdown(props: DropdownProps) {
         <Modal
           id={dialogId}
           open={open}
-          onClose={() => close(true)}
+          onClose={closeAndReturnFocus}
           title={title}
           closeLabel={closeLabel}
         >
@@ -319,9 +319,9 @@ export function Dropdown(props: DropdownProps) {
           popover="manual"
           role="list"
           aria-labelledby={buttonId}
-          style={open ? listStyle : undefined}
+          style={listPosition}
           onKeyDown={onListKeyDown}
-          onPointerDown={(event) => event.stopPropagation()}
+          onPointerDown={keepListOpen}
           onClick={onListClick}
         >
           {children}

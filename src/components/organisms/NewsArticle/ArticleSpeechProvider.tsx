@@ -1,5 +1,4 @@
 'use client';
-
 import {
   createContext,
   useCallback,
@@ -9,20 +8,13 @@ import {
   useMemo,
   useRef,
   useState,
-  type ReactNode,
 } from 'react';
-import type { ArticleListenStatus } from '@/components/molecules/ArticleListen/ArticleListenView';
-import type { ArticleSpeechEngine, SpeechSegment } from '@/lib/speech/types';
+import type { ArticleListenStatus } from '@/components/molecules/ArticleListen/ArticleListenView.types';
 import { webSpeechEngine } from '@/lib/speech/web-speech-engine';
-
-type ArticleSpeechContextValue = {
-  status: ArticleListenStatus;
-  activeSegmentId: string | null;
-  play: () => void;
-  pause: () => void;
-  resume: () => void;
-  stop: () => void;
-};
+import type {
+  ArticleSpeechContextValue,
+  ArticleSpeechProviderProps,
+} from './ArticleSpeechProvider.types';
 
 const ArticleSpeechContext = createContext<ArticleSpeechContextValue | null>(
   null,
@@ -47,14 +39,7 @@ export function ArticleSpeechProvider({
   rate = 1,
   engine = webSpeechEngine,
   children,
-}: {
-  articleId: string;
-  segments: SpeechSegment[];
-  lang: string;
-  rate?: number;
-  engine?: ArticleSpeechEngine;
-  children: ReactNode;
-}) {
+}: ArticleSpeechProviderProps) {
   const [trackedArticleId, setTrackedArticleId] = useState(articleId);
   const [status, setStatus] = useState<ArticleListenStatus>('idle');
   const [activeSegmentId, setActiveSegmentId] = useState<string | null>(null);

@@ -8,13 +8,10 @@ import {
   useState,
   type CSSProperties,
   type KeyboardEvent,
+  type PointerEvent as ReactPointerEvent,
 } from 'react';
 import styles from './field.module.css';
-
-export type SelectOption = {
-  value: string;
-  label: string;
-};
+import type { SelectProps } from './Select.types';
 
 export function Select({
   label,
@@ -27,18 +24,7 @@ export function Select({
   className,
   disabled,
   id,
-}: {
-  label: string;
-  value: string;
-  options: SelectOption[];
-  onChange: (value: string) => void;
-  error?: string;
-  describedBy?: string;
-  invalid?: boolean;
-  className?: string;
-  disabled?: boolean;
-  id?: string;
-}) {
+}: SelectProps) {
   const generatedId = useId();
   const fieldId = id ?? generatedId;
   const labelId = `${fieldId}-label`;
@@ -234,6 +220,21 @@ export function Select({
   }
 
   const activeId = `${fieldId}-option-${activeIndex}`;
+  const activeDescendant = open ? activeId : undefined;
+  const ariaInvalid = isInvalid || undefined;
+  const ariaDescribedBy = described || undefined;
+  const listPosition = open ? listStyle : undefined;
+
+  function toggleOpen() {
+    if (!open) {
+      setActiveIndex(selectedIndex);
+    }
+    setOpen((current) => !current);
+  }
+
+  function keepListOpen(event: ReactPointerEvent<HTMLUListElement>) {
+    event.stopPropagation();
+  }
 
   return (
     <div className={[styles.field, className].filter(Boolean).join(' ')}>
@@ -249,17 +250,12 @@ export function Select({
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls={listId}
-        aria-activedescendant={open ? activeId : undefined}
-        aria-invalid={isInvalid || undefined}
-        aria-describedby={described || undefined}
+        aria-activedescendant={activeDescendant}
+        aria-invalid={ariaInvalid}
+        aria-describedby={ariaDescribedBy}
         role="combobox"
         aria-autocomplete="none"
-        onClick={() => {
-          if (!open) {
-            setActiveIndex(selectedIndex);
-          }
-          setOpen((current) => !current);
-        }}
+        onClick={toggleOpen}
         onKeyDown={onButtonKeyDown}
       >
         <span className={styles.value}>{selected?.label}</span>
@@ -288,28 +284,34 @@ export function Select({
         popover="manual"
         role="listbox"
         aria-labelledby={labelId}
-        style={open ? listStyle : undefined}
-        onPointerDown={(event) => event.stopPropagation()}
+        style={listPosition}
+        onPointerDown={keepListOpen}
       >
         {options.map((option, index) => {
           const isActive = index === activeIndex;
           const isSelected = option.value === value;
+          const optionClassName = [
+            styles.option,
+            isSelected ? styles.selected : undefined,
+            isActive ? styles.active : undefined,
+          ]
+            .filter(Boolean)
+            .join(' ');
+          const activeState = isActive || undefined;
+
+          function chooseOption() {
+            choose(index);
+          }
 
           return (
             <li
               key={`${option.value}-${index}`}
               id={`${fieldId}-option-${index}`}
               role="option"
-              className={[
-                styles.option,
-                isSelected ? styles.selected : undefined,
-                isActive ? styles.active : undefined,
-              ]
-                .filter(Boolean)
-                .join(' ')}
+              className={optionClassName}
               aria-selected={isSelected}
-              data-active={isActive || undefined}
-              onClick={() => choose(index)}
+              data-active={activeState}
+              onClick={chooseOption}
             >
               {option.label}
             </li>

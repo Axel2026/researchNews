@@ -7,6 +7,7 @@ import { CredentialsForm } from '@/components/organisms/AuthForms/CredentialsFor
 import { AuthScreen } from '@/components/templates/AuthScreen/AuthScreen';
 import { routing } from '@/i18n/routing';
 import { authPageMetadata } from '@/lib/seo';
+import type { RegisterPageProps } from './page.types';
 
 export async function generateMetadata({
   params,
@@ -21,9 +22,7 @@ export async function generateMetadata({
   return authPageMetadata(locale, '/register', t('registerTitle'));
 }
 
-export default async function RegisterPage({
-  params,
-}: PageProps<'/[locale]/register'>) {
+export default async function RegisterPage({ params }: RegisterPageProps) {
   const { locale } = await params;
 
   if (!hasLocale(routing.locales, locale)) {

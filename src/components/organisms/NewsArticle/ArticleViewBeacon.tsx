@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { recordArticleView } from '@/data/articles';
+import type { ArticleViewBeaconProps } from './ArticleViewBeacon.types';
 
 const recorded = new Set<string>();
 
@@ -9,7 +10,7 @@ function viewKey(slug: string): string {
   return `view:${slug}:${new Date().toISOString().slice(0, 10)}`;
 }
 
-export function ArticleViewBeacon({ slug }: { slug: string }) {
+export function ArticleViewBeacon({ slug }: ArticleViewBeaconProps) {
   useEffect(() => {
     const key = viewKey(slug);
 

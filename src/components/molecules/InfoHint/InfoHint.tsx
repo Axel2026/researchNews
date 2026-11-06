@@ -1,5 +1,4 @@
 'use client';
-
 import {
   useEffect,
   useId,
@@ -7,21 +6,16 @@ import {
   useState,
   type FocusEvent,
   type PointerEvent,
-  type ReactNode,
 } from 'react';
 import styles from './InfoHint.module.css';
+import type { InfoHintProps } from './InfoHint.types';
 
 export function InfoHint({
   children,
   hint,
   label,
   description,
-}: {
-  children: ReactNode;
-  hint: ReactNode;
-  label: string;
-  description?: string;
-}) {
+}: InfoHintProps) {
   const tooltipId = useId();
   const rootRef = useRef<HTMLSpanElement>(null);
   const hideTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
@@ -126,12 +120,12 @@ export function InfoHint({
 
   const described =
     description ?? (typeof hint === 'string' ? hint : undefined);
+  const rootClassName = open ? `${styles.root} ${styles.open}` : styles.root;
+  const describedBy = described ? tooltipId : undefined;
+  const hideHintFromAssistiveTech = typeof hint === 'string' ? true : undefined;
 
   return (
-    <span
-      ref={rootRef}
-      className={open ? `${styles.root} ${styles.open}` : styles.root}
-    >
+    <span ref={rootRef} className={rootClassName}>
       {children}
       <span
         className={styles.info}
@@ -142,7 +136,7 @@ export function InfoHint({
           type="button"
           className={styles.trigger}
           aria-label={label}
-          aria-describedby={described ? tooltipId : undefined}
+          aria-describedby={describedBy}
           aria-expanded={open}
           onPointerDown={onInfoPointerDown}
           onClick={onInfoClick}
@@ -182,7 +176,7 @@ export function InfoHint({
         {open ? (
           <span
             className={styles.tooltip}
-            aria-hidden={typeof hint === 'string' ? true : undefined}
+            aria-hidden={hideHintFromAssistiveTech}
           >
             {hint}
           </span>

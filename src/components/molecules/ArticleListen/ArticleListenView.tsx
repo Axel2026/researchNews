@@ -1,23 +1,14 @@
 import { InfoHint } from '@/components/molecules/InfoHint/InfoHint';
 import styles from './ArticleListen.module.css';
+import type {
+  ArticleListenStatus,
+  ArticleListenCopy,
+  PlaybackIconProps,
+  ArticleListenViewProps,
+} from './ArticleListenView.types';
 
 const SPEECH_VOICE_HELP_URL =
   'https://support.microsoft.com/en-us/windows/hardware/input-devices/manage-the-language-and-keyboard-input-layout-settings-in-windows';
-
-export type ArticleListenStatus =
-  'idle' | 'playing' | 'paused' | 'unavailable' | 'noVoice';
-
-export type ArticleListenCopy = {
-  listen: string;
-  pause: string;
-  resume: string;
-  unavailable: string;
-  noVoice: string;
-  noVoiceHint: string;
-  noVoiceHintLink: string;
-  noVoiceHintLabel: string;
-  opensNewTab: string;
-};
 
 function primaryLabel(status: ArticleListenStatus, copy: ArticleListenCopy) {
   if (status === 'playing') {
@@ -31,7 +22,7 @@ function primaryLabel(status: ArticleListenStatus, copy: ArticleListenCopy) {
   return copy.listen;
 }
 
-function PlaybackIcon({ playing }: { playing: boolean }) {
+function PlaybackIcon({ playing }: PlaybackIconProps) {
   if (playing) {
     return (
       <svg
@@ -72,13 +63,7 @@ export function ArticleListenView({
   onPlay,
   onPause,
   onResume,
-}: {
-  status: ArticleListenStatus;
-  copy: ArticleListenCopy;
-  onPlay?: () => void;
-  onPause?: () => void;
-  onResume?: () => void;
-}) {
+}: ArticleListenViewProps) {
   const unavailable = status === 'unavailable';
   const note =
     status === 'unavailable'
@@ -101,6 +86,8 @@ export function ArticleListenView({
     onPlay?.();
   };
 
+  const pressed = unavailable ? undefined : status === 'playing';
+
   return (
     <div className={styles.root}>
       <button
@@ -108,7 +95,7 @@ export function ArticleListenView({
         className={styles.control}
         disabled={unavailable}
         aria-label={primaryLabel(status, copy)}
-        aria-pressed={unavailable ? undefined : status === 'playing'}
+        aria-pressed={pressed}
         onClick={onPrimary}
       >
         <PlaybackIcon playing={status === 'playing'} />

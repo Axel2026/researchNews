@@ -2,24 +2,18 @@ import { ArticleImage } from '@/components/atoms/ArticleImage/ArticleImage';
 import { CategoryChip } from '@/components/atoms/CategoryChip/CategoryChip';
 import { ArticleAuthors } from '@/components/molecules/ArticleAuthors/ArticleAuthors';
 import { ArticleComments } from '@/components/molecules/ArticleComments/ArticleComments';
-import type { ArticleListItem } from '@/data/articles';
 import { mediaMinLg } from '@/design-system/tokens';
 import { Link } from '@/i18n/navigation';
-import type { AppLocale } from '@/i18n/routing';
 import { formatPaperPublishedAt } from '@/lib/dates';
 import styles from './Article.module.css';
+import type { ArticleProps } from './Article.types';
 
 export function Article({
   article,
   locale = 'en',
   titleAs: Title = 'h3',
   showCategoryChip = true,
-}: {
-  article: ArticleListItem;
-  locale?: AppLocale;
-  titleAs?: 'h2' | 'h3';
-  showCategoryChip?: boolean;
-}) {
+}: ArticleProps) {
   return (
     <article className={styles.card}>
       <div className={styles.media}>

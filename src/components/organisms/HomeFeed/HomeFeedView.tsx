@@ -2,10 +2,10 @@ import styles from './HomeFeed.module.css';
 import { ArticleImage } from '@/components/atoms/ArticleImage/ArticleImage';
 import { CategoryChip } from '@/components/atoms/CategoryChip/CategoryChip';
 import { ArticleCardGrid } from '@/components/molecules/ArticleCardGrid/ArticleCardGrid';
-import type { ArticleCategory, ArticleListItem } from '@/data/articles';
+import type { ArticleListItem } from '@/data/articles.types';
 import { mediaMinLg } from '@/design-system/tokens';
 import { Link } from '@/i18n/navigation';
-import type { AppLocale } from '@/i18n/routing';
+import type { HomeFeedViewProps } from './HomeFeedView.types';
 
 const HOME_ROW_SIZE = 4;
 
@@ -29,28 +29,12 @@ function popularFirst(articles: ArticleListItem[]): ArticleListItem[] {
   });
 }
 
-export type HomeFeedCopy = {
-  kicker: string;
-  readStory: string;
-  popularTitle: string;
-  popularDek: string;
-  latestTitle: string;
-  latestDek: string;
-  more: string;
-  moreIn: (field: string) => string;
-};
-
 export function HomeFeedView({
   articles,
   categories,
   locale = 'en',
   copy,
-}: {
-  articles: ArticleListItem[];
-  categories: ArticleCategory[];
-  locale?: AppLocale;
-  copy: HomeFeedCopy;
-}) {
+}: HomeFeedViewProps) {
   const [featured, ...rest] = articles;
   const popular = popularFirst(rest).slice(0, HOME_ROW_SIZE);
   const latest = newestFirst(rest).slice(0, HOME_ROW_SIZE);

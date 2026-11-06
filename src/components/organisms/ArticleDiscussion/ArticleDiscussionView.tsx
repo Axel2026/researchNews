@@ -1,42 +1,16 @@
 'use client';
 
-import { useId, useState, type FormEvent } from 'react';
+import { useId, useState, type ChangeEvent, type FormEvent } from 'react';
 import { Button } from '@/components/atoms/Button/Button';
 import { InfoHint } from '@/components/molecules/InfoHint/InfoHint';
-import type { CommentReply, CommentThread } from '@/data/comments';
 import { COMMENT_MAX_LENGTH, isWithinCommentEditWindow } from '@/data/comments';
 import { loginHref } from '@/lib/auth/redirect';
 import styles from './ArticleDiscussion.module.css';
-
-export type DiscussionLoadStatus = 'pending' | 'ready' | 'error';
-export type DiscussionAuthStatus = 'pending' | 'anonymous' | 'authenticated';
-
-export type ArticleDiscussionCopy = {
-  title: string;
-  empty: string;
-  loading: string;
-  error: string;
-  signIn: string;
-  placeholder: string;
-  replyPlaceholder: string;
-  submit: string;
-  replySubmit: string;
-  reply: string;
-  edit: string;
-  save: string;
-  cancel: string;
-  delete: string;
-  deleted: string;
-  edited: string;
-  truncated: string;
-  required: string;
-  tooLong: string;
-  composerLabel: string;
-  replyLabel: string;
-  editLabel: string;
-  editHint: string;
-  editHintLabel: string;
-};
+import type {
+  ArticleDiscussionViewProps,
+  CommentEntryProps,
+  CommentComposerProps,
+} from './ArticleDiscussionView.types';
 
 export function ArticleDiscussionView({
   status,
@@ -56,27 +30,13 @@ export function ArticleDiscussionView({
   onReply,
   onEdit,
   onDelete,
-}: {
-  status: DiscussionLoadStatus;
-  authStatus: DiscussionAuthStatus;
-  comments: CommentThread[];
-  truncated?: boolean;
-  currentUserId?: string | null;
-  nextPath: string;
-  replyToId?: string | null;
-  editingId?: string | null;
-  busy?: boolean;
-  formError?: string | null;
-  composerKey?: number;
-  copy: ArticleDiscussionCopy;
-  formatDate: (iso: string) => string;
-  onSubmit?: (body: string, parentId?: string) => void;
-  onReply?: (id: string | null) => void;
-  onEdit?: (id: string | null) => void;
-  onDelete?: (id: string) => void;
-}) {
+}: ArticleDiscussionViewProps) {
   const showComposer =
     authStatus === 'authenticated' && !replyToId && !editingId;
+
+  function submitTopLevel(body: string) {
+    onSubmit?.(body);
+  }
 
   return (
     <section className={styles.section} aria-labelledby="discussion-heading">
@@ -151,7 +111,7 @@ export function ArticleDiscussionView({
           error={formError}
           busy={busy}
           copy={copy}
-          onSubmit={(body) => onSubmit?.(body)}
+          onSubmit={submitTopLevel}
         />
       ) : null}
     </section>
@@ -172,21 +132,7 @@ function CommentEntry({
   onReply,
   onEdit,
   onDelete,
-}: {
-  comment: CommentThread | CommentReply;
-  currentUserId: string | null;
-  authStatus: DiscussionAuthStatus;
-  replyToId: string | null;
-  editingId: string | null;
-  busy: boolean;
-  formError: string | null;
-  copy: ArticleDiscussionCopy;
-  formatDate: (iso: string) => string;
-  onSubmit?: (body: string, parentId?: string) => void;
-  onReply?: (id: string | null) => void;
-  onEdit?: (id: string | null) => void;
-  onDelete?: (id: string) => void;
-}) {
+}: CommentEntryProps) {
   const replies = 'replies' in comment ? comment.replies : undefined;
   const isTopLevel = replies !== undefined;
   const own = currentUserId === comment.author.id;
@@ -199,6 +145,35 @@ function CommentEntry({
     !editing;
   const canDelete = own && !comment.deleted && !editing;
   const canEdit = canDelete && isWithinCommentEditWindow(comment.createdAt);
+  const bodyClassName = comment.deleted ? styles.deleted : styles.body;
+
+  function submitEdit(body: string) {
+    onSubmit?.(body);
+  }
+
+  function cancelEdit() {
+    onEdit?.(null);
+  }
+
+  function toggleReply() {
+    onReply?.(replyToId === comment.id ? null : comment.id);
+  }
+
+  function startEdit() {
+    onEdit?.(comment.id);
+  }
+
+  function requestDelete() {
+    onDelete?.(comment.id);
+  }
+
+  function submitReply(body: string) {
+    onSubmit?.(body, comment.id);
+  }
+
+  function cancelReply() {
+    onReply?.(null);
+  }
 
   return (
     <>
@@ -220,11 +195,11 @@ function CommentEntry({
           error={formError}
           busy={busy}
           copy={copy}
-          onSubmit={(body) => onSubmit?.(body)}
-          onCancel={() => onEdit?.(null)}
+          onSubmit={submitEdit}
+          onCancel={cancelEdit}
         />
       ) : (
-        <p className={comment.deleted ? styles.deleted : styles.body}>
+        <p className={bodyClassName}>
           {comment.deleted ? copy.deleted : comment.body}
         </p>
       )}
@@ -236,9 +211,7 @@ function CommentEntry({
               type="button"
               className={styles.action}
               disabled={busy}
-              onClick={() =>
-                onReply?.(replyToId === comment.id ? null : comment.id)
-              }
+              onClick={toggleReply}
             >
               {replyToId === comment.id ? copy.cancel : copy.reply}
             </button>
@@ -249,7 +222,7 @@ function CommentEntry({
                 type="button"
                 className={styles.action}
                 disabled={busy}
-                onClick={() => onEdit?.(comment.id)}
+                onClick={startEdit}
               >
                 {copy.edit}
               </button>
@@ -260,7 +233,7 @@ function CommentEntry({
               type="button"
               className={styles.action}
               disabled={busy}
-              onClick={() => onDelete?.(comment.id)}
+              onClick={requestDelete}
             >
               {copy.delete}
             </button>
@@ -277,8 +250,8 @@ function CommentEntry({
           error={formError}
           busy={busy}
           copy={copy}
-          onSubmit={(body) => onSubmit?.(body, comment.id)}
-          onCancel={() => onReply?.(null)}
+          onSubmit={submitReply}
+          onCancel={cancelReply}
         />
       ) : null}
 
@@ -320,23 +293,14 @@ function CommentComposer({
   copy,
   onSubmit,
   onCancel,
-}: {
-  initialBody?: string;
-  label: string;
-  placeholder: string;
-  submitLabel: string;
-  cancelLabel?: string;
-  error: string | null;
-  busy: boolean;
-  copy: Pick<ArticleDiscussionCopy, 'required' | 'tooLong'>;
-  onSubmit: (body: string) => void;
-  onCancel?: () => void;
-}) {
+}: CommentComposerProps) {
   const id = useId();
   const errorId = `${id}-error`;
   const [body, setBody] = useState(initialBody);
   const [localError, setLocalError] = useState<string | null>(null);
   const shownError = localError ?? error;
+  const errorDescribedBy = shownError ? errorId : undefined;
+  const submitBusy = busy || undefined;
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -356,6 +320,11 @@ function CommentComposer({
     onSubmit(next);
   }
 
+  function changeBody(event: ChangeEvent<HTMLTextAreaElement>) {
+    setBody(event.target.value);
+    setLocalError(null);
+  }
+
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.field}>
@@ -372,11 +341,8 @@ function CommentComposer({
           rows={4}
           aria-invalid={Boolean(shownError)}
           aria-required="true"
-          aria-describedby={shownError ? errorId : undefined}
-          onChange={(event) => {
-            setBody(event.target.value);
-            setLocalError(null);
-          }}
+          aria-describedby={errorDescribedBy}
+          onChange={changeBody}
         />
         {shownError ? (
           <span id={errorId} className={styles.formError}>
@@ -385,7 +351,7 @@ function CommentComposer({
         ) : null}
       </div>
       <div className={styles.formActions}>
-        <Button type="submit" disabled={busy} aria-busy={busy || undefined}>
+        <Button type="submit" disabled={busy} aria-busy={submitBusy}>
           {submitLabel}
         </Button>
         {onCancel ? (

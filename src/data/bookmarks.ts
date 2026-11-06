@@ -1,16 +1,6 @@
-import type { ArticleListItem } from './articles';
 import { apiUrl } from '@/lib/api';
-import type { AppLocale } from '@/i18n/routing';
-
-export type BookmarkList = {
-  slugs: string[];
-  articles: ArticleListItem[];
-};
-
-export type BookmarkUpdate = {
-  slugs: string[];
-  bookmarked: boolean;
-};
+import type { AppLocale } from '@/i18n/routing.types';
+import type { BookmarkList, BookmarkUpdate } from './bookmarks.types';
 
 function bookmarksUrl(locale: AppLocale): URL {
   const url = new URL('/me/bookmarks', apiUrl());

@@ -7,6 +7,7 @@ import { CredentialsForm } from '@/components/organisms/AuthForms/CredentialsFor
 import { AuthScreen } from '@/components/templates/AuthScreen/AuthScreen';
 import { routing } from '@/i18n/routing';
 import { authPageMetadata } from '@/lib/seo';
+import type { LoginPageProps } from './page.types';
 
 export async function generateMetadata({
   params,
@@ -21,9 +22,7 @@ export async function generateMetadata({
   return authPageMetadata(locale, '/login', t('loginTitle'));
 }
 
-export default async function LoginPage({
-  params,
-}: PageProps<'/[locale]/login'>) {
+export default async function LoginPage({ params }: LoginPageProps) {
   const { locale } = await params;
 
   if (!hasLocale(routing.locales, locale)) {

@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import { useRouter } from '@/i18n/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { publicSupabaseEnv } from '@/lib/supabase/env';
-import { AccountMenuView, type AccountMenuStatus } from './AccountMenuView';
+import { AccountMenuView } from './AccountMenuView';
+import type { AccountMenuStatus } from './AccountMenuView.types';
 
 export function AccountMenu() {
   const router = useRouter();
@@ -48,20 +49,19 @@ export function AccountMenu() {
     };
   }, [configured]);
 
-  return (
-    <AccountMenuView
-      status={status}
-      onSignOut={() => {
-        void (async () => {
-          try {
-            const supabase = createClient();
-            await supabase.auth.signOut();
-            router.refresh();
-          } catch {
-            setStatus('anonymous');
-          }
-        })();
-      }}
-    />
-  );
+  async function signOut() {
+    try {
+      const supabase = createClient();
+      await supabase.auth.signOut();
+      router.refresh();
+    } catch {
+      setStatus('anonymous');
+    }
+  }
+
+  function handleSignOut() {
+    void signOut();
+  }
+
+  return <AccountMenuView status={status} onSignOut={handleSignOut} />;
 }

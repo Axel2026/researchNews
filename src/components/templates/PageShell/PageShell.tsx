@@ -1,25 +1,18 @@
-import type { ReactNode } from 'react';
 import styles from './PageShell.module.css';
-
-export type PageShellVariant = 'feed' | 'article' | 'auth' | 'error';
+import type { PageShellProps } from './PageShell.types';
 
 export function PageShell({
   header,
   children,
   variant = 'feed',
-}: {
-  header?: ReactNode;
-  children?: ReactNode;
-  variant?: PageShellVariant;
-}) {
+}: PageShellProps) {
   const plainLinks = variant === 'feed' || variant === 'article';
+  const pageClassName = plainLinks
+    ? `${styles.page} ${styles.plainLinks}`
+    : styles.page;
 
   return (
-    <div
-      className={
-        plainLinks ? `${styles.page} ${styles.plainLinks}` : styles.page
-      }
-    >
+    <div className={pageClassName}>
       {header}
       {children != null ? (
         <main

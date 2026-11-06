@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import type { ArticleImageProps } from './ArticleImage.types';
 
 function isSvgSrc(src: string) {
   return /\.svg($|\?)/i.test(src);
@@ -9,12 +10,7 @@ export function ArticleImage({
   alt = '',
   sizes,
   priority = false,
-}: {
-  src: string;
-  alt?: string;
-  sizes: string;
-  priority?: boolean;
-}) {
+}: ArticleImageProps) {
   if (isSvgSrc(src)) {
     return (
       // eslint-disable-next-line @next/next/no-img-element -- next/image does not optimize SVG

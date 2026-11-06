@@ -4,6 +4,7 @@ import { redirect } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
 import { categoryPath } from '@/lib/seo';
 import { CategoryListing, categoryMetadata } from '../../../CategoryListing';
+import type { CategoryNumberedPageProps } from './page.types';
 
 export const revalidate = 10800;
 export const dynamicParams = true;
@@ -37,7 +38,7 @@ export async function generateMetadata({
 
 export default async function CategoryNumberedPage({
   params,
-}: PageProps<'/[locale]/category/[slug]/page/[page]'>) {
+}: CategoryNumberedPageProps) {
   const { locale, slug, page } = await params;
 
   if (!hasLocale(routing.locales, locale)) {

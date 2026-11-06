@@ -1,14 +1,9 @@
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import styles from './CategoryChip.module.css';
+import type { CategoryChipProps } from './CategoryChip.types';
 
-export function CategoryChip({
-  field,
-  href,
-}: {
-  field: string;
-  href?: string;
-}) {
+export function CategoryChip({ field, href }: CategoryChipProps) {
   const t = useTranslations('Category');
 
   if (href) {

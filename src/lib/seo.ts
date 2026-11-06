@@ -1,11 +1,10 @@
-import type { ArticleDetail } from '@/data/articles';
 import type { Metadata, MetadataRoute } from 'next';
 import { getPathname } from '@/i18n/navigation';
-import { routing, type AppLocale } from '@/i18n/routing';
+import { routing } from '@/i18n/routing';
+import type { AppLocale } from '@/i18n/routing.types';
+import type { PathHref, ArticleJsonLdValue } from './seo.types';
 
 export const SITE_THEME_COLOR = '#f6f1e8';
-
-type PathHref = Parameters<typeof getPathname>[0]['href'];
 
 export const ogLocaleByAppLocale: Record<AppLocale, string> = {
   en: 'en_US',
@@ -145,11 +144,7 @@ export function articleJsonLd({
   article,
   locale,
   siteName,
-}: {
-  article: ArticleDetail;
-  locale: AppLocale;
-  siteName: string;
-}): Record<string, unknown> {
+}: ArticleJsonLdValue): Record<string, unknown> {
   const href = articlePath(article.slug);
   const url = absoluteUrl(locale, href);
   const origin = getSiteUrl();

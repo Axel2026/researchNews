@@ -1,29 +1,10 @@
-import type {
-  ArticleSpeechEngine,
-  ArticleSpeechStartOptions,
-  SpeechSegment,
-} from './types';
+import type { ArticleSpeechEngine, SpeechSegment } from './speech.types';
+import type { SpeechChunk, SpeechSession } from './web-speech-engine.types';
 
 const VOICE_WAIT_MS = 1000;
 const SPEAK_DELAY_MS = 50;
 const NUDGE_MS = 10000;
 const MAX_CHUNK_LENGTH = 160;
-
-type SpeechChunk = {
-  segmentId: string;
-  text: string;
-  announce: boolean;
-};
-
-type SpeechSession = {
-  options: ArticleSpeechStartOptions;
-  queue: SpeechChunk[];
-  voice: SpeechSynthesisVoice | undefined;
-  paused: boolean;
-  ready: boolean;
-  timer: number | null;
-  cancelVoiceWait: (() => void) | null;
-};
 
 function defaultSynth(): SpeechSynthesis | null {
   if (typeof window === 'undefined' || !window.speechSynthesis) {

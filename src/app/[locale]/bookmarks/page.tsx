@@ -16,6 +16,7 @@ import {
   pageAlternates,
 } from '@/lib/seo';
 import { getAccessToken } from '@/lib/supabase/access-token';
+import type { BookmarksPageProps } from './page.types';
 
 export const dynamic = 'force-dynamic';
 
@@ -48,9 +49,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function BookmarksPage({
-  params,
-}: PageProps<'/[locale]/bookmarks'>) {
+export default async function BookmarksPage({ params }: BookmarksPageProps) {
   const { locale } = await params;
 
   if (!hasLocale(routing.locales, locale)) {

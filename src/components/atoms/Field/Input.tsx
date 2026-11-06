@@ -1,5 +1,6 @@
-import { useId, type InputHTMLAttributes, type ReactNode } from 'react';
+import { useId } from 'react';
 import styles from './field.module.css';
+import type { InputProps } from './Input.types';
 
 export function Input({
   label,
@@ -11,16 +12,7 @@ export function Input({
   id,
   required,
   ...inputProps
-}: {
-  label: string;
-  error?: string;
-  action?: ReactNode;
-  describedBy?: string;
-  invalid?: boolean;
-  className?: string;
-} & Omit<InputHTMLAttributes<HTMLInputElement>, 'className' | 'id'> & {
-    id?: string;
-  }) {
+}: InputProps) {
   const generatedId = useId();
   const inputId = id ?? generatedId;
   const errorId = `${inputId}-error`;
@@ -35,6 +27,9 @@ export function Input({
   ]
     .filter(Boolean)
     .join(' ');
+  const ariaRequired = required || undefined;
+  const ariaInvalid = isInvalid || undefined;
+  const ariaDescribedBy = described || undefined;
 
   return (
     <div className={[styles.field, className].filter(Boolean).join(' ')}>
@@ -48,9 +43,9 @@ export function Input({
             id={inputId}
             className={controlClass}
             required={required}
-            aria-required={required || undefined}
-            aria-invalid={isInvalid || undefined}
-            aria-describedby={described || undefined}
+            aria-required={ariaRequired}
+            aria-invalid={ariaInvalid}
+            aria-describedby={ariaDescribedBy}
           />
           {action}
         </div>
@@ -60,9 +55,9 @@ export function Input({
           id={inputId}
           className={controlClass}
           required={required}
-          aria-required={required || undefined}
-          aria-invalid={isInvalid || undefined}
-          aria-describedby={described || undefined}
+          aria-required={ariaRequired}
+          aria-invalid={ariaInvalid}
+          aria-describedby={ariaDescribedBy}
         />
       )}
       {showError ? (

@@ -10,11 +10,12 @@ import {
 } from 'react';
 import { useTranslations } from 'next-intl';
 import styles from './ArticleAuthors.module.css';
+import type { ArticleAuthorsProps } from './ArticleAuthors.types';
 
 const SHOW_DELAY_MS = 400;
 const HIDE_DELAY_MS = 150;
 
-export function ArticleAuthors({ authors }: { authors: string[] }) {
+export function ArticleAuthors({ authors }: ArticleAuthorsProps) {
   const t = useTranslations('News');
   const listId = useId();
   const rootRef = useRef<HTMLSpanElement>(null);
@@ -167,10 +168,13 @@ export function ArticleAuthors({ authors }: { authors: string[] }) {
     return null;
   }
 
+  const rootClassName = open ? `${styles.root} ${styles.open}` : styles.root;
+  const panelClassName = open ? styles.panel : styles.srOnly;
+
   return (
     <span
       ref={rootRef}
-      className={open ? `${styles.root} ${styles.open}` : styles.root}
+      className={rootClassName}
       onPointerEnter={onPointerEnter}
       onPointerLeave={onPointerLeave}
     >
@@ -224,7 +228,7 @@ export function ArticleAuthors({ authors }: { authors: string[] }) {
           />
         </svg>
       </button>
-      <span id={listId} className={open ? styles.panel : styles.srOnly}>
+      <span id={listId} className={panelClassName}>
         <ul className={styles.names}>
           {authors.map((name, index) => (
             <li key={`${name}-${index}`}>{name}</li>

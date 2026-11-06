@@ -8,20 +8,21 @@ import {
   deleteComment,
   listComments,
   updateComment,
-  type CommentThread,
 } from '@/data/comments';
+import type { CommentThread } from '@/data/comments.types';
 import { usePathname } from '@/i18n/navigation';
 import { ConfirmModal } from '@/components/molecules/ConfirmModal/ConfirmModal';
 import { formatCommentPostedAt } from '@/lib/dates';
 import { createClient } from '@/lib/supabase/client';
 import { publicSupabaseEnv } from '@/lib/supabase/env';
-import {
-  ArticleDiscussionView,
-  type DiscussionAuthStatus,
-  type DiscussionLoadStatus,
-} from './ArticleDiscussionView';
+import { ArticleDiscussionView } from './ArticleDiscussionView';
+import type {
+  DiscussionAuthStatus,
+  DiscussionLoadStatus,
+} from './ArticleDiscussionView.types';
+import type { ArticleDiscussionProps } from './ArticleDiscussion.types';
 
-export function ArticleDiscussion({ slug }: { slug: string }) {
+export function ArticleDiscussion({ slug }: ArticleDiscussionProps) {
   const t = useTranslations();
   const locale = useLocale();
   const pathname = usePathname();
@@ -250,6 +251,25 @@ export function ArticleDiscussion({ slug }: { slug: string }) {
     }
   }
 
+  function formatDate(iso: string) {
+    return formatCommentPostedAt(iso, locale);
+  }
+
+  function handleSubmit(body: string, parentId?: string) {
+    void submitComment(body, parentId);
+  }
+
+  const deleteError = pendingDeleteId ? formError : null;
+
+  function closeDelete() {
+    setPendingDeleteId(null);
+    setFormError(null);
+  }
+
+  function handleConfirmDelete() {
+    void confirmDelete();
+  }
+
   return (
     <>
       <ArticleDiscussionView
@@ -265,13 +285,11 @@ export function ArticleDiscussion({ slug }: { slug: string }) {
         formError={formError}
         composerKey={composerKey}
         copy={copy}
-        formatDate={(iso) => formatCommentPostedAt(iso, locale)}
+        formatDate={formatDate}
         onReply={startReply}
         onEdit={startEdit}
         onDelete={requestDelete}
-        onSubmit={(body, parentId) => {
-          void submitComment(body, parentId);
-        }}
+        onSubmit={handleSubmit}
       />
       <ConfirmModal
         open={pendingDeleteId !== null}
@@ -280,14 +298,9 @@ export function ArticleDiscussion({ slug }: { slug: string }) {
         cancelLabel={t('Discussion.cancel')}
         confirmLabel={t('Discussion.delete')}
         busy={busy}
-        error={pendingDeleteId ? formError : null}
-        onClose={() => {
-          setPendingDeleteId(null);
-          setFormError(null);
-        }}
-        onConfirm={() => {
-          void confirmDelete();
-        }}
+        error={deleteError}
+        onClose={closeDelete}
+        onConfirm={handleConfirmDelete}
       >
         {t('Discussion.deleteConfirm')}
       </ConfirmModal>

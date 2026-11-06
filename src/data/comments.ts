@@ -1,4 +1,9 @@
 import { apiUrl } from '@/lib/api';
+import type {
+  CommentReply,
+  CommentThread,
+  CommentsList,
+} from './comments.types';
 
 export const COMMENT_MAX_LENGTH = 2000;
 export const COMMENT_EDIT_WINDOW_MS = 60 * 60 * 1000;
@@ -10,29 +15,6 @@ export function isWithinCommentEditWindow(
   const created = Date.parse(createdAt);
   return Number.isFinite(created) && now - created < COMMENT_EDIT_WINDOW_MS;
 }
-
-export type CommentAuthor = {
-  id: string;
-  displayName: string;
-};
-
-export type CommentReply = {
-  id: string;
-  body: string;
-  createdAt: string;
-  updatedAt: string;
-  deleted: boolean;
-  author: CommentAuthor;
-};
-
-export type CommentThread = CommentReply & {
-  replies: CommentReply[];
-};
-
-export type CommentsList = {
-  comments: CommentThread[];
-  truncated: boolean;
-};
 
 export class CommentsApiError extends Error {
   constructor(

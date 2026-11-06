@@ -1,8 +1,6 @@
-import type { ReactNode } from 'react';
 import { CategoryFeed } from '@/components/organisms/CategoryFeed/CategoryFeed';
-import type { ArticleListItem } from '@/data/articles';
-import type { AppLocale } from '@/i18n/routing';
 import styles from './ArticleListing.module.css';
+import type { ArticleListingProps } from './ArticleListing.types';
 
 export function ArticleListing({
   kicker,
@@ -15,18 +13,7 @@ export function ArticleListing({
   toolbar,
   status,
   pagination,
-}: {
-  kicker: string;
-  title: string;
-  headingId: string;
-  dek?: string;
-  empty?: string;
-  articles: ArticleListItem[];
-  locale?: AppLocale;
-  toolbar?: ReactNode;
-  status?: ReactNode;
-  pagination?: ReactNode;
-}) {
+}: ArticleListingProps) {
   const showFeed = articles.length > 0 || empty == null;
 
   return (

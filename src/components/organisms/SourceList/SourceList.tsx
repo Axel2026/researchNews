@@ -1,15 +1,8 @@
 import { getTranslations } from 'next-intl/server';
-import type { SourceListItem } from '@/data/sources';
-import type { AppLocale } from '@/i18n/routing';
 import { SourceListView } from './SourceListView';
+import type { SourceListProps } from './SourceList.types';
 
-export async function SourceList({
-  sources,
-  locale,
-}: {
-  sources: SourceListItem[];
-  locale: AppLocale;
-}) {
+export async function SourceList({ sources, locale }: SourceListProps) {
   const t = await getTranslations({ locale });
 
   return (

@@ -14,6 +14,7 @@ import {
   pageAlternates,
   socialImages,
 } from '@/lib/seo';
+import type { ArticlePageProps } from './page.types';
 
 export const revalidate = 10800;
 
@@ -71,9 +72,7 @@ export async function generateStaticParams() {
   );
 }
 
-export default async function ArticlePage({
-  params,
-}: PageProps<'/[locale]/article/[slug]'>) {
+export default async function ArticlePage({ params }: ArticlePageProps) {
   const { locale, slug } = await params;
 
   if (!hasLocale(routing.locales, locale)) {

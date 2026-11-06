@@ -14,6 +14,7 @@ import {
   ogLocaleByAppLocale,
   pageAlternates,
 } from '@/lib/seo';
+import type { SourcesPageProps } from './page.types';
 
 export const revalidate = 10800;
 
@@ -52,9 +53,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function SourcesPage({
-  params,
-}: PageProps<'/[locale]/sources'>) {
+export default async function SourcesPage({ params }: SourcesPageProps) {
   const { locale } = await params;
 
   if (!hasLocale(routing.locales, locale)) {

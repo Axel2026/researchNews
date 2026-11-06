@@ -1,28 +1,31 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEvent,
+  type FormEvent,
+} from 'react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/atoms/Button/Button';
 import { Input } from '@/components/atoms/Field/Input';
 import { Loader } from '@/components/atoms/Loader/Loader';
-import {
-  ArticleFilters,
-  type ArticleFilterValues,
-} from '@/components/molecules/ArticleFilters/ArticleFilters';
+import { ArticleFilters } from '@/components/molecules/ArticleFilters/ArticleFilters';
+import type { ArticleFilterValues } from '@/components/molecules/ArticleFilters/ArticleFilters.types';
 import {
   Pagination,
   paginationCount,
 } from '@/components/molecules/Pagination/Pagination';
 import { ArticleListing } from '@/components/templates/ArticleListing/ArticleListing';
-import {
-  searchArticles,
-  type ArticleCategory,
-  type ArticleListItem,
-  type ArticleSearchParams,
-} from '@/data/articles';
+import { searchArticles } from '@/data/articles';
+import type {
+  ArticleListItem,
+  ArticleSearchParams,
+} from '@/data/articles.types';
 import { useRouter } from '@/i18n/navigation';
-import type { AppLocale } from '@/i18n/routing';
 import styles from './SearchScreen.module.css';
+import type { SearchScreenProps } from './SearchScreen.types';
 
 const SEARCH_DEBOUNCE_MS = 400;
 
@@ -102,13 +105,7 @@ export function SearchScreen({
   initialQuery,
   initialFilters,
   initialPage,
-}: {
-  locale: AppLocale;
-  categories: ArticleCategory[];
-  initialQuery: string;
-  initialFilters: ArticleFilterValues;
-  initialPage: number;
-}) {
+}: SearchScreenProps) {
   const t = useTranslations('Search');
   const tFilters = useTranslations('Filters');
   const tStatus = useTranslations('Status');
@@ -227,6 +224,85 @@ export function SearchScreen({
     // eslint-disable-next-line react-hooks/exhaustive-deps -- mount-only fetch
   }, []);
 
+  function submitSearch(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    pageRef.current = 1;
+    searchNow();
+  }
+
+  function changeQuery(event: ChangeEvent<HTMLInputElement>) {
+    const next = event.target.value;
+    queryRef.current = next;
+    setValue(next);
+    scheduleSearch();
+  }
+
+  function changeFilters(next: ArticleFilterValues) {
+    const previous = filtersRef.current;
+    filtersRef.current = next;
+    setFilters(next);
+    const onlyAuthor =
+      next.author !== previous.author &&
+      next.field === previous.field &&
+      next.sort === previous.sort &&
+      next.from === previous.from &&
+      next.to === previous.to;
+
+    if (onlyAuthor) {
+      scheduleSearch();
+      return;
+    }
+
+    pageRef.current = 1;
+    searchNow();
+  }
+
+  function clearFilters() {
+    filtersRef.current = emptyFilters;
+    setFilters(emptyFilters);
+    pageRef.current = 1;
+    searchNow();
+  }
+
+  function pageLabel(pageNumber: number) {
+    return tPagination('page', { page: pageNumber });
+  }
+
+  function goToPage(pageNumber: number) {
+    pageRef.current = pageNumber;
+    searchNow();
+  }
+
+  const status = loading ? (
+    <Loader label={tStatus('loading')} />
+  ) : failed ? (
+    <p className={styles.error}>{tStatus('error')}</p>
+  ) : undefined;
+  const pageCount = paginationCount(pageInfo.total, pageInfo.pageSize);
+  const toolbar = (
+    <form className={styles.field} onSubmit={submitSearch}>
+      <Input
+        id="search-query"
+        label={t('label')}
+        type="search"
+        value={value}
+        placeholder={t('placeholder')}
+        autoComplete="off"
+        maxLength={200}
+        enterKeyHint="search"
+        onChange={changeQuery}
+        action={<Button type="submit">{t('submit')}</Button>}
+      />
+      <ArticleFilters
+        categories={categories}
+        values={filters}
+        dateError={dateError}
+        onChange={changeFilters}
+        onClear={clearFilters}
+      />
+    </form>
+  );
+
   return (
     <ArticleListing
       kicker={t('kicker')}
@@ -236,83 +312,17 @@ export function SearchScreen({
       empty={t('empty')}
       articles={articles}
       locale={locale}
-      toolbar={
-        <form
-          className={styles.field}
-          onSubmit={(event) => {
-            event.preventDefault();
-            pageRef.current = 1;
-            searchNow();
-          }}
-        >
-          <Input
-            id="search-query"
-            label={t('label')}
-            type="search"
-            value={value}
-            placeholder={t('placeholder')}
-            autoComplete="off"
-            maxLength={200}
-            enterKeyHint="search"
-            onChange={(event) => {
-              const next = event.target.value;
-              queryRef.current = next;
-              setValue(next);
-              scheduleSearch();
-            }}
-            action={<Button type="submit">{t('submit')}</Button>}
-          />
-          <ArticleFilters
-            categories={categories}
-            values={filters}
-            dateError={dateError}
-            onChange={(next) => {
-              const previous = filtersRef.current;
-              filtersRef.current = next;
-              setFilters(next);
-              const onlyAuthor =
-                next.author !== previous.author &&
-                next.field === previous.field &&
-                next.sort === previous.sort &&
-                next.from === previous.from &&
-                next.to === previous.to;
-
-              if (onlyAuthor) {
-                scheduleSearch();
-                return;
-              }
-
-              pageRef.current = 1;
-              searchNow();
-            }}
-            onClear={() => {
-              filtersRef.current = emptyFilters;
-              setFilters(emptyFilters);
-              pageRef.current = 1;
-              searchNow();
-            }}
-          />
-        </form>
-      }
-      status={
-        loading ? (
-          <Loader label={tStatus('loading')} />
-        ) : failed ? (
-          <p className={styles.error}>{tStatus('error')}</p>
-        ) : undefined
-      }
+      toolbar={toolbar}
+      status={status}
       pagination={
         <Pagination
           label={tPagination('label')}
           previousLabel={tPagination('previous')}
           nextLabel={tPagination('next')}
-          pageLabel={(pageNumber) => tPagination('page', { page: pageNumber })}
+          pageLabel={pageLabel}
           page={pageInfo.page}
-          pageCount={paginationCount(pageInfo.total, pageInfo.pageSize)}
-          onPage={(pageNumber) => {
-            pageRef.current = pageNumber;
-            searchNow();
-          }}
+          pageCount={pageCount}
+          onPage={goToPage}
         />
       }
     />

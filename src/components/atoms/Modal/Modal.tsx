@@ -1,15 +1,14 @@
 'use client';
-
 import {
   useEffect,
   useId,
   useRef,
   useSyncExternalStore,
   type MouseEvent,
-  type ReactNode,
 } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './Modal.module.css';
+import type { ModalProps } from './Modal.types';
 
 function subscribeNever() {
   return () => {};
@@ -23,15 +22,7 @@ export function Modal({
   closeLabel,
   describedBy,
   children,
-}: {
-  id?: string;
-  open: boolean;
-  onClose: () => void;
-  title: string;
-  closeLabel: string;
-  describedBy?: string;
-  children: ReactNode;
-}) {
+}: ModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const titleId = useId();
   const mounted = useSyncExternalStore(
