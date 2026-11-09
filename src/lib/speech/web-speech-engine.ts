@@ -15,6 +15,7 @@ const SPEAK_DELAY_MS = 50;
 const NUDGE_MS = 10000;
 const MAX_CHUNK_LENGTH = 160;
 
+/** Returns the browser speech synthesizer, or null during SSR and in browsers without the API. */
 function defaultSynth(): SpeechSynthesis | null {
   if (typeof window === 'undefined' || !window.speechSynthesis) {
     return null;
@@ -23,6 +24,11 @@ function defaultSynth(): SpeechSynthesis | null {
   return window.speechSynthesis;
 }
 
+/**
+ * Scores how well a voice matches the requested language.
+ * An exact locale ranks above a shared language prefix, and a local voice ranks above a remote one.
+ * Returns null when the language does not match at all.
+ */
 function voiceRank({ voice, lang }: VoiceRankParams): number | null {
   const voiceLang = voice.lang.toLowerCase().replaceAll('_', '-');
   const wanted = lang.toLowerCase();
@@ -41,6 +47,7 @@ function voiceRank({ voice, lang }: VoiceRankParams): number | null {
   return null;
 }
 
+/** Chooses the highest-ranked installed voice for the requested language. */
 function pickVoice({
   voices,
   lang,
@@ -60,6 +67,7 @@ function pickVoice({
   return selected;
 }
 
+/** Splits text into sentences and keeps the trailing punctuation on each one. */
 function splitSentences({ text }: SplitSentencesParams): string[] {
   const parts = text.split(/([.!?…]+)(?:\s+|$)/u);
   const sentences: string[] = [];
@@ -77,6 +85,7 @@ function splitSentences({ text }: SplitSentencesParams): string[] {
   return sentences;
 }
 
+/** Breaks a long sentence into word-bounded pieces no longer than MAX_CHUNK_LENGTH. */
 function splitLongPiece({ text }: SplitLongPieceParams): string[] {
   const words = text.split(/\s+/).filter(Boolean);
   const chunks: string[] = [];
@@ -100,6 +109,10 @@ function splitLongPiece({ text }: SplitLongPieceParams): string[] {
   return chunks;
 }
 
+/**
+ * Turns one article segment into speakable chunks.
+ * Only the first chunk is marked for announcement, so segment highlighting fires once per segment.
+ */
 function chunksForSegment({ segment }: ChunksForSegmentParams): SpeechChunk[] {
   const sentences = splitSentences({ text: segment.text });
   const pieces = sentences.length > 0 ? sentences : [segment.text];
@@ -123,12 +136,14 @@ function chunksForSegment({ segment }: ChunksForSegmentParams): SpeechChunk[] {
   return chunks;
 }
 
+/** Builds an article reader on top of the Web Speech API, with one active session at a time. */
 export function createWebSpeechEngine({
   synth = defaultSynth(),
 }: CreateWebSpeechEngineParams = {}): ArticleSpeechEngine {
   let session: SpeechSession | null = null;
   let nudgeTimer: number | null = null;
 
+  /** Stops the keep-alive interval that prevents Chrome from dropping long playback. */
   const clearNudge = () => {
     if (nudgeTimer === null || typeof window === 'undefined') {
       nudgeTimer = null;
@@ -139,12 +154,15 @@ export function createWebSpeechEngine({
     nudgeTimer = null;
   };
 
+  /**
+   * Starts a pause/resume nudge while speech is active.
+   * Chrome drops speechSynthesis after about 15s unless it is nudged.
+   */
   const ensureNudge = () => {
     if (!synth || nudgeTimer !== null || typeof window === 'undefined') {
       return;
     }
 
-    // Chrome drops speechSynthesis after about 15s unless it is nudged.
     nudgeTimer = window.setInterval(() => {
       if (!session || session.paused || !synth.speaking || synth.paused) {
         return;
@@ -155,6 +173,7 @@ export function createWebSpeechEngine({
     }, NUDGE_MS);
   };
 
+  /** Cancels a session's delayed-speak timer. */
   const clearTimer = (current: SpeechSession) => {
     if (current.timer === null || typeof window === 'undefined') {
       current.timer = null;
@@ -165,6 +184,7 @@ export function createWebSpeechEngine({
     current.timer = null;
   };
 
+  /** Drops the current session, pending timers, and anything already queued in the synthesizer. */
   const halt = () => {
     const current = session;
     session = null;
@@ -178,6 +198,7 @@ export function createWebSpeechEngine({
     synth?.cancel();
   };
 
+  /** Speaks the next chunk, or ends the session when the queue is empty. */
   const speakNext = (current: SpeechSession) => {
     if (!synth || session !== current || current.paused) {
       return;
@@ -237,6 +258,7 @@ export function createWebSpeechEngine({
     synth.speak(utterance);
   };
 
+  /** Speaks the next chunk after a short delay so the synthesizer can settle between utterances. */
   const scheduleSpeak = (current: SpeechSession) => {
     if (typeof window === 'undefined') {
       speakNext(current);
@@ -250,6 +272,7 @@ export function createWebSpeechEngine({
     }, SPEAK_DELAY_MS);
   };
 
+  /** Resolves a voice for the session and starts playback unless the session is paused. */
   const begin = (current: SpeechSession) => {
     if (!synth || session !== current) {
       return;
@@ -276,10 +299,15 @@ export function createWebSpeechEngine({
   };
 
   return {
+    /** Reports whether this environment exposes speechSynthesis. */
     supported() {
       return synth !== null;
     },
 
+    /**
+     * Stops any current reading, queues the article segments, and starts once a matching voice is available.
+     * If the voice list is still empty, waits for voiceschanged or a short timeout.
+     */
     start(options) {
       halt();
 
@@ -315,6 +343,8 @@ export function createWebSpeechEngine({
       }
 
       let settled = false;
+
+      /** Ends the voice wait and starts the session, ignoring later voiceschanged or timeout events. */
       const finish = () => {
         if (settled || session !== next) {
           return;
@@ -340,6 +370,7 @@ export function createWebSpeechEngine({
       synth.addEventListener('voiceschanged', finish);
     },
 
+    /** Pauses the current session and the synthesizer without discarding the queue. */
     pause() {
       if (!session) {
         return;
@@ -353,6 +384,10 @@ export function createWebSpeechEngine({
       }
     },
 
+    /**
+     * Continues a paused session.
+     * Resumes the synthesizer when it is mid-utterance, otherwise speaks the next queued chunk.
+     */
     resume() {
       if (!synth || !session?.paused) {
         return;
@@ -376,10 +411,12 @@ export function createWebSpeechEngine({
       scheduleSpeak(session);
     },
 
+    /** Stops reading and clears the session. */
     stop() {
       halt();
     },
   };
 }
 
+/** Shared engine used by the article speech controls. */
 export const webSpeechEngine = createWebSpeechEngine({});

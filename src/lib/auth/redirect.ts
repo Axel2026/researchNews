@@ -3,6 +3,11 @@ import type {
   AuthCallbackUrlParams,
   LoginHrefParams,
 } from './redirect.types';
+
+/**
+ * Keeps an in-app path and rejects values that could leave the site.
+ * Protocol-relative URLs, backslashes, schemes, and /auth paths fall back.
+ */
 export function safeNextPath({
   value,
   fallback = '/',
@@ -21,6 +26,10 @@ export function safeNextPath({
   return value;
 }
 
+/**
+ * Builds the Supabase redirect URL for /auth/callback.
+ * next is where a successful sign-in lands; login is where a failure returns.
+ */
 export function authCallbackUrl({
   nextPath,
   loginPath,
@@ -34,6 +43,7 @@ export function authCallbackUrl({
   return url.toString();
 }
 
+/** Builds the login link, carrying the current page as next when it is not the home page. */
 export function loginHref({ nextPath }: LoginHrefParams) {
   const next = safeNextPath({ value: nextPath });
 

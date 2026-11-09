@@ -2,6 +2,7 @@
 
 import {
   useEffect,
+  useEffectEvent,
   useRef,
   useState,
   type ChangeEvent,
@@ -22,6 +23,8 @@ import type {
   ArticleSearchParams,
 } from '@/data/articles.types';
 import { useRouter } from '@/i18n/navigation';
+import { debounce } from '@/lib/debounce';
+import type { Debounced } from '@/lib/debounce.types';
 import styles from './SearchScreen.module.css';
 import type { SearchScreenProps } from './SearchScreen.types';
 import { isInvalidRange, searchHref, searchKey } from './SearchScreen.utils';
@@ -64,9 +67,7 @@ export function SearchScreen({
   const fetchedKey = useRef<string | null>(null);
   const queryRef = useRef(initialQuery);
   const filtersRef = useRef(initialFilters);
-  const debounceTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
-    undefined,
-  );
+  const debouncedSearchRef = useRef<Debounced<[]> | null>(null);
 
   useEffect(() => {
     queryRef.current = value;
@@ -137,26 +138,38 @@ export function SearchScreen({
       });
   }
 
+  const runSearchEvent = useEffectEvent(() => {
+    runSearch();
+  });
+
+  useEffect(() => {
+    const debounced = debounce({
+      delay: SEARCH_DEBOUNCE_MS,
+      callback: () => {
+        runSearchEvent();
+      },
+    });
+    debouncedSearchRef.current = debounced;
+
+    return () => {
+      debounced.cancel();
+      debouncedSearchRef.current = null;
+    };
+  }, []);
+
   function scheduleSearch() {
     pageRef.current = 1;
-    window.clearTimeout(debounceTimer.current);
-    debounceTimer.current = setTimeout(() => {
-      runSearch();
-    }, SEARCH_DEBOUNCE_MS);
+    debouncedSearchRef.current?.();
   }
 
   function searchNow() {
-    window.clearTimeout(debounceTimer.current);
+    debouncedSearchRef.current?.cancel();
     runSearch();
   }
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- mount-only fetch
     runSearch();
-
-    return () => {
-      window.clearTimeout(debounceTimer.current);
-    };
     // Later searches come from typing, filters and submit.
     // eslint-disable-next-line react-hooks/exhaustive-deps -- mount-only fetch
   }, []);

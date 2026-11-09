@@ -175,5 +175,40 @@
     "callbackError": "Sign-in did not finish. Try again.",
     "backHome": "Back to the home page",
     "requestNewLink": "Request a new link"
+  },
+  "Account": {
+    "title": "User panel",
+    "dek": "Save an API key once. It stays encrypted and is used only to popularize a paper that still shows the abstract.",
+    "provider": "Provider",
+    "model": "Model",
+    "apiKey": "API key",
+    "save": "Save key",
+    "remove": "Remove key",
+    "saved": "Key saved.",
+    "removed": "Key removed.",
+    "empty": "No key for this provider.",
+    "listHeading": "Saved keys",
+    "listEmpty": "No keys saved yet.",
+    "editSaved": "Edit the {name} key",
+    "current": "Saved key ending in {last4}.",
+    "openai": "OpenAI",
+    "xai": "xAI",
+    "anthropic": "Anthropic",
+    "invalid": "That key does not look usable.",
+    "error": "Could not update the key. Try again."
+  },
+  "Popularize": {
+    "action": "Popularize",
+    "pending": "Writing the article…",
+    "signIn": "Sign in to popularize",
+    "needsKey": "Add an API key",
+    "provider": "Provider",
+    "inProgress": "Someone is already popularizing this paper.",
+    "failed": "The model did not return a usable article. Try again.",
+    "providerFailed": "The provider rejected the request. Check the key and try again.",
+    "invalidKey": "The saved key could not be read. Replace it in your account.",
+    "unavailable": "This paper cannot be popularized.",
+    "notice": "Unverified reader version by {name}.",
+    "noticeModel": "Unverified reader version by {name}. Model: {model}."
   }
 }

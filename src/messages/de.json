@@ -175,5 +175,40 @@
     "callbackError": "Die Anmeldung ist fehlgeschlagen. Versuchen Sie es noch einmal.",
     "backHome": "Zur Startseite",
     "requestNewLink": "Neuen Link anfordern"
+  },
+  "Account": {
+    "title": "Benutzerbereich",
+    "dek": "Den API-Schlüssel speichern Sie einmal. Er bleibt verschlüsselt und dient nur dazu, eine Arbeit zu popularisieren, die noch das Abstract zeigt.",
+    "provider": "Anbieter",
+    "model": "Modell",
+    "apiKey": "API-Schlüssel",
+    "save": "Schlüssel speichern",
+    "remove": "Schlüssel entfernen",
+    "saved": "Schlüssel gespeichert.",
+    "removed": "Schlüssel entfernt.",
+    "empty": "Kein Schlüssel für diesen Anbieter.",
+    "listHeading": "Gespeicherte Schlüssel",
+    "listEmpty": "Noch keine Schlüssel gespeichert.",
+    "editSaved": "Schlüssel von {name} bearbeiten",
+    "current": "Gespeicherter Schlüssel endet auf {last4}.",
+    "openai": "OpenAI",
+    "xai": "xAI",
+    "anthropic": "Anthropic",
+    "invalid": "Dieser Schlüssel sieht nicht brauchbar aus.",
+    "error": "Der Schlüssel ließ sich nicht speichern. Versuchen Sie es noch einmal."
+  },
+  "Popularize": {
+    "action": "Popularisieren",
+    "pending": "Der Artikel entsteht…",
+    "signIn": "Anmelden, um zu popularisieren",
+    "needsKey": "API-Schlüssel hinzufügen",
+    "provider": "Anbieter",
+    "inProgress": "Jemand popularisiert diese Arbeit bereits.",
+    "failed": "Das Modell hat keinen verwendbaren Text geliefert. Versuchen Sie es noch einmal.",
+    "providerFailed": "Der Anbieter hat die Anfrage abgelehnt. Prüfen Sie den Schlüssel und versuchen Sie es noch einmal.",
+    "invalidKey": "Der gespeicherte Schlüssel lässt sich nicht lesen. Ersetzen Sie ihn im Konto.",
+    "unavailable": "Diese Arbeit lässt sich nicht popularisieren.",
+    "notice": "Ungeprüfte Lesefassung von {name}.",
+    "noticeModel": "Ungeprüfte Lesefassung von {name}. Modell: {model}."
   }
 }

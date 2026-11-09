@@ -12,17 +12,6 @@ export type HomeFeedCopy = {
   moreIn: (field: string) => string;
 };
 
-export type HomeFeedSectionProps = {
-  headingId: string;
-  title: string;
-  description?: string;
-  articles: ArticleListItem[];
-  locale: AppLocale;
-  moreLabel: string;
-  moreHref?: string;
-  moreAriaLabel?: string;
-};
-
 export type HomeFeedViewProps = {
   articles: ArticleListItem[];
   locale?: AppLocale;

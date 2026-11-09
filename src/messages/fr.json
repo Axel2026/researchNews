@@ -175,5 +175,40 @@
     "callbackError": "La connexion n’a pas abouti. Réessayez.",
     "backHome": "Retour à l’accueil",
     "requestNewLink": "Demander un nouveau lien"
+  },
+  "Account": {
+    "title": "Espace utilisateur",
+    "dek": "La clé API s’enregistre une fois. Elle reste chiffrée et sert seulement à populariser un article qui montre encore le résumé.",
+    "provider": "Fournisseur",
+    "model": "Modèle",
+    "apiKey": "Clé API",
+    "save": "Enregistrer la clé",
+    "remove": "Supprimer la clé",
+    "saved": "Clé enregistrée.",
+    "removed": "Clé supprimée.",
+    "empty": "Pas de clé pour ce fournisseur.",
+    "listHeading": "Clés enregistrées",
+    "listEmpty": "Aucune clé enregistrée pour le moment.",
+    "editSaved": "Modifier la clé {name}",
+    "current": "Clé enregistrée se terminant par {last4}.",
+    "openai": "OpenAI",
+    "xai": "xAI",
+    "anthropic": "Anthropic",
+    "invalid": "Cette clé ne semble pas utilisable.",
+    "error": "Impossible d’enregistrer la clé. Réessayez."
+  },
+  "Popularize": {
+    "action": "Populariser",
+    "pending": "Rédaction de l’article…",
+    "signIn": "Connectez-vous pour populariser",
+    "needsKey": "Ajouter une clé API",
+    "provider": "Fournisseur",
+    "inProgress": "Quelqu’un popularise déjà cet article.",
+    "failed": "Le modèle n’a pas renvoyé un texte utilisable. Réessayez.",
+    "providerFailed": "Le fournisseur a refusé la demande. Vérifiez la clé et réessayez.",
+    "invalidKey": "La clé enregistrée est illisible. Remplacez-la dans votre compte.",
+    "unavailable": "Cet article ne peut pas être popularisé.",
+    "notice": "Version de lecteur non vérifiée, par {name}.",
+    "noticeModel": "Version de lecteur non vérifiée, par {name}. Modèle : {model}."
   }
 }

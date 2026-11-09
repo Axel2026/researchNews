@@ -175,5 +175,40 @@
     "callbackError": "El inicio de sesión no se ha completado. Prueba de nuevo.",
     "backHome": "Volver al inicio",
     "requestNewLink": "Pedir un enlace nuevo"
+  },
+  "Account": {
+    "title": "Panel de usuario",
+    "dek": "La clave API se guarda una vez. Queda cifrada y solo sirve para popularizar un trabajo que todavía muestra el resumen.",
+    "provider": "Proveedor",
+    "model": "Modelo",
+    "apiKey": "Clave API",
+    "save": "Guardar clave",
+    "remove": "Quitar clave",
+    "saved": "Clave guardada.",
+    "removed": "Clave eliminada.",
+    "empty": "No hay clave para este proveedor.",
+    "listHeading": "Claves guardadas",
+    "listEmpty": "Todavía no hay claves guardadas.",
+    "editSaved": "Editar la clave de {name}",
+    "current": "Clave guardada que termina en {last4}.",
+    "openai": "OpenAI",
+    "xai": "xAI",
+    "anthropic": "Anthropic",
+    "invalid": "Esa clave no parece válida.",
+    "error": "No se pudo guardar la clave. Inténtalo de nuevo."
+  },
+  "Popularize": {
+    "action": "Popularizar",
+    "pending": "Escribiendo el artículo…",
+    "signIn": "Entra para popularizar",
+    "needsKey": "Añadir una clave API",
+    "provider": "Proveedor",
+    "inProgress": "Alguien ya está popularizando este trabajo.",
+    "failed": "El modelo no devolvió un texto utilizable. Inténtalo de nuevo.",
+    "providerFailed": "El proveedor rechazó la petición. Revisa la clave e inténtalo de nuevo.",
+    "invalidKey": "No se puede leer la clave guardada. Cámbiala en tu cuenta.",
+    "unavailable": "Este trabajo no se puede popularizar.",
+    "notice": "Versión de un lector, sin verificar. Autor: {name}.",
+    "noticeModel": "Versión de un lector, sin verificar. Autor: {name}. Modelo: {model}."
   }
 }

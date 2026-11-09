@@ -11,6 +11,7 @@ export type NewsArticleCopy = {
   viewOriginal: string;
   download: string;
   opensNewTab: string;
+  communityNotice?: string;
 };
 
 export type NewsArticleViewProps = {
@@ -18,5 +19,6 @@ export type NewsArticleViewProps = {
   locale?: AppLocale;
   copy: NewsArticleCopy;
   bookmarkAction?: ReactNode;
+  popularizeAction?: ReactNode;
   discussion?: ReactNode;
 };

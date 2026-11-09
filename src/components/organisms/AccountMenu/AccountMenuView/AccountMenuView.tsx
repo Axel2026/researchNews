@@ -32,7 +32,7 @@ export function AccountMenuView({ status, onSignOut }: AccountMenuViewProps) {
           label={<UserIcon />}
         >
           <li>
-            <Link className={styles.option} href="/">
+            <Link className={styles.option} href="/account">
               {t('userPanel')}
             </Link>
           </li>

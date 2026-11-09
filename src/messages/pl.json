@@ -175,5 +175,40 @@
     "callbackError": "Logowanie nie doszło do skutku. Spróbuj jeszcze raz.",
     "backHome": "Wróć na stronę główną",
     "requestNewLink": "Poproś o nowy link"
+  },
+  "Account": {
+    "title": "Panel użytkownika",
+    "dek": "Klucz API zapisujesz raz. Zostaje zaszyfrowany i służy tylko do popularyzacji pracy, która wciąż pokazuje abstrakt.",
+    "provider": "Dostawca",
+    "model": "Model",
+    "apiKey": "Klucz API",
+    "save": "Zapisz klucz",
+    "remove": "Usuń klucz",
+    "saved": "Klucz zapisany.",
+    "removed": "Klucz usunięty.",
+    "empty": "Brak klucza u tego dostawcy.",
+    "listHeading": "Zapisane klucze",
+    "listEmpty": "Nie ma jeszcze zapisanych kluczy.",
+    "editSaved": "Edytuj klucz {name}",
+    "current": "Zapisany klucz kończy się na {last4}.",
+    "openai": "OpenAI",
+    "xai": "xAI",
+    "anthropic": "Anthropic",
+    "invalid": "Ten klucz nie wygląda na poprawny.",
+    "error": "Nie udało się zapisać klucza. Spróbuj jeszcze raz."
+  },
+  "Popularize": {
+    "action": "Popularyzuj",
+    "pending": "Powstaje artykuł…",
+    "signIn": "Zaloguj się, aby popularyzować",
+    "needsKey": "Dodaj klucz API",
+    "provider": "Dostawca",
+    "inProgress": "Ktoś już popularyzuje tę pracę.",
+    "failed": "Model nie zwrócił tekstu, którego da się użyć. Spróbuj jeszcze raz.",
+    "providerFailed": "Dostawca odrzucił prośbę. Sprawdź klucz i spróbuj jeszcze raz.",
+    "invalidKey": "Zapisanego klucza nie da się odczytać. Podmień go w panelu.",
+    "unavailable": "Tej pracy nie da się popularyzować.",
+    "notice": "Wersja od czytelnika, niezweryfikowana. Autor: {name}.",
+    "noticeModel": "Wersja od czytelnika, niezweryfikowana. Autor: {name}. Model: {model}."
   }
 }

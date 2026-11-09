@@ -37,6 +37,9 @@ export const sampleArticleDetail: ArticleDetail = {
   journal: 'Nature',
   sourceUrl: 'https://doi.org/10.1234/example.peptides',
   downloadUrl: 'https://example.com/paper.pdf',
+  needsPopularization: false,
+  popularizationModel: null,
+  communityPopularization: null,
 };
 
 export const sampleArticles: ArticleListItem[] = [

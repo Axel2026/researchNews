@@ -25,6 +25,9 @@ export type ArticleDetail = ArticleListItem & {
   journal: string | null;
   sourceUrl: string | null;
   downloadUrl: string | null;
+  needsPopularization: boolean;
+  popularizationModel: string | null;
+  communityPopularization: { displayName: string } | null;
 };
 
 export type ArticleCategory = {

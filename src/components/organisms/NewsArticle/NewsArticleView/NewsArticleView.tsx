@@ -16,6 +16,7 @@ export function NewsArticleView({
   locale = 'en',
   copy,
   bookmarkAction,
+  popularizeAction,
   discussion,
 }: NewsArticleViewProps) {
   const summary = getArticleParagraphs({
@@ -55,6 +56,9 @@ export function NewsArticleView({
         >
           {article.shortPopularization}
         </SpokenBlock>
+        {copy.communityNotice ? (
+          <p className={styles.notice}>{copy.communityNotice}</p>
+        ) : null}
         <div className={styles.meta}>
           <div className={styles.byline}>
             {article.paperPublishedAt && paperDate ? (
@@ -70,6 +74,7 @@ export function NewsArticleView({
           />
           <div className={styles.actions}>
             {bookmarkAction}
+            {popularizeAction}
             <ArticleListen />
           </div>
         </div>

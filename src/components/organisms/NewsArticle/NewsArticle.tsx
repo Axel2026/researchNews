@@ -3,6 +3,7 @@ import { JsonLd } from '@/components/atoms/JsonLd/JsonLd';
 import { articleJsonLd } from '@/lib/seo';
 import { ArticleDiscussion } from '@/components/organisms/ArticleDiscussion/ArticleDiscussion';
 import { BookmarkButton } from '@/components/molecules/BookmarkButton/BookmarkButton';
+import { PopularizeButton } from '@/components/molecules/PopularizeButton/PopularizeButton';
 import { ArticleViewBeacon } from './ArticleViewBeacon/ArticleViewBeacon';
 import { NewsArticleView } from './NewsArticleView/NewsArticleView';
 import type { NewsArticleProps } from './NewsArticle.types';
@@ -21,12 +22,25 @@ export async function NewsArticle({ article, locale }: NewsArticleProps) {
     viewOriginal: t('News.viewOriginal'),
     download: t('News.download'),
     opensNewTab: t('News.opensNewTab'),
+    communityNotice: article.communityPopularization
+      ? article.popularizationModel
+        ? t('Popularize.noticeModel', {
+            name: article.communityPopularization.displayName,
+            model: article.popularizationModel,
+          })
+        : t('Popularize.notice', {
+            name: article.communityPopularization.displayName,
+          })
+      : undefined,
   };
   const jsonLd = articleJsonLd({
     article,
     locale,
     siteName: t('Metadata.title'),
   });
+  const popularizeAction = article.needsPopularization ? (
+    <PopularizeButton slug={article.slug} />
+  ) : null;
 
   return (
     <>
@@ -36,6 +50,7 @@ export async function NewsArticle({ article, locale }: NewsArticleProps) {
         article={article}
         locale={locale}
         bookmarkAction={<BookmarkButton slug={article.slug} />}
+        popularizeAction={popularizeAction}
         discussion={
           <ArticleDiscussion key={article.slug} slug={article.slug} />
         }

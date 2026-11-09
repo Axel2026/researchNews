@@ -103,6 +103,7 @@ export async function getArticleBySlug({
   return response.json() as Promise<ArticleDetail>;
 }
 
+/** Document types, journal titles, and the "Research" fallback CORE stores when it has no discipline. */
 const EXCLUDED_FIELDS = new Set([
   'dataset',
   'book',
@@ -124,16 +125,24 @@ const EXCLUDED_FIELDS = new Set([
   'pnas',
 ]);
 
+/**
+ * Returns whether `field` names a discipline and can become a category.
+ * CORE sometimes fills this column with a document type, a journal, a publisher acronym, or "Research".
+ */
 function isFieldOfStudy({ field }: IsFieldOfStudyParams): boolean {
   const trimmed = field.trim();
+
+  // A discipline name is at least three characters. This also drops blanks and stray codes.
   if (trimmed.length < 3) {
     return false;
   }
 
+  // Two to six capital letters are journal or publisher acronyms, such as PNAS or CELL.
   if (/^[A-Z]{2,6}$/.test(trimmed)) {
     return false;
   }
 
+  // Comparison is case-insensitive, so "Artigo" and "Nature" hit the same list as their lowercase forms.
   return !EXCLUDED_FIELDS.has(trimmed.toLowerCase());
 }
 
