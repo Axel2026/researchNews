@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import { Header } from '@/components/organisms/Header/Header';
 import { NewsArticle } from '@/components/organisms/NewsArticle/NewsArticle';
 import { PageShell } from '@/components/templates/PageShell/PageShell';
-import { getArticleBySlug, listArticles } from '@/data/articles';
+import { getArticleBySlug } from '@/data/articles';
 import { getPathname } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
 import {
@@ -16,7 +16,9 @@ import {
 } from '@/lib/seo';
 import type { ArticlePageProps } from './page.types';
 
-export const revalidate = 10800;
+export const dynamic = 'force-dynamic';
+// ISR disabled because of AWS Amplify max bundle size limit
+// export const revalidate = 10800;
 
 export async function generateMetadata({
   params,
@@ -64,13 +66,15 @@ export async function generateMetadata({
   };
 }
 
+/*
+ //ISR disabled because of AWS Amplify max bundle size limit
 export async function generateStaticParams() {
   const articles = await listArticles({ locale: routing.defaultLocale });
 
   return routing.locales.flatMap((locale) =>
     articles.map((article) => ({ locale, slug: article.slug })),
   );
-}
+} */
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
   const { locale, slug } = await params;
