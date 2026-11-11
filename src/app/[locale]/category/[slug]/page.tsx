@@ -1,12 +1,13 @@
 import { hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
-import { listCategories } from '@/data/articles';
 import { routing } from '@/i18n/routing';
 import { CategoryListing } from '../CategoryListing';
 import { categoryMetadata } from '../CategoryListing.utils';
 import type { CategoryPageProps } from './page.types';
 
-export const revalidate = 10800;
+export const dynamic = 'force-dynamic';
+// ISR disabled because of AWS Amplify max bundle size limit
+// export const revalidate = 10800;
 
 export async function generateMetadata({
   params,
@@ -15,7 +16,9 @@ export async function generateMetadata({
   return categoryMetadata({ locale, slug, page: 1 });
 }
 
-export async function generateStaticParams() {
+/*
+ //ISR disabled because of AWS Amplify max bundle size limit
+ export async function generateStaticParams() {
   const localeSlugs = await Promise.all(
     routing.locales.map(async (locale) => {
       const categories = await listCategories({ locale });
@@ -24,7 +27,7 @@ export async function generateStaticParams() {
   );
 
   return localeSlugs.flat();
-}
+} */
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const { locale, slug } = await params;

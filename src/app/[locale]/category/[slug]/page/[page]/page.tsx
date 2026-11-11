@@ -8,12 +8,15 @@ import { categoryMetadata } from '../../../CategoryListing.utils';
 import type { CategoryNumberedPageProps } from './page.types';
 import { pageNumber } from './page.utils';
 
+export const dynamic = 'force-dynamic';
+
+/* //ISR disabled because of AWS Amplify max bundle size limit
 export const revalidate = 10800;
 export const dynamicParams = true;
 
 export function generateStaticParams() {
   return [];
-}
+} */
 
 export async function generateMetadata({
   params,
