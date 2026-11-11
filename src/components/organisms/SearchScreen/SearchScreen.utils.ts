@@ -1,3 +1,4 @@
+import { comparePlainDates } from '@/lib/dates';
 import type {
   SearchHrefParams,
   SearchKeyParams,
@@ -55,12 +56,7 @@ export function isInvalidRange({ from, to }: IsInvalidRangeParams) {
   }
 
   try {
-    return (
-      Temporal.PlainDate.compare(
-        Temporal.PlainDate.from(from),
-        Temporal.PlainDate.from(to),
-      ) > 0
-    );
+    return comparePlainDates(from, to) > 0;
   } catch {
     return true;
   }

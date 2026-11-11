@@ -1,5 +1,6 @@
 import { unstable_cache } from 'next/cache';
 import { apiUrl } from '@/lib/api';
+import { localIsoDate } from '@/lib/dates';
 import type {
   ArticleListItem,
   ArticleDetail,
@@ -189,7 +190,7 @@ export async function getCategoryBySlug({
 }
 
 export const getEditionDateIso = unstable_cache(
-  async () => Temporal.Now.plainDateISO().toString(),
+  async () => localIsoDate(),
   ['edition-date'],
   {
     revalidate: ARTICLES_REVALIDATE_SECONDS,
