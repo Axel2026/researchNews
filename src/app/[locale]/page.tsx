@@ -5,7 +5,6 @@ import { Header } from '@/components/organisms/Header/Header';
 import { HomeFeed } from '@/components/organisms/HomeFeed/HomeFeed';
 import { PageShell } from '@/components/templates/PageShell/PageShell';
 import {
-  ARTICLES_REVALIDATE_SECONDS,
   getEditionDateIso,
   listArticles,
   listCategories,
@@ -15,7 +14,7 @@ import styles from './page.module.css';
 import type { HomeProps } from './page.types';
 import { formatEditionDate } from './page.utils';
 
-export const revalidate = ARTICLES_REVALIDATE_SECONDS;
+export const revalidate = 10800;
 
 export default async function Home({ params }: HomeProps) {
   const { locale } = await params;

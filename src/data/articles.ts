@@ -17,6 +17,7 @@ import type {
   RecordArticleViewParams,
 } from './articles.types';
 
+/** ISR window used by fetch cache options. Route `export const revalidate` must repeat this number as a literal — Next.js rejects an imported segment config. */
 export const ARTICLES_REVALIDATE_SECONDS = 10800;
 export const ARTICLES_CACHE_TAG = 'articles';
 

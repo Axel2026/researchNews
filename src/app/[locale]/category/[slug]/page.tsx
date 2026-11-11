@@ -1,12 +1,12 @@
 import { hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
-import { ARTICLES_REVALIDATE_SECONDS, listCategories } from '@/data/articles';
+import { listCategories } from '@/data/articles';
 import { routing } from '@/i18n/routing';
 import { CategoryListing } from '../CategoryListing';
 import { categoryMetadata } from '../CategoryListing.utils';
 import type { CategoryPageProps } from './page.types';
 
-export const revalidate = ARTICLES_REVALIDATE_SECONDS;
+export const revalidate = 10800;
 
 export async function generateMetadata({
   params,

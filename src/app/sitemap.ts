@@ -1,13 +1,9 @@
 import type { MetadataRoute } from 'next';
-import {
-  ARTICLES_REVALIDATE_SECONDS,
-  listArticles,
-  listCategories,
-} from '@/data/articles';
+import { listArticles, listCategories } from '@/data/articles';
 import { routing } from '@/i18n/routing';
 import { articlePath, categoryPath, localizedSitemapEntries } from '@/lib/seo';
 
-export const revalidate = ARTICLES_REVALIDATE_SECONDS;
+export const revalidate = 10800;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [articles, categories] = await Promise.all([

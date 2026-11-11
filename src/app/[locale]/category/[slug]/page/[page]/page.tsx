@@ -1,6 +1,5 @@
 import { hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
-import { ARTICLES_REVALIDATE_SECONDS } from '@/data/articles';
 import { redirect } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
 import { categoryPath } from '@/lib/seo';
@@ -9,7 +8,7 @@ import { categoryMetadata } from '../../../CategoryListing.utils';
 import type { CategoryNumberedPageProps } from './page.types';
 import { pageNumber } from './page.utils';
 
-export const revalidate = ARTICLES_REVALIDATE_SECONDS;
+export const revalidate = 10800;
 export const dynamicParams = true;
 
 export function generateStaticParams() {

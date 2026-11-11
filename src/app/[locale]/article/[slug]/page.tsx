@@ -5,11 +5,7 @@ import { notFound } from 'next/navigation';
 import { Header } from '@/components/organisms/Header/Header';
 import { NewsArticle } from '@/components/organisms/NewsArticle/NewsArticle';
 import { PageShell } from '@/components/templates/PageShell/PageShell';
-import {
-  ARTICLES_REVALIDATE_SECONDS,
-  getArticleBySlug,
-  listArticles,
-} from '@/data/articles';
+import { getArticleBySlug, listArticles } from '@/data/articles';
 import { getPathname } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
 import {
@@ -20,7 +16,7 @@ import {
 } from '@/lib/seo';
 import type { ArticlePageProps } from './page.types';
 
-export const revalidate = ARTICLES_REVALIDATE_SECONDS;
+export const revalidate = 10800;
 
 export async function generateMetadata({
   params,

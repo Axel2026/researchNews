@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import { Header } from '@/components/organisms/Header/Header';
 import { SourceList } from '@/components/organisms/SourceList/SourceList';
 import { PageShell } from '@/components/templates/PageShell/PageShell';
-import { ARTICLES_REVALIDATE_SECONDS, listCategories } from '@/data/articles';
+import { listCategories } from '@/data/articles';
 import { listSources } from '@/data/sources';
 import { getPathname } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
@@ -16,7 +16,7 @@ import {
 } from '@/lib/seo';
 import type { SourcesPageProps } from './page.types';
 
-export const revalidate = ARTICLES_REVALIDATE_SECONDS;
+export const revalidate = 10800;
 
 export async function generateMetadata({
   params,
