@@ -21,10 +21,13 @@ it('shows the kicker, title, and a link to the article', () => {
   expect(
     screen.getByRole('link', { name: sampleArticle.title }),
   ).toHaveAttribute('href', '/article/frog-peptides');
-  const readStory = screen
-    .getAllByRole('link', { hidden: true })
-    .find((link) => link.textContent?.includes('Read the article'));
-  expect(readStory).toHaveAttribute('href', '/article/frog-peptides');
+  expect(screen.getByText('Read the article')).toBeInTheDocument();
+  expect(
+    screen.queryByRole('link', { name: /Read the article/ }),
+  ).not.toBeInTheDocument();
+  expect(
+    screen.getByRole('img', { name: sampleArticle.title }),
+  ).toBeInTheDocument();
   expect(
     screen.getByText(sampleArticle.shortPopularization),
   ).toBeInTheDocument();

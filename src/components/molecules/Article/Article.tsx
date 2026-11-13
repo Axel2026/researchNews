@@ -19,6 +19,7 @@ export function Article({
       <div className={styles.media}>
         <ArticleImage
           src={article.imageUrl}
+          alt={article.title}
           sizes={`${mediaMinLg} 25vw, 16rem`}
         />
       </div>

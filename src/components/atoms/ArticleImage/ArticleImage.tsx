@@ -4,7 +4,7 @@ import { isSvgSrc } from './ArticleImage.utils';
 
 export function ArticleImage({
   src,
-  alt = '',
+  alt,
   sizes,
   priority = false,
 }: ArticleImageProps) {

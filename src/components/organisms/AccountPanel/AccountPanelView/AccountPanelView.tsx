@@ -97,13 +97,34 @@ export function AccountPanelView({
                   className={styles.savedItem}
                   value={row.provider}
                   aria-pressed={row.selected}
-                  aria-label={row.label}
+                  aria-labelledby={`${row.provider}-saved-action ${row.provider}-saved-name ${row.provider}-saved-model ${row.provider}-saved-ending`}
                   disabled={busy}
                   onClick={chooseSaved}
                 >
-                  <span className={styles.savedProvider}>{row.name}</span>
-                  <span className={styles.savedModel}>{row.model}</span>
-                  <span className={styles.savedEnding}>{row.ending}</span>
+                  <span
+                    id={`${row.provider}-saved-action`}
+                    className={styles.visuallyHidden}
+                  >
+                    {row.label}
+                  </span>
+                  <span
+                    id={`${row.provider}-saved-name`}
+                    className={styles.savedProvider}
+                  >
+                    {row.name}
+                  </span>
+                  <span
+                    id={`${row.provider}-saved-model`}
+                    className={styles.savedModel}
+                  >
+                    {row.model}
+                  </span>
+                  <span
+                    id={`${row.provider}-saved-ending`}
+                    className={styles.savedEnding}
+                  >
+                    {row.ending}
+                  </span>
                 </button>
               </li>
             ))}

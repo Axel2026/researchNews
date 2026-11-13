@@ -14,6 +14,9 @@ it('renders the story as a heading link with its meta', () => {
     screen.getByRole('link', { name: sampleArticle.title }),
   ).toHaveAttribute('href', `/article/${sampleArticle.slug}`);
   expect(
+    screen.getByRole('img', { name: sampleArticle.title }),
+  ).toBeInTheDocument();
+  expect(
     screen.getByText(sampleArticle.shortPopularization),
   ).toBeInTheDocument();
   expect(screen.getByText('Mar 12, 2026')).toBeInTheDocument();

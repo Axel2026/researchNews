@@ -1,6 +1,7 @@
-# Badania
+# General
 
 A web app of popular-science articles. Each story covers one research paper.
+Available publicly at: https://main.d3vw1tdhpj4l7.amplifyapp.com/
 
 ## Requirements
 

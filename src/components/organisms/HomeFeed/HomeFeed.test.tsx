@@ -9,10 +9,10 @@ it('renders the featured story and the latest discoveries', async () => {
   renderWithIntl(view);
 
   expect(screen.getByText('Featured article')).toBeInTheDocument();
-  const readStory = screen
-    .getAllByRole('link', { hidden: true })
-    .find((link) => link.textContent?.includes('Read the article'));
-  expect(readStory).toHaveAttribute('href', `/article/${sampleArticle.slug}`);
+  expect(screen.getByText('Read the article')).toBeInTheDocument();
+  expect(
+    screen.queryByRole('link', { name: /Read the article/ }),
+  ).not.toBeInTheDocument();
   expect(
     screen.getByRole('heading', { name: 'Latest discoveries' }),
   ).toBeInTheDocument();

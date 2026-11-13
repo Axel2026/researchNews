@@ -17,7 +17,12 @@ export function FeaturedArticle({
   return (
     <article className={styles.article} aria-labelledby={headingId}>
       <div className={styles.media}>
-        <ArticleImage src={article.imageUrl} sizes={imageSizes} priority />
+        <ArticleImage
+          src={article.imageUrl}
+          alt={article.title}
+          sizes={imageSizes}
+          priority
+        />
       </div>
       <div className={styles.copy}>
         <p className={styles.kicker}>{kicker}</p>
@@ -26,14 +31,9 @@ export function FeaturedArticle({
         </h2>
         <p className={styles.dek}>{article.shortPopularization}</p>
         <CategoryChip field={article.field} />
-        <Link
-          className={styles.storyLink}
-          href={articleHref}
-          tabIndex={-1}
-          aria-hidden="true"
-        >
+        <span className={styles.storyLink}>
           {readStory} <span aria-hidden="true">→</span>
-        </Link>
+        </span>
       </div>
     </article>
   );

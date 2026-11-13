@@ -9,7 +9,7 @@ export const colors = [
   { name: 'Surface', variable: '--color-surface', value: '#fffdf8' },
   { name: 'Peach', variable: '--color-peach', value: '#f3d5c0' },
   { name: 'Hero', variable: '--color-hero', value: '#ece4d6' },
-  { name: 'Chip border', variable: '--color-chip-border', value: '#d8d0c4' },
+  { name: 'Chip border', variable: '--color-chip-border', value: '#8a7968' },
   {
     name: 'Control border',
     variable: '--color-control-border',
@@ -91,7 +91,7 @@ export const borders = [
   { name: 'Rule', variable: '--border-rule', value: '3px' },
   { name: 'Line color', variable: '--color-line', value: '#e4ddd2' },
   { name: 'Rule color', variable: '--color-rule', value: '#b9ab96' },
-  { name: 'Chip border', variable: '--color-chip-border', value: '#d8d0c4' },
+  { name: 'Chip border', variable: '--color-chip-border', value: '#8a7968' },
 ] as const;
 
 export const breakpoints = [

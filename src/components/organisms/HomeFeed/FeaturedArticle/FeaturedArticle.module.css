@@ -69,15 +69,12 @@
   position: relative;
   z-index: var(--z-content);
   color: var(--color-accent);
+  pointer-events: none;
   font-size: var(--text-base);
   font-weight: var(--weight-semibold);
   text-decoration: none;
   border-bottom: 2px solid currentColor;
   padding-bottom: 0.12em;
-}
-
-.storyLink:hover {
-  color: var(--color-accent-hover);
 }
 
 @media (min-width: 64rem) {

@@ -101,7 +101,7 @@
   background: var(--color-surface);
   list-style: none;
   scrollbar-width: thin;
-  scrollbar-color: var(--color-rule) var(--color-hero);
+  scrollbar-color: var(--color-chip-border) var(--color-hero);
 }
 
 .list::-webkit-scrollbar {
@@ -113,7 +113,7 @@
 }
 
 .list::-webkit-scrollbar-thumb {
-  background: var(--color-rule);
+  background: var(--color-chip-border);
   border: 2px solid var(--color-hero);
   border-radius: var(--radius-pill);
 }

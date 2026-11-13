@@ -35,6 +35,9 @@ it('shows the story, source links, and listen control', () => {
     screen.getByRole('heading', { name: sampleArticleDetail.title }),
   ).toBeInTheDocument();
   expect(
+    screen.getByRole('img', { name: sampleArticleDetail.title }),
+  ).toBeInTheDocument();
+  expect(
     screen.getByText(sampleArticleDetail.shortPopularization),
   ).toBeInTheDocument();
   expect(screen.getAllByText(`Published ${paperDate}`).length).toBeGreaterThan(

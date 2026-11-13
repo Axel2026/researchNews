@@ -1,5 +1,6 @@
 import type { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
+import { resolveSiteUrl } from './src/lib/site-url';
 
 const apiOrigin = new URL(
   process.env.API_URL ??
@@ -10,6 +11,13 @@ const isLocalApi =
   apiOrigin.hostname === 'localhost' || apiOrigin.hostname === '127.0.0.1';
 
 const nextConfig: NextConfig = {
+  env: {
+    NEXT_PUBLIC_SITE_URL: resolveSiteUrl({
+      configured: process.env.NEXT_PUBLIC_SITE_URL,
+      appId: process.env.AWS_APP_ID,
+      branch: process.env.AWS_BRANCH,
+    }),
+  },
   reactCompiler: true,
   images: {
     ...(isLocalApi ? { dangerouslyAllowLocalIP: true } : {}),

@@ -8,11 +8,17 @@
 
 .title {
   max-width: 28ch;
+  padding-top: 0.3em;
+  padding-bottom: 0.31em;
   font-family: var(--font-serif);
   font-size: var(--text-display);
   font-weight: var(--weight-bold);
   letter-spacing: var(--tracking-tight);
   line-height: var(--leading-tight);
+
+  /* Newsreader draws the capital acute above its ascender. Trim the unused
+     descender, then pad so the caps are centered and Ź stays in the box. */
+  text-box: trim-both text alphabetic;
 }
 
 .dek {

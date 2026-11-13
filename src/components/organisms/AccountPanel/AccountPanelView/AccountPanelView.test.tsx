@@ -59,7 +59,9 @@ it('saves a typed key and lists a saved one', async () => {
     screen.getByRole('heading', { name: 'Saved keys' }),
   ).toBeInTheDocument();
   expect(
-    screen.getByRole('button', { name: 'Edit the OpenAI key' }),
+    screen.getByRole('button', {
+      name: 'Edit the OpenAI key OpenAI gpt-6.1-sol Saved key ending in a1b2.',
+    }),
   ).toBeInTheDocument();
   expect(screen.getAllByText('Saved key ending in a1b2.')).toHaveLength(2);
   await user.click(screen.getByRole('button', { name: 'Save key' }));

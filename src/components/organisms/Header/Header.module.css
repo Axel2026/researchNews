@@ -29,6 +29,7 @@
 .start {
   display: flex;
   flex: 1 1 100%;
+  flex-wrap: wrap;
   align-items: center;
   gap: var(--space-16);
   min-width: 0;
@@ -37,6 +38,8 @@
 .brand {
   display: flex;
   align-items: center;
+  max-width: 100%;
+  min-width: 0;
   line-height: 0;
   color: inherit;
   text-decoration: none;
@@ -46,13 +49,17 @@
   display: block;
   height: 4rem;
   width: auto;
-  max-width: none;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: left center;
 }
 
 .nav {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-6);
+  gap: var(--space-3) var(--space-6);
+  min-width: 0;
   font-size: var(--text-base);
 }
 
